@@ -506,6 +506,17 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   .nav-btn .lbl{ display:none;}
   #urgencyBar{ display:none;}
   #stickyCTA{ top:auto; bottom:90px; right:14px;}
+  .slide{
+    align-items:flex-start;
+    overflow-y:auto; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    padding:24px 5vw 110px;
+    scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.25) transparent;
+  }
+  .slide::-webkit-scrollbar{ width:4px;}
+  .slide::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.25); border-radius:99px;}
+  .slide > *{ width:100%;}
+  #prev, #next{ bottom:18px;}
 }
 </style>
 </head>
@@ -846,7 +857,7 @@ const dots = dotsWrap.querySelectorAll('button');
 function render(){
   slides.forEach((s,i) => {
     s.classList.remove('active','prev');
-    if(i === current) s.classList.add('active');
+    if(i === current){ s.classList.add('active'); s.scrollTop = 0; }
     else if(i < current) s.classList.add('prev');
   });
   dots.forEach((d,i) => d.classList.toggle('active', i === current));
