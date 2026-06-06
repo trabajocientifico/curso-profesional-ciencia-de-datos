@@ -476,13 +476,15 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   .nav-btn{ padding:11px 16px; font-size:12px;}
   .nav-btn .lbl{ display:none;}
   #urgencyBar{ display:none;}
-  #whatsBtn{ width:50px; height:50px; bottom:auto; top:60px; right:14px;}
-  #whatsBtn svg{ width:26px; height:26px;}
-  #stickyCTA{ top:14px; right:14px; bottom:auto; padding:9px 14px; font-size:10px; letter-spacing:.1em;}
+  #whatsBtn{ width:48px; height:48px; bottom:auto; top:14px; right:14px;}
+  #whatsBtn svg{ width:24px; height:24px;}
+  #stickyCTA{ top:14px; right:auto; left:14px; bottom:auto; padding:9px 14px; font-size:10px; letter-spacing:.08em;}
+
   .slide{
-    display:block;
-    overflow-y:auto; overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;
+    display:block !important;
+    height:100vh; max-height:100vh;
+    overflow-y:auto !important; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
     padding:30px 5vw 130px;
     text-align:center;
     scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.25) transparent;
@@ -490,8 +492,24 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   .slide::-webkit-scrollbar{ width:4px;}
   .slide::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.25); border-radius:99px;}
   .slide > *{ max-width:100%;}
-  .hero{ padding-top:8px; display:block;}
-  .hero-stats{ flex-wrap:wrap; justify-content:center; gap:18px;}
+
+  .hero{ padding-top:74px !important; display:block;}
+  .hero-top{ flex-direction:column; gap:10px; margin-bottom:18px;}
+  .python-logo{ width:62px; height:62px;}
+  .hero-top .start-badge{ font-size:12.5px; padding:8px 18px;}
+
+  .course-name h1{ font-size:clamp(64px, 18vw, 92px); line-height:.9;}
+  .course-name .ln1{ font-size:.34em; letter-spacing:.22em; margin-bottom:10px;}
+  .course-name .ln3{ font-size:.5em; margin-top:4px;}
+
+  .hero .sub{ font-size:14.5px; margin-top:22px; padding:0 4px; line-height:1.5;}
+  .hero-stats{ flex-wrap:wrap; justify-content:center; gap:16px 28px; margin-top:28px;}
+  .hero-stats .div{ display:none;}
+  .hero-stat .n{ font-size:34px;}
+  .hero-cta{ margin-top:26px; gap:10px;}
+  .btn-primary{ padding:15px 26px; font-size:13px;}
+  .btn-ghost{ padding:15px 24px; font-size:12px;}
+
   #prev, #next{ bottom:18px;}
 
   .evo-track{ gap:2px; margin-top:30px;}
