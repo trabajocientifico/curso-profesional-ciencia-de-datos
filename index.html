@@ -86,6 +86,7 @@ body::before{
   transition:all .25s ease;
 }
 .nav-btn:hover{ background:var(--neon); color:#000; border-color:var(--neon); box-shadow:0 0 22px var(--neon); transform:translateY(-3px);}
+.nav-btn.is-disabled{ opacity:.25; pointer-events:none; filter:grayscale(.6);}
 .nav-btn .arr{ font-size:18px;}
 #prev{ left:24px; } #next{ right:24px; }
 
@@ -187,47 +188,6 @@ body::before{
 .modal-foot a{ color:var(--neon); text-decoration:none; font-weight:700; letter-spacing:.06em;}
 .modal-foot a:hover{ text-decoration:underline;}
 
-#welcome{
-  position:fixed; inset:0; z-index:120; display:flex;
-  align-items:center; justify-content:center; padding:24px;
-  background:rgba(5,6,15,.92); backdrop-filter:blur(14px);
-  animation:fadeIn .4s ease;
-}
-#welcome.hide{ display:none;}
-.welcome-box{
-  max-width:640px; padding:42px 38px; border-radius:26px;
-  background:linear-gradient(160deg,rgba(0,245,212,.08),rgba(155,92,255,.12));
-  border:1px solid rgba(255,255,255,.14); text-align:center;
-  box-shadow:0 40px 100px rgba(0,0,0,.6), 0 0 60px rgba(0,245,212,.12);
-}
-.welcome-box .w-pre{ font-size:11px; letter-spacing:.4em; text-transform:uppercase; color:var(--neon); margin-bottom:14px;}
-.welcome-box h3{ font-size:clamp(24px,3vw,32px); font-weight:900; line-height:1.1; letter-spacing:-.01em;}
-.welcome-box p{ margin-top:14px; font-size:15px; color:var(--text); line-height:1.6;}
-.welcome-tips{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:26px 0;}
-.welcome-tip{
-  padding:14px 12px; border-radius:14px;
-  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
-  display:flex; flex-direction:column; align-items:center; gap:8px;
-}
-.welcome-tip .tic{
-  width:42px; height:42px; border-radius:12px;
-  background:rgba(0,245,212,.14); border:1px solid rgba(0,245,212,.35);
-  display:grid; place-items:center; color:var(--neon); font-size:18px; font-weight:900;
-}
-.welcome-tip .t-lab{ font-size:11px; color:var(--text); font-weight:700;}
-.welcome-tip .t-sub{ font-size:10px; color:var(--muted); letter-spacing:.06em;}
-.welcome-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:8px;}
-.welcome-actions button{
-  padding:14px 26px; border-radius:99px; border:none; cursor:pointer;
-  font-weight:800; font-size:13px; letter-spacing:.14em; text-transform:uppercase;
-  transition:all .25s;
-}
-.btn-start{
-  background:linear-gradient(90deg,var(--neon),var(--neon-2)); color:#000;
-  box-shadow:0 10px 30px rgba(0,245,212,.3);
-}
-.btn-start:hover{ transform:translateY(-2px) scale(1.04);}
-@media(max-width:680px){ .welcome-tips{ grid-template-columns:1fr;}}
 
 .eyebrow{
   display:inline-block; font-size:12px; letter-spacing:.4em; text-transform:uppercase;
@@ -518,16 +478,28 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   #urgencyBar{ display:none;}
   #stickyCTA{ top:auto; bottom:90px; right:14px;}
   .slide{
-    align-items:flex-start;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:flex-start;
     overflow-y:auto; overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
-    padding:24px 5vw 110px;
+    padding:28px 5vw 120px;
     scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.25) transparent;
   }
   .slide::-webkit-scrollbar{ width:4px;}
   .slide::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.25); border-radius:99px;}
-  .slide > *{ width:100%;}
+  .slide > *{ width:100%; max-width:100%;}
+  .hero{ padding-top:14px;}
   #prev, #next{ bottom:18px;}
+
+  .evo-track{ gap:2px; margin-top:30px;}
+  .evo-track::before{ display:none;}
+  .evo-step{ display:flex; flex-direction:column; align-items:center; min-width:0;}
+  .evo-step .dot{ width:52px; height:52px; font-size:13px;}
+  .evo-step .name{ font-size:11px; line-height:1.15; margin-top:8px; word-break:break-word; padding:0 2px;}
+  .evo-step .lvl{ font-size:8px; letter-spacing:.18em; margin-top:3px;}
+  .evo-step.s2 .dot, .evo-step.s4 .dot{ order:3; margin-top:6px;}
+  .evo-step.s2 .name, .evo-step.s4 .name{ order:1; margin-top:0; margin-bottom:4px;}
+  .evo-step.s2 .lvl, .evo-step.s4 .lvl{ order:2; margin-top:0; margin-bottom:6px;}
 }
 </style>
 </head>
@@ -547,23 +519,6 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
 <div id="progress"></div>
 <div class="progress-num"><b id="curNum">1</b> / 4</div>
 
-<div id="welcome">
-  <div class="welcome-box">
-    <div class="w-pre">¡Bienvenido!</div>
-    <h3>Explora el curso a tu ritmo</h3>
-    <p>Recorre las <b>4 secciones</b> de esta presentación. Navega fácilmente con:</p>
-    <div class="welcome-tips">
-      <div class="welcome-tip"><div class="tic">→</div><div class="t-lab">Flechas</div><div class="t-sub">teclado ← →</div></div>
-      <div class="welcome-tip"><div class="tic">⊙</div><div class="t-lab">Botones</div><div class="t-sub">"Siguiente" abajo</div></div>
-      <div class="welcome-tip"><div class="tic">↕</div><div class="t-lab">Scroll</div><div class="t-sub">rueda del mouse</div></div>
-    </div>
-    <p style="font-size:13px; color:var(--muted);">Cuando quieras <b style="color:var(--neon);">inscribirte, resolver dudas o coordinar el pago</b>, usa el botón verde <b style="color:var(--neon);">"Reserva tu cupo"</b> arriba a la derecha — te contactaremos personalmente.</p>
-    <div class="welcome-actions">
-      <button class="btn-start" onclick="closeWelcome()">Empezar el recorrido →</button>
-    </div>
-  </div>
-</div>
-
 <div id="stage">
 
   <!-- ============== SLIDE 1 — HERO ============== -->
@@ -579,7 +534,6 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
         <path fill="url(#pyBlue)" d="M126.92 0c-10.4 0-20.32.89-29.04 2.43-25.7 4.54-30.38 14.04-30.38 31.55v23.13h60.76v7.72H44.7c-17.65 0-33.1 10.6-37.93 30.78-5.58 23.13-5.83 37.55 0 61.7 4.31 17.97 14.61 30.78 32.26 30.78H59.95v-27.72c0-20.04 17.34-37.72 37.93-37.72h60.7c16.89 0 30.38-13.91 30.38-30.86V33.98c0-16.46-13.89-28.81-30.38-31.55C148.1.89 137.32 0 126.92 0zM94.07 18.6c6.28 0 11.4 5.21 11.4 11.61 0 6.39-5.12 11.55-11.4 11.55-6.3 0-11.4-5.16-11.4-11.55 0-6.4 5.1-11.61 11.4-11.61z"/>
         <path fill="url(#pyYel)" d="M197.92 64.83v26.92c0 20.91-17.71 38.51-37.93 38.51h-60.7c-16.62 0-30.38 14.23-30.38 30.86v57.83c0 16.45 14.31 26.13 30.38 30.86 19.25 5.66 37.71 6.68 60.7 0 15.31-4.43 30.38-13.36 30.38-30.86v-23.14h-60.67v-7.72h91.04c17.65 0 24.23-12.31 30.38-30.78 6.35-19.02 6.08-37.32 0-61.7-4.36-17.55-12.7-30.78-30.38-30.78H197.92zm-34.15 146.5c6.31 0 11.41 5.16 11.41 11.55s-5.1 11.62-11.41 11.62c-6.27 0-11.4-5.22-11.4-11.62 0-6.39 5.13-11.55 11.4-11.55z"/>
       </svg>
-      <div class="pre">PROGRAMA PROFESIONAL · 20H · CERTIFICADO<b>Con Python + Inteligencia Artificial</b></div>
       <div class="start-badge">📅 INICIA EN <b>JULIO 2026</b></div>
     </div>
 
@@ -828,17 +782,6 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
 <script>
 const FORM_URL = 'https://forms.gle/rbWWxzf5FeouCBUg6';
 
-function closeWelcome(){
-  document.getElementById('welcome').classList.add('hide');
-  try{ localStorage.setItem('cdp_visited','1'); }catch(e){}
-  animateCounters();
-}
-try{
-  if(localStorage.getItem('cdp_visited') === '1'){
-    document.getElementById('welcome').classList.add('hide');
-  }
-}catch(e){}
-
 function openModal(){
   const m = document.getElementById('modal');
   const f = document.getElementById('modalForm');
@@ -867,6 +810,8 @@ slides.forEach((_, i) => {
   dotsWrap.appendChild(b);
 });
 const dots = dotsWrap.querySelectorAll('button');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 function render(){
   slides.forEach((s,i) => {
     s.classList.remove('active','prev');
@@ -876,21 +821,18 @@ function render(){
   dots.forEach((d,i) => d.classList.toggle('active', i === current));
   progress.style.width = ((current+1)/total*100) + '%';
   curNum.textContent = current + 1;
+  prevBtn.classList.toggle('is-disabled', current === 0);
+  nextBtn.classList.toggle('is-disabled', current === total-1);
   if(current === 0) animateCounters();
 }
 function go(i){
-  if(i < 0) i = total-1;
-  if(i >= total) i = 0;
+  if(i < 0 || i >= total) return;
   current = i; render();
 }
 function next(){ go(current+1);} function prev(){ go(current-1);}
 document.getElementById('next').addEventListener('click', next);
 document.getElementById('prev').addEventListener('click', prev);
 document.addEventListener('keydown', e => {
-  if(!document.getElementById('welcome').classList.contains('hide')){
-    if(e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') closeWelcome();
-    return;
-  }
   if(document.getElementById('modal').classList.contains('show')){
     if(e.key === 'Escape') closeModal();
     return;
@@ -904,14 +846,12 @@ let touchX = 0;
 document.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
 document.addEventListener('touchend', e => {
   if(document.getElementById('modal').classList.contains('show')) return;
-  if(!document.getElementById('welcome').classList.contains('hide')) return;
   const dx = e.changedTouches[0].clientX - touchX;
   if(Math.abs(dx) > 60){ dx < 0 ? next() : prev();}
 });
 let wheelLock = false;
 document.addEventListener('wheel', e => {
   if(document.getElementById('modal').classList.contains('show')) return;
-  if(!document.getElementById('welcome').classList.contains('hide')) return;
   if(wheelLock) return;
   if(Math.abs(e.deltaY) < 30) return;
   wheelLock = true;
