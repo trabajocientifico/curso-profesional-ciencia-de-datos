@@ -180,13 +180,125 @@ body::before{
   display:grid; place-items:center; transition:all .25s;
 }
 .modal-head .close:hover{ background:var(--neon-3); color:#000; border-color:var(--neon-3);}
-.modal-iframe{ flex:1; width:100%; border:none; background:#fff;}
-.modal-foot{
-  padding:12px 24px; font-size:12px; color:var(--muted); text-align:center;
-  border-top:1px solid rgba(255,255,255,.08); display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap;
+/* ====== FORMULARIO NATIVO EN MODAL ====== */
+.modal-body{
+  flex:1; overflow-y:auto; padding:26px 28px 22px;
+  scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.25) transparent;
 }
-.modal-foot a{ color:var(--neon); text-decoration:none; font-weight:700; letter-spacing:.06em;}
-.modal-foot a:hover{ text-decoration:underline;}
+.modal-body::-webkit-scrollbar{ width:6px;}
+.modal-body::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:99px;}
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px;}
+.field{ display:flex; flex-direction:column; gap:6px;}
+.field.full{ grid-column:1 / -1;}
+.field label{
+  font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted);
+}
+.field label .req{ color:var(--neon-3); margin-left:4px;}
+.field input, .field select, .field textarea{
+  width:100%; padding:13px 14px; border-radius:12px;
+  background:rgba(255,255,255,.04); color:var(--text);
+  border:1px solid rgba(255,255,255,.12);
+  font-family:inherit; font-size:14.5px; font-weight:500;
+  transition:border-color .2s, background .2s, box-shadow .2s;
+  -webkit-appearance:none; appearance:none;
+}
+.field textarea{ resize:vertical; min-height:90px; line-height:1.5;}
+.field input::placeholder, .field textarea::placeholder{ color:rgba(232,236,255,.35);}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none; border-color:var(--neon);
+  background:rgba(0,245,212,.05);
+  box-shadow:0 0 0 3px rgba(0,245,212,.15);
+}
+.field select{
+  background-image:linear-gradient(45deg,transparent 50%,var(--neon) 50%),
+                   linear-gradient(135deg,var(--neon) 50%,transparent 50%);
+  background-position:calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size:5px 5px, 5px 5px; background-repeat:no-repeat;
+  padding-right:36px; cursor:pointer;
+}
+.field select option{ background:#0b0d22; color:var(--text);}
+.field.error input, .field.error select, .field.error textarea{
+  border-color:var(--neon-3); box-shadow:0 0 0 3px rgba(255,61,247,.18);
+}
+.field .err-msg{ font-size:11px; color:var(--neon-3); font-weight:600; display:none;}
+.field.error .err-msg{ display:block;}
+
+.form-consent{
+  margin-top:14px; font-size:11.5px; color:var(--muted); line-height:1.5;
+}
+.form-consent label{ display:flex; gap:9px; cursor:pointer; align-items:flex-start;}
+.form-consent input[type=checkbox]{
+  width:16px; height:16px; margin-top:2px; accent-color:var(--neon); cursor:pointer; flex-shrink:0;
+}
+
+.form-actions{
+  margin-top:18px; display:flex; flex-direction:column; gap:12px;
+}
+.btn-submit{
+  width:100%; padding:16px 20px; border:none; border-radius:14px; cursor:pointer;
+  background:linear-gradient(90deg,var(--neon),var(--neon-2));
+  color:#000; font-weight:900; font-size:14px; letter-spacing:.16em; text-transform:uppercase;
+  box-shadow:0 10px 28px rgba(0,245,212,.3);
+  transition:transform .2s, box-shadow .2s, opacity .2s;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+}
+.btn-submit:hover{ transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,245,212,.45);}
+.btn-submit:disabled{ opacity:.65; cursor:not-allowed; transform:none;}
+.btn-submit .spinner{
+  width:16px; height:16px; border-radius:50%;
+  border:2.5px solid rgba(0,0,0,.25); border-top-color:#000;
+  animation:spin .8s linear infinite; display:none;
+}
+.btn-submit.loading .spinner{ display:inline-block;}
+.btn-submit.loading .lbl::after{ content:" enviando...";}
+.btn-submit.loading .lbl-base{ display:none;}
+@keyframes spin{ to{ transform:rotate(360deg);}}
+
+.form-divider{
+  display:flex; align-items:center; gap:12px; color:var(--muted); font-size:11px;
+  letter-spacing:.2em; text-transform:uppercase;
+}
+.form-divider::before, .form-divider::after{
+  content:""; flex:1; height:1px; background:rgba(255,255,255,.12);
+}
+.btn-wa{
+  width:100%; padding:14px 20px; border-radius:14px; cursor:pointer; text-decoration:none;
+  background:var(--whats); color:#fff;
+  font-weight:800; font-size:13.5px; letter-spacing:.1em;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 8px 22px rgba(37,211,102,.35);
+}
+.btn-wa:hover{ transform:translateY(-2px); box-shadow:0 14px 32px rgba(37,211,102,.5);}
+.btn-wa svg{ width:20px; height:20px;}
+
+.form-status{
+  display:none; padding:16px 18px; border-radius:14px; font-size:13.5px; line-height:1.5;
+  margin-top:14px; font-weight:600;
+}
+.form-status.show{ display:block;}
+.form-status.ok{
+  background:linear-gradient(90deg,rgba(0,245,212,.12),rgba(155,92,255,.1));
+  border:1px solid rgba(0,245,212,.4); color:var(--neon);
+}
+.form-status.ok b{ color:#fff;}
+.form-status.bad{
+  background:rgba(255,61,247,.08); border:1px solid rgba(255,61,247,.35); color:var(--neon-3);
+}
+.form-trust{
+  margin-top:12px; font-size:11px; color:var(--muted); text-align:center; letter-spacing:.04em;
+}
+.form-trust .dot{ color:var(--neon); margin:0 6px;}
+
+@media (max-width:680px){
+  .modal-box{ height:94vh; max-height:none; border-radius:18px;}
+  .modal-body{ padding:20px 18px 18px;}
+  .form-grid{ grid-template-columns:1fr; gap:12px;}
+  .modal-head{ padding:14px 18px;}
+  .modal-head .ttl{ font-size:12px;}
+  .modal-head .sub{ font-size:11px;}
+}
 
 
 .eyebrow{
@@ -533,7 +645,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   Reserva tu cupo
 </a>
 
-<a id="whatsBtn" href="https://wa.me/573184280113?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20curso%20Ciencia%20de%20Datos%20con%20Python%20%2B%20IA" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+<a id="whatsBtn" href="https://wa.me/573184280112?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20curso%20Ciencia%20de%20Datos%20con%20Python%20%2B%20IA" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
   <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L.3 31.6l7.9-2.1c2.3 1.3 4.9 2 7.6 2h.1c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.4h-.1c-2.4 0-4.8-.6-6.8-1.9l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.4-2.2-2.1-4.7-2.1-7.3 0-7.1 5.8-12.9 13-12.9 3.4 0 6.7 1.3 9.1 3.8 2.4 2.4 3.8 5.7 3.8 9.1-.1 7.1-5.9 12.9-12.7 12.9zm7-9.7c-.4-.2-2.3-1.1-2.6-1.2-.4-.1-.6-.2-.9.2s-1 1.2-1.2 1.5c-.2.2-.4.3-.8.1-2.2-1.1-3.7-2-5.2-4.6-.4-.7.4-.6 1.1-2.1.1-.2.1-.4 0-.6s-.9-2.1-1.2-2.9c-.3-.7-.6-.6-.9-.7h-.7c-.2 0-.6.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.3 2.6 4 6.4 5.7 2.4 1 3.3 1.1 4.5.9.7-.1 2.3-.9 2.6-1.9.3-.9.3-1.8.2-1.9-.1-.2-.3-.3-.7-.5z"/></svg>
 </a>
 
@@ -593,7 +705,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
       <a class="li" href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43A2.06 2.06 0 113.27 5.37a2.06 2.06 0 012.07 2.06zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
       </a>
-      <a class="wa" href="https://wa.me/573184280113?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20curso" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+      <a class="wa" href="https://wa.me/573184280112?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20curso" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
         <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L.3 31.6l7.9-2.1c2.3 1.3 4.9 2 7.6 2h.1c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm7 18.7c-.4-.2-2.3-1.1-2.6-1.2-.4-.1-.6-.2-.9.2s-1 1.2-1.2 1.5c-.2.2-.4.3-.8.1-2.2-1.1-3.7-2-5.2-4.6-.4-.7.4-.6 1.1-2.1.1-.2.1-.4 0-.6s-.9-2.1-1.2-2.9c-.3-.7-.6-.6-.9-.7h-.7c-.2 0-.6.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.3 2.6 4 6.4 5.7 2.4 1 3.3 1.1 4.5.9.7-.1 2.3-.9 2.6-1.9.3-.9.3-1.8.2-1.9-.1-.2-.3-.3-.7-.5z"/></svg>
       </a>
       <a href="https://trabajocientifico.org/" target="_blank" rel="noopener" title="trabajocientifico.org" aria-label="Sitio web">
@@ -783,32 +895,98 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
 
 <div id="dots"></div>
 
-<div id="modal" role="dialog" aria-modal="true" aria-label="Formulario de contacto">
+<div id="modal" role="dialog" aria-modal="true" aria-label="Solicitud de información">
   <div class="modal-box">
     <div class="modal-head">
       <div>
-        <div class="ttl">Reserva tu cupo · Inicio Julio 2026</div>
-        <div class="sub">Déjanos tus datos · te contactamos para inscribirte, resolver dudas y coordinar el pago</div>
+        <div class="ttl">Solicitud de información · Inicio Julio 2026</div>
+        <div class="sub">Déjanos tus datos y te enviaremos toda la información del curso, valor y forma de pago</div>
       </div>
       <button class="close" onclick="closeModal()" aria-label="Cerrar">×</button>
     </div>
-    <iframe class="modal-iframe" id="modalForm" src="about:blank" loading="lazy"></iframe>
-    <div class="modal-foot">
-      <span>¿No te carga el formulario?</span>
-      <a href="https://forms.gle/rbWWxzf5FeouCBUg6" target="_blank" rel="noopener">Abrir en nueva pestaña ↗</a>
+    <div class="modal-body">
+      <form id="leadForm" novalidate autocomplete="on">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="lf-nombre">Nombre completo<span class="req">*</span></label>
+            <input id="lf-nombre" name="nombre" type="text" required minlength="3" placeholder="Ej. María Fernández" autocomplete="name">
+            <span class="err-msg">Escribe tu nombre completo</span>
+          </div>
+          <div class="field full">
+            <label for="lf-email">Correo electrónico<span class="req">*</span></label>
+            <input id="lf-email" name="email" type="email" required placeholder="tucorreo@ejemplo.com" autocomplete="email">
+            <span class="err-msg">Correo no válido</span>
+          </div>
+          <div class="field">
+            <label for="lf-tel">WhatsApp / Teléfono<span class="req">*</span></label>
+            <input id="lf-tel" name="telefono" type="tel" required minlength="7" placeholder="+57 300 000 0000" autocomplete="tel">
+            <span class="err-msg">Número no válido</span>
+          </div>
+          <div class="field">
+            <label for="lf-pais">País<span class="req">*</span></label>
+            <input id="lf-pais" name="pais" type="text" required minlength="2" placeholder="Colombia" autocomplete="country-name">
+            <span class="err-msg">Indica tu país</span>
+          </div>
+        </div>
+
+        <div class="form-consent">
+          <label>
+            <input type="checkbox" id="lf-consent" name="consent" required>
+            <span>Autorizo que me contacten por correo o WhatsApp con información del curso. Mis datos no serán compartidos con terceros.</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="lf-submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="lbl"><span class="lbl-base">SOLICITAR INFORMACIÓN →</span></span>
+          </button>
+
+          <div class="form-divider">o</div>
+
+          <a class="btn-wa" id="lf-wa" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L.3 31.6l7.9-2.1c2.3 1.3 4.9 2 7.6 2h.1c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.4h-.1c-2.4 0-4.8-.6-6.8-1.9l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.4-2.2-2.1-4.7-2.1-7.3 0-7.1 5.8-12.9 13-12.9 3.4 0 6.7 1.3 9.1 3.8 2.4 2.4 3.8 5.7 3.8 9.1-.1 7.1-5.9 12.9-12.7 12.9zm7-9.7c-.4-.2-2.3-1.1-2.6-1.2-.4-.1-.6-.2-.9.2s-1 1.2-1.2 1.5c-.2.2-.4.3-.8.1-2.2-1.1-3.7-2-5.2-4.6-.4-.7.4-.6 1.1-2.1.1-.2.1-.4 0-.6s-.9-2.1-1.2-2.9c-.3-.7-.6-.6-.9-.7h-.7c-.2 0-.6.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.3 2.6 4 6.4 5.7 2.4 1 3.3 1.1 4.5.9.7-.1 2.3-.9 2.6-1.9.3-.9.3-1.8.2-1.9-.1-.2-.3-.3-.7-.5z"/></svg>
+            Prefiero escribir por WhatsApp
+          </a>
+        </div>
+
+        <div class="form-status ok" id="lf-ok">
+          <b>¡Recibido!</b> Te enviaremos la información completa del curso por correo o WhatsApp en las próximas horas.
+        </div>
+        <div class="form-status bad" id="lf-bad">
+          Hubo un problema al enviar. Intenta de nuevo o escríbenos directo por WhatsApp.
+        </div>
+
+        <div class="form-trust">
+          🔒 Tus datos están seguros <span class="dot">·</span> Sin spam <span class="dot">·</span> Respuesta en menos de 24h
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
 <script>
-const FORM_URL = 'https://forms.gle/rbWWxzf5FeouCBUg6';
+/* === CONFIGURACIÓN DE INSCRIPCIÓN === */
+/* Pega aquí la URL del Apps Script (Implementar → Aplicación web → "Cualquier persona") */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8t5Wn6BSCZZQLVLEfYXIQEp5xeCwtI_rXtFAwg6zN9sPZTW22op-MgEDmzb1oLiRwfQ/exec';
+const WA_NUMBER = '573184280112'; // sin "+" ni espacios
+const WA_MSG_DEFAULT = 'Hola, quiero inscribirme al curso Ciencia de Datos con Python + IA';
+
+/* Link WhatsApp dentro del formulario: incluye nombre/país si ya los escribió */
+function buildWaLink(){
+  const n = document.getElementById('lf-nombre')?.value.trim();
+  const pais = document.getElementById('lf-pais')?.value.trim();
+  let msg = WA_MSG_DEFAULT;
+  if(n) msg = `Hola, soy ${n}${pais ? ' desde ' + pais : ''}. Quiero información del curso Ciencia de Datos con Python + IA`;
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
 
 function openModal(){
-  const m = document.getElementById('modal');
-  const f = document.getElementById('modalForm');
-  if(f.src === 'about:blank' || !f.src.includes('forms')){ f.src = FORM_URL; }
-  m.classList.add('show');
+  document.getElementById('modal').classList.add('show');
   document.body.style.overflow = 'hidden';
+  const wa = document.getElementById('lf-wa');
+  if(wa) wa.href = buildWaLink();
+  setTimeout(() => document.getElementById('lf-nombre')?.focus(), 250);
 }
 function closeModal(){
   document.getElementById('modal').classList.remove('show');
@@ -816,6 +994,84 @@ function closeModal(){
 }
 document.getElementById('modal').addEventListener('click', e => {
   if(e.target.id === 'modal') closeModal();
+});
+
+/* Mantener el link de WhatsApp actualizado a medida que escriben */
+['lf-nombre','lf-pais'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('input', () => {
+    const wa = document.getElementById('lf-wa');
+    if(wa) wa.href = buildWaLink();
+  });
+});
+
+/* Validación + envío al Apps Script */
+const leadForm = document.getElementById('leadForm');
+const okBox = document.getElementById('lf-ok');
+const badBox = document.getElementById('lf-bad');
+const submitBtn = document.getElementById('lf-submit');
+
+function setFieldError(input, hasError){
+  input.closest('.field').classList.toggle('error', hasError);
+}
+function validate(){
+  let ok = true;
+  const nombre = document.getElementById('lf-nombre');
+  const email = document.getElementById('lf-email');
+  const tel = document.getElementById('lf-tel');
+  const pais = document.getElementById('lf-pais');
+  const consent = document.getElementById('lf-consent');
+
+  const nombreOk = nombre.value.trim().length >= 3;
+  setFieldError(nombre, !nombreOk); if(!nombreOk) ok = false;
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+  setFieldError(email, !emailOk); if(!emailOk) ok = false;
+
+  const telOk = tel.value.replace(/\D/g,'').length >= 7;
+  setFieldError(tel, !telOk); if(!telOk) ok = false;
+
+  const paisOk = pais.value.trim().length >= 2;
+  setFieldError(pais, !paisOk); if(!paisOk) ok = false;
+
+  if(!consent.checked){ ok = false; consent.focus(); }
+  return ok;
+}
+
+leadForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  okBox.classList.remove('show');
+  badBox.classList.remove('show');
+  if(!validate()) return;
+
+  submitBtn.classList.add('loading');
+  submitBtn.disabled = true;
+
+  const data = new FormData(leadForm);
+  data.append('origen', 'brochure-web');
+  data.append('curso', 'Ciencia de Datos con Python + IA · Julio 2026');
+  data.append('fecha', new Date().toISOString());
+
+  try {
+    if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('PEGA_AQUI')){
+      throw new Error('Apps Script URL no configurada');
+    }
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: data,
+      mode: 'no-cors'  // Apps Script web app no devuelve CORS; aceptamos respuesta opaca
+    });
+    okBox.classList.add('show');
+    leadForm.reset();
+    submitBtn.classList.remove('loading');
+    submitBtn.disabled = false;
+    document.getElementById('lf-wa').href = buildWaLink();
+  } catch(err){
+    badBox.classList.add('show');
+    submitBtn.classList.remove('loading');
+    submitBtn.disabled = false;
+    console.error('Error envío formulario:', err);
+  }
 });
 
 const slides = document.querySelectorAll('.slide');
