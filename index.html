@@ -245,7 +245,18 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
 
 /* ====== SLIDE 1 — HERO ====== */
 .hero{ text-align:center; flex-direction:column; position:relative; padding-top:9vh;}
-.hero-top{ display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:18px; opacity:0; animation:reveal .8s .15s forwards;}
+.hero-top{ display:flex; align-items:center; justify-content:center; gap:18px; margin-bottom:14px; opacity:0; animation:reveal .8s .15s forwards; flex-wrap:wrap;}
+.hero-top .start-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 16px; border-radius:99px;
+  background:linear-gradient(90deg, rgba(255,209,102,.18), rgba(255,61,247,.16));
+  border:1px solid rgba(255,209,102,.5);
+  color:var(--gold); font-size:12px; font-weight:800; letter-spacing:.18em;
+  box-shadow:0 0 18px rgba(255,209,102,.25);
+  animation:pulseGold 2.2s ease-in-out infinite;
+}
+.hero-top .start-badge b{ color:#fff; font-weight:900;}
+@keyframes pulseGold{ 0%,100%{ box-shadow:0 0 18px rgba(255,209,102,.25);} 50%{ box-shadow:0 0 28px rgba(255,209,102,.55);} }
 .python-logo{ width:54px; height:54px;}
 .hero-top .pre{ font-size:12px; letter-spacing:.5em; color:var(--neon); text-transform:uppercase; text-align:left;}
 .hero-top .pre b{ display:block; color:var(--text); font-size:14px; letter-spacing:.18em; margin-top:3px;}
@@ -522,7 +533,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
 </head>
 <body>
 
-<div id="urgencyBar">⚡ <b>Cupos muy limitados</b> · grupos de 10 a 15 personas · 2 clases por semana</div>
+<div id="urgencyBar">🚀 <b>Inicia en JULIO 2026</b> · cupos limitados · grupos de 10 a 15 personas · 2 clases por semana</div>
 
 <a id="stickyCTA" href="#" onclick="openModal();return false;" title="Inscribirme, resolver dudas y coordinar pago">
   <span class="ring"></span>
@@ -569,6 +580,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
         <path fill="url(#pyYel)" d="M197.92 64.83v26.92c0 20.91-17.71 38.51-37.93 38.51h-60.7c-16.62 0-30.38 14.23-30.38 30.86v57.83c0 16.45 14.31 26.13 30.38 30.86 19.25 5.66 37.71 6.68 60.7 0 15.31-4.43 30.38-13.36 30.38-30.86v-23.14h-60.67v-7.72h91.04c17.65 0 24.23-12.31 30.38-30.78 6.35-19.02 6.08-37.32 0-61.7-4.36-17.55-12.7-30.78-30.38-30.78H197.92zm-34.15 146.5c6.31 0 11.41 5.16 11.41 11.55s-5.1 11.62-11.41 11.62c-6.27 0-11.4-5.22-11.4-11.62 0-6.39 5.13-11.55 11.4-11.55z"/>
       </svg>
       <div class="pre">PROGRAMA PROFESIONAL · 20H · CERTIFICADO<b>Con Python + Inteligencia Artificial</b></div>
+      <div class="start-badge">📅 INICIA EN <b>JULIO 2026</b></div>
     </div>
 
     <div class="course-name">
@@ -757,6 +769,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
             <div class="savings" id="priceSave">⚡ Menos de $4.500 por hora de clase en vivo</div>
           </div>
           <ul class="price-includes">
+            <li><b style="color:var(--gold);">📅 Inicia Julio 2026</b></li>
             <li>20 horas en vivo</li>
             <li>4 módulos pro</li>
             <li>Demos descargables</li>
@@ -799,7 +812,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   <div class="modal-box">
     <div class="modal-head">
       <div>
-        <div class="ttl">Reserva tu cupo</div>
+        <div class="ttl">Reserva tu cupo · Inicio Julio 2026</div>
         <div class="sub">Déjanos tus datos · te contactamos para inscribirte, resolver dudas y coordinar el pago</div>
       </div>
       <button class="close" onclick="closeModal()" aria-label="Cerrar">×</button>
