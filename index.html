@@ -328,6 +328,15 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   animation:pulseGold 2.2s ease-in-out infinite;
 }
 .hero-top .start-badge b{ color:#fff; font-weight:900;}
+.hero-top .level-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 16px; border-radius:99px;
+  background:linear-gradient(90deg, rgba(0,245,212,.14), rgba(155,92,255,.12));
+  border:1px solid rgba(0,245,212,.45);
+  color:var(--neon); font-size:12px; font-weight:800; letter-spacing:.18em;
+  box-shadow:0 0 14px rgba(0,245,212,.18);
+}
+.hero-top .level-badge b{ color:#fff; font-weight:900;}
 @keyframes pulseGold{ 0%,100%{ box-shadow:0 0 18px rgba(255,209,102,.25);} 50%{ box-shadow:0 0 28px rgba(255,209,102,.55);} }
 .python-logo{ width:54px; height:54px;}
 .hero-top .pre{ font-size:12px; letter-spacing:.5em; color:var(--neon); text-transform:uppercase; text-align:left;}
@@ -609,6 +618,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
   .hero-top{ flex-direction:column; gap:10px; margin-bottom:18px;}
   .python-logo{ width:62px; height:62px;}
   .hero-top .start-badge{ font-size:12.5px; padding:8px 18px;}
+  .hero-top .level-badge{ font-size:11.5px; padding:7px 16px;}
 
   .course-name h1{ font-size:clamp(64px, 18vw, 92px); line-height:.9;}
   .course-name .ln1{ font-size:.34em; letter-spacing:.22em; margin-bottom:10px;}
@@ -668,6 +678,7 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
         <path fill="url(#pyYel)" d="M197.92 64.83v26.92c0 20.91-17.71 38.51-37.93 38.51h-60.7c-16.62 0-30.38 14.23-30.38 30.86v57.83c0 16.45 14.31 26.13 30.38 30.86 19.25 5.66 37.71 6.68 60.7 0 15.31-4.43 30.38-13.36 30.38-30.86v-23.14h-60.67v-7.72h91.04c17.65 0 24.23-12.31 30.38-30.78 6.35-19.02 6.08-37.32 0-61.7-4.36-17.55-12.7-30.78-30.38-30.78H197.92zm-34.15 146.5c6.31 0 11.41 5.16 11.41 11.55s-5.1 11.62-11.41 11.62c-6.27 0-11.4-5.22-11.4-11.62 0-6.39 5.13-11.55 11.4-11.55z"/>
       </svg>
       <div class="start-badge">📅 INICIA EN <b>JULIO 2026</b></div>
+      <div class="level-badge">💡 DESDE CERO · <b>SIN PROGRAMACIÓN PREVIA</b></div>
     </div>
 
     <div class="course-name">
@@ -732,8 +743,8 @@ h2{ font-size:clamp(32px,4.6vw,58px); font-weight:800; line-height:1.05; letter-
         <div class="evo-detail-inner show" id="evoDetail">
           <div class="ksub" style="color:var(--neon);">MÓDULO 01 · FUNDAMENTOS</div>
           <h3 class="grad">Código Génesis</h3>
-          <p>Rompes el miedo al código. Aprendes a pensar como programador y a usar IA conversacional para acelerar tu curva — entendiendo cada línea que escribes.</p>
-          <div class="tools"><span class="tt">Python</span><span class="tt">Lógica</span><span class="tt">ChatGPT</span><span class="tt">Claude</span><span class="tt">Prompting técnico</span></div>
+          <p><b style="color:var(--neon);">Empezamos desde cero — no necesitas haber programado antes.</b> Rompes el miedo al código, aprendes a pensar como programador y a usar IA conversacional para acelerar tu curva — entendiendo cada línea que escribes.</p>
+          <div class="tools"><span class="tt">Sin requisitos</span><span class="tt">Python</span><span class="tt">Lógica</span><span class="tt">ChatGPT</span><span class="tt">Claude</span><span class="tt">Prompting técnico</span></div>
         </div>
       </div>
       <p style="margin-top:22px; font-size:12px; color:var(--neon); letter-spacing:.22em; font-weight:700;">⌖ Haz clic en cada módulo para ver el detalle</p>
@@ -1173,8 +1184,8 @@ function animateCounters(){
 // MÓDULOS TIMELINE (4 módulos)
 const modData = {
   1:{ color:'var(--neon)', kicker:'MÓDULO 01 · FUNDAMENTOS', title:'Código Génesis',
-      desc:'Rompes el miedo al código. Aprendes a pensar como programador y a usar IA conversacional para acelerar tu curva — entendiendo cada línea que escribes.',
-      tools:['Python','Lógica','ChatGPT','Claude','Prompting técnico']},
+      desc:'<b style="color:var(--neon);">Empezamos desde cero — no necesitas haber programado antes.</b> Rompes el miedo al código, aprendes a pensar como programador y a usar IA conversacional para acelerar tu curva — entendiendo cada línea que escribes.',
+      tools:['Sin requisitos','Python','Lógica','ChatGPT','Claude','Prompting técnico']},
   2:{ color:'var(--neon-2)', kicker:'MÓDULO 02 · GESTIÓN DE DATOS', title:'Data Alquimia',
       desc:'Conviertes datos crudos en oro analítico. Cargas, limpias, filtras, transformas y exportas archivos en CSV, XLSX, SHP y JSON — pipelines reproducibles asistidos por IA.',
       tools:['Pandas','GeoPandas','OpenPyXL','ETL con IA']},
