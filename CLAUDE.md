@@ -11,9 +11,13 @@ HTML files with all CSS and JavaScript inlined in `<style>`/`<script>` blocks.
 
 - `index.html` — the course brochure. A full-screen, slide-based (horizontal
   carousel) presentation with a lead-capture modal form.
-- `perfil.html` — instructor profile/CV page (Oscar Ivan Vargas Pineda),
-  linked from `index.html` via `Volver al curso` back-link.
-- `perfil.png` — profile image asset.
+- `proximos_eventos/perfil.html` — instructor profile/CV page (Oscar Ivan
+  Vargas Pineda), linked from `index.html`; links back via `Volver al curso`.
+- `proximos_eventos/eventos.html` — upcoming-events agenda page (event cards
+  with registration/Meet links), linked from the hero of `index.html`.
+- `proximos_eventos/imagen/` — event poster images used by `eventos.html`.
+- `proximos_eventos/perfil.png` — profile image asset, used by `perfil.html`
+  in the same folder.
 
 ## Running / developing
 
