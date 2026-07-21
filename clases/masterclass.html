@@ -226,6 +226,14 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .ag-card.a-codex:hover{ border-color:var(--codex);} .a-codex .ag-logo{ background:rgba(25,195,125,.14); color:var(--codex);}
 .ag-card.a-antig:hover{ border-color:var(--antig);} .a-antig .ag-logo{ background:rgba(66,133,244,.14); color:var(--antig);}
 .ag-card.a-freebuff:hover{ border-color:var(--freebuff);} .a-freebuff .ag-logo{ background:rgba(0,245,212,.14); color:var(--freebuff);}
+/* otras opciones / alternativas */
+.ag-others{ margin-top:16px; padding:14px 18px; border-radius:16px; background:rgba(255,255,255,.02); border:1px dashed var(--line);}
+.ag-others .ol{ font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:11px; text-align:center;}
+.ag-others .ol b{ color:var(--text);}
+.ag-others-grid{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
+.oth{ display:inline-flex; align-items:center; gap:8px; padding:7px 13px; border-radius:99px; background:rgba(255,255,255,.03); border:1px solid var(--line); font-size:12px; font-weight:600; transition:transform .2s, border-color .2s;}
+.oth:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,.25);}
+.oth i{ width:20px; height:20px; min-width:20px; border-radius:6px; display:grid; place-items:center; font-size:9px; font-weight:800; color:#fff; font-style:normal; letter-spacing:-.02em;}
 
 /* ====== SLIDE 6 — INSTALACIÓN INTERACTIVA ====== */
 .inst2{ width:100%; max-width:1120px; --brand:var(--claude);}
@@ -355,6 +363,32 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .vs-tabs span{ font-size:9.5px; padding:4px 8px; border-radius:6px 6px 0 0; background:rgba(255,255,255,.04); border:1px solid var(--line); border-bottom:none; font-family:var(--font-mono);}
 .vs-tabs span.active{ background:rgba(0,245,212,.14); color:var(--accent);}
 
+/* viz ejercicio previo — dos hojas de Excel */
+.viz-xls{ display:grid; grid-template-columns:1fr 1.32fr; gap:12px; align-items:start;}
+.xls{ border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#0b1020;}
+.xls-bar{ display:flex; align-items:center; gap:7px; padding:7px 10px; background:rgba(33,115,70,.18); border-bottom:1px solid var(--line);}
+.xls-bar .xi{ width:16px; height:16px; border-radius:3px; background:#217346; color:#fff; display:grid; place-items:center; font-size:9px; font-weight:800;}
+.xls-bar .nm{ font-family:var(--font-mono); font-size:11px; color:#8fd7b3; font-weight:700;}
+.xls-bar .ct{ margin-left:auto; font-size:9.5px; color:var(--muted);}
+.xls-row{ display:grid; grid-template-columns:22px 1fr 1.25fr;}
+.xls.wide .xls-row{ grid-template-columns:22px .92fr 1.15fr 1fr;}
+.xls-cell{ padding:6px 8px; border-right:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:11px;}
+.xls-cell.gut{ background:rgba(255,255,255,.04); color:var(--muted); text-align:center; font-family:var(--font-mono); font-size:10px;}
+.xls-row.head .xls-cell{ background:rgba(255,255,255,.05); font-weight:700; color:var(--muted); font-size:9.5px; letter-spacing:.03em; text-transform:uppercase;}
+.xls-row.head .xls-cell.new{ color:var(--accent); background:rgba(0,245,212,.08);}
+.xls-cell.mono{ font-family:var(--font-mono); font-size:10px; color:var(--muted);}
+.xls-cell.match{ color:var(--accent); font-weight:700;}
+.xls-row.dup .xls-cell{ background:rgba(255,209,102,.08);}
+.xls-cell.estado{ padding:4px 6px;}
+.xls-tab{ display:inline-block; font-size:10px; font-weight:700; padding:5px 14px; background:rgba(255,255,255,.03); border-top:2px solid #2fa869; color:#8fd7b3; font-family:var(--font-mono);}
+.ib-badge{ font-size:9.5px; font-weight:700; padding:3px 8px; border-radius:99px; text-align:center; white-space:nowrap; display:inline-block;}
+.ib-badge.both{ background:rgba(0,245,212,.14); border:1px solid rgba(0,245,212,.42); color:var(--accent);}
+.ib-badge.only{ background:rgba(139,148,179,.14); border:1px solid var(--line); color:var(--muted);}
+.xls-legend{ grid-column:1/-1; display:flex; gap:16px; justify-content:center; margin-top:5px; font-size:10.5px; color:var(--muted); flex-wrap:wrap;}
+.xls-legend span{ display:inline-flex; align-items:center; gap:6px;}
+.xls-legend b{ color:var(--accent); font-weight:700;}
+.xls-legend .sw{ width:11px; height:11px; border-radius:3px; display:inline-block;}
+
 /* ====== CIERRE ====== */
 .close-wrap{ width:100%; max-width:900px; text-align:center;}
 .close-wrap .lead{ margin:14px auto 0; color:var(--muted); font-size:16px; max-width:620px; line-height:1.55;}
@@ -401,6 +435,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .inst-steps li{ opacity:1; transform:none; animation:none;}
   .viz-clean{ grid-template-columns:1fr;} .vc-mid{ transform:rotate(90deg);}
   .viz-dash{ grid-template-columns:1fr;}
+  .viz-xls{ grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -447,7 +482,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
     <div class="hero-cta">
       <button class="btn-primary" onclick="go(1)">Empezar →</button>
-      <button class="btn-ghost" onclick="go(4)">Ver los agentes</button>
+      <button class="btn-ghost" onclick="go(5)">Ver los agentes</button>
     </div>
     <div class="hero-agents">
       <span class="hero-agent"><span class="mini-logo" style="background:var(--claude)">✳</span> Claude Code</span>
@@ -573,45 +608,105 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 5 — LOS 4 AGENTES ============== -->
+  <!-- ============== SLIDE 5 — EJERCICIO PREVIO (ICE-BREAKER) ============== -->
   <section class="slide" data-slide="4">
+    <div class="ex">
+      <div class="slide-head">
+        <span class="eyebrow"><span class="step-pill">DEMO EN VIVO</span> Rompamos el hielo</span>
+        <h2>Un agente <span class="hl">dentro de Excel</span></h2>
+        <div class="ex-tools">Lo haré en vivo con <b>Claude Code</b> ya instalado · tú solo observa lo práctico que es</div>
+      </div>
+      <div class="practical">
+        <div class="prompt-card">
+          <div class="card-label"><span class="dot"></span>El prompt · a Claude Code, dentro de Excel</div>
+          <div class="prompt-text" id="p0">Necesito que revises las <b>dos hojas</b>: primero, en cada hoja dime si hay alguna <b>persona repetida o duplicada</b> revisando <code>nombres</code> y <code>correos electrónicos</code>. Luego, en la hoja <code>taller</code>, agrégame una <b>columna nueva</b> que indique, por cada persona, si está <b>solo en el taller</b> o si está <b>tanto en el taller como en el curso</b>.</div>
+          <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p0')">⧉ Copiar prompt</button><span class="copy-hint">No necesitas replicarlo — es una demostración.</span></div>
+        </div>
+        <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+        <div class="visual-card">
+          <div class="card-label"><span class="dot soft"></span>Qué haré ver</div>
+          <div class="viz-xls">
+            <div class="xls">
+              <div class="xls-bar"><span class="xi">X</span><span class="nm">curso</span><span class="ct">3 personas</span></div>
+              <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span></div>
+              <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span></div>
+              <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Carlos Ríos</span><span class="xls-cell mono">carlos@mail.com</span></div>
+              <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span></div>
+              <span class="xls-tab">◧ curso</span>
+            </div>
+            <div class="xls wide">
+              <div class="xls-bar"><span class="xi">X</span><span class="nm">taller</span><span class="ct">+ columna nueva ✦</span></div>
+              <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span><span class="xls-cell new">estado ✦</span></div>
+              <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+              <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Luis Páez</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+              <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+              <div class="xls-row dup"><span class="xls-cell gut">4</span><span class="xls-cell">Luis Páez 🔁</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+              <span class="xls-tab">◧ taller</span>
+            </div>
+            <div class="xls-legend">
+              <span><span class="sw" style="background:rgba(0,245,212,.5)"></span> <b>verde</b> = está en ambas hojas</span>
+              <span>🔁 fila duplicada</span>
+              <span>✦ lo que agrega el agente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-note">💡 <span><b>La idea:</b> en segundos el agente cruza dos listas, detecta repetidos y marca quién está en ambas — sin fórmulas manuales.</span></div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 6 — LOS 4 AGENTES ============== -->
+  <section class="slide" data-slide="5">
     <div class="ag-wrap">
       <div class="slide-head">
-        <span class="eyebrow">Lo que instalaremos hoy</span>
+        <span class="eyebrow">Los protagonistas de hoy</span>
         <h2>Los <span class="hl">4 agentes</span></h2>
-        <p class="lead">Toca una tarjeta para ir directo a su instalación.</p>
+        <p class="lead">Estos son los <span class="hl">4 que veremos hoy</span> en la sesión. Toca una tarjeta para ir a su instalación.</p>
       </div>
       <div class="ag-grid">
-        <div class="ag-card a-claude" onclick="go(5,'claude')">
+        <div class="ag-card a-claude" onclick="go(6,'claude')">
           <span class="step-idx">01</span>
           <div class="ag-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.5 9 2 12l7.5 3 2.5 7 2.5-7L22 12l-7.5-3z"/></svg></div>
           <h3>Claude Code</h3><div class="maker">Anthropic</div>
           <span class="type-chip">CLI · terminal</span><div class="see">Ver instalación →</div>
         </div>
-        <div class="ag-card a-codex" onclick="go(5,'codex')">
+        <div class="ag-card a-codex" onclick="go(6,'codex')">
           <span class="step-idx">02</span>
           <div class="ag-logo"><span class="txt">&lt;/&gt;</span></div>
           <h3>Codex</h3><div class="maker">OpenAI</div>
           <span class="type-chip">CLI · terminal</span><div class="see">Ver instalación →</div>
         </div>
-        <div class="ag-card a-antig" onclick="go(5,'antig')">
+        <div class="ag-card a-antig" onclick="go(6,'antig')">
           <span class="step-idx">03</span>
           <div class="ag-logo"><span class="txt">Ag</span></div>
           <h3>Antigravity</h3><div class="maker">Google</div>
           <span class="type-chip">IDE · aplicación</span><div class="see">Ver instalación →</div>
         </div>
-        <div class="ag-card a-freebuff" onclick="go(5,'freebuff')">
+        <div class="ag-card a-freebuff" onclick="go(6,'freebuff')">
           <span class="step-idx">04</span><span class="free-badge">GRATIS</span>
           <div class="ag-logo"><span class="txt">FB</span></div>
           <h3>FreeBuff</h3><div class="maker">Opción gratuita</div>
           <span class="type-chip">CLI · Web · Desktop</span><div class="see">Ver instalación →</div>
         </div>
       </div>
+      <div class="ag-others">
+        <div class="ol">Otras opciones · <b>alternativas de agentes de IA para código</b></div>
+        <div class="ag-others-grid">
+          <span class="oth"><i style="background:#0d0d0d">Cu</i> Cursor</span>
+          <span class="oth"><i style="background:#6e5494">GC</i> GitHub Copilot</span>
+          <span class="oth"><i style="background:#09b6a2">W</i> Windsurf</span>
+          <span class="oth"><i style="background:#3a3f4b">Cl</i> Cline</span>
+          <span class="oth"><i style="background:#4285f4">G</i> Gemini CLI</span>
+          <span class="oth"><i style="background:#14b8a6">Ai</i> Aider</span>
+          <span class="oth"><i style="background:#1f6feb">Ct</i> Continue</span>
+          <span class="oth"><i style="background:#f26207">R</i> Replit</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ============== SLIDE 6 — INSTALACIÓN INTERACTIVA ============== -->
-  <section class="slide" id="installSlide" data-slide="5">
+  <!-- ============== SLIDE 7 — INSTALACIÓN INTERACTIVA ============== -->
+  <section class="slide" id="installSlide" data-slide="6">
     <div class="inst2" id="instWrap">
       <div class="slide-head">
         <span class="eyebrow">Instalación paso a paso</span>
@@ -636,8 +731,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 7 — BASE DE DATOS ============== -->
-  <section class="slide" data-slide="6">
+  <!-- ============== SLIDE 8 — BASE DE DATOS ============== -->
+  <section class="slide" data-slide="7">
     <div class="db">
       <div class="slide-head">
         <span class="eyebrow">Nuestra materia prima</span>
@@ -689,8 +784,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 8 — EJERCICIO 1 · LIMPIEZA ============== -->
-  <section class="slide" data-slide="7">
+  <!-- ============== SLIDE 9 — EJERCICIO 1 · LIMPIEZA ============== -->
+  <section class="slide" data-slide="8">
     <div class="ex">
       <div class="slide-head">
         <span class="eyebrow"><span class="step-pill">EJERCICIO 1</span> Limpieza de datos</span>
@@ -730,8 +825,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 9 — EJERCICIO 2 · DASHBOARD ============== -->
-  <section class="slide" data-slide="8">
+  <!-- ============== SLIDE 10 — EJERCICIO 2 · DASHBOARD ============== -->
+  <section class="slide" data-slide="9">
     <div class="ex">
       <div class="slide-head">
         <span class="eyebrow"><span class="step-pill">EJERCICIO 2</span> Gráficos / Dashboard</span>
@@ -778,8 +873,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 10 — EJERCICIO 3 · AUTOMATIZACIÓN ============== -->
-  <section class="slide" data-slide="9">
+  <!-- ============== SLIDE 11 — EJERCICIO 3 · AUTOMATIZACIÓN ============== -->
+  <section class="slide" data-slide="10">
     <div class="ex">
       <div class="slide-head">
         <span class="eyebrow"><span class="step-pill">EJERCICIO 3</span> Automatización de Excel</span>
@@ -816,8 +911,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 11 — CIERRE ============== -->
-  <section class="slide" data-slide="10">
+  <!-- ============== SLIDE 12 — CIERRE ============== -->
+  <section class="slide" data-slide="11">
     <div class="close-wrap">
       <span class="eyebrow">Recapitulemos</span>
       <h2>Ya sabes <span class="hl">dirigir agentes</span></h2>
