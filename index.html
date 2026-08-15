@@ -45,7 +45,7 @@ button,input,textarea,select{ font:inherit; color:inherit; }
   --muted:#8b94b3;
   --line:rgba(255,255,255,.09);
   --claude:#d97757;
-  --codebuff:#19c37d;
+  --freebuff:#00f5d4;
   --python:#4b8bbe;
   --vscode:#0098ff;
   --node:#3c873a;
@@ -85,13 +85,15 @@ body::before{
    ========================================================================== */
 #stage{ position:relative; width:100vw; height:100vh; height:100dvh; overflow:hidden; z-index:1; }
 .slide{
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:7vh 5vw 12vh;
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:10vh 5vw 7vh;
   opacity:0; transform:translateX(60px) scale(.98);
   transition:opacity .6s ease, transform .7s cubic-bezier(.2,.8,.2,1); pointer-events:none;
 }
 .slide.active{ opacity:1; transform:none; pointer-events:auto; }
 .slide.prev{ transform:translateX(-60px) scale(.98); }
-.slide-scroll{ width:100%; max-height:100%; overflow-y:auto; overflow-x:hidden; }
+.slide-scroll{ width:100%; max-height:100%; overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none; -ms-overflow-style:none; }
+.slide-scroll::-webkit-scrollbar{ display:none; }   /* sin barra visible: es una presentación */
 
 #progress{ position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--accent),var(--accent-deep)); z-index:60; transition:width .6s ease; }
 .progress-num{ position:fixed; top:56px; left:24px; z-index:50; font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.18em; }
@@ -131,7 +133,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .hero .orbit{ width:84px; height:84px; opacity:0; animation:reveal .8s .05s forwards, floaty 6s ease-in-out infinite 1s; filter:drop-shadow(0 0 22px rgba(0,245,212,.55)); }
 @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
 .mc-name{ position:relative; opacity:0; animation:reveal 1s .35s forwards; }
-.mc-name h1{ font-size:clamp(52px,9.4vw,150px); line-height:.9; font-weight:900; letter-spacing:-.03em; }
+.mc-name h1{ font-size:clamp(52px,min(11.5vw,25vh),200px); line-height:.9; font-weight:900; letter-spacing:-.03em; }
 .mc-name .ln1{ display:block; font-family:var(--font-body); font-size:.16em; font-weight:700; color:var(--gold); letter-spacing:.34em; text-transform:uppercase; margin-bottom:22px; }
 .mc-name .ln2{ display:block; }
 .grad{ background:linear-gradient(100deg,#00f5d4,#4285f4,#ffd166,#00f5d4); background-size:300% 100%;
@@ -182,17 +184,120 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .note-foot{ text-align:center; margin-top:22px; font-size:14px; color:var(--muted); }
 .note-foot b{ color:var(--accent); }
 
+/* firma del docente en portada */
+.hero-author{ display:flex; flex-direction:column; align-items:center; gap:11px;
+  margin-top:clamp(30px,5.5vh,58px); opacity:0; animation:reveal .8s .85s forwards; }
+.hero-author .ha-name{ font-family:var(--font-display); font-weight:600;
+  font-size:clamp(19px,2.1vw,27px); color:var(--text); letter-spacing:.01em; }
+.hero-author .ha-role{ font-size:11px; font-weight:700; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--gold); }
+
+/* --- diapositiva de perfil del docente --- */
+.pf{ width:100%; max-width:1240px; }
+.pf-grid{ display:grid; grid-template-columns:300px 1fr; gap:32px; align-items:start; }
+.pf-frame{ position:relative; border-radius:22px; overflow:hidden; border:1px solid var(--line);
+  background:var(--surface); aspect-ratio:1/1; }
+.pf-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+.pf-frame::after{ content:""; position:absolute; inset:0; border-radius:22px;
+  box-shadow:inset 0 -70px 90px -40px rgba(4,10,16,.9); pointer-events:none; }
+.pf-edu{ margin-top:18px; padding:16px 16px 14px; border-radius:18px; background:var(--surface); border:1px solid var(--line); }
+.pf-edu-t{ font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:11px; }
+.pf-edu-row{ display:grid; grid-template-columns:24px 1fr; gap:2px 10px; padding:7px 0; border-top:1px solid var(--line); }
+.pf-edu-row:first-of-type{ border-top:none; }
+.pf-edu-row .n{ grid-row:span 2; font-family:var(--font-mono); font-size:10.5px; color:var(--muted); padding-top:3px; }
+.pf-edu-row .lv{ font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+.pf-edu-row .dg{ font-size:12.5px; color:var(--text); line-height:1.3; }
+.pf-edu-row.phd .dg{ color:var(--accent); font-weight:700; }
+
+.pf-social{ margin-top:14px; padding:16px 16px 14px; border-radius:18px; background:var(--surface); border:1px solid var(--line); }
+.pf-soc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.pf-social .soc{ display:flex; align-items:center; gap:9px; padding:9px 10px; border-radius:12px;
+  background:rgba(255,255,255,.03); border:1px solid var(--line); color:var(--muted);
+  text-decoration:none; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+  transition:color .22s, border-color .22s, background .22s, transform .22s; }
+.pf-social .soc svg{ width:17px; height:17px; flex:none; }
+.pf-social .soc:hover{ transform:translateY(-2px); background:rgba(255,255,255,.06); }
+.pf-social .soc.yt:hover{ color:#ff4d4d; border-color:rgba(255,77,77,.5); }
+.pf-social .soc.li:hover{ color:#4aa3ff; border-color:rgba(74,163,255,.5); }
+.pf-social .soc.ig:hover{ color:#ff6ec7; border-color:rgba(255,110,199,.5); }
+.pf-social .soc.wa:hover{ color:#3ddc84; border-color:rgba(61,220,132,.5); }
+
+.pf-name{ font-size:clamp(30px,4vw,50px); line-height:1.02; font-weight:900; letter-spacing:-.02em; margin-top:10px; }
+.pf-phd{ display:inline-block; vertical-align:super; margin-left:10px; font-family:var(--font-mono);
+  font-size:12px; font-weight:700; letter-spacing:.16em; color:var(--gold); }
+.pf-bio{ margin-top:12px; font-size:14.5px; line-height:1.65; color:var(--muted); max-width:72ch; }
+.pf-bio b{ color:var(--text); font-weight:700; }
+
+.pf-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px; }
+.pf-stat{ padding:14px 14px 12px; border-radius:16px; background:var(--surface); border:1px solid var(--line); }
+.pf-stat .v{ font-family:var(--font-display); font-size:30px; font-weight:900; color:var(--accent); line-height:1; }
+.pf-stat .k{ margin-top:6px; font-size:11px; color:var(--muted); line-height:1.35; }
+
+.pf-cols{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+.pf-box{ padding:16px 16px 14px; border-radius:18px; background:var(--surface); border:1px solid var(--line); }
+.pf-box-t{ font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.pf-list{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+.pf-list li{ font-size:13px; line-height:1.3; padding-left:13px; position:relative; color:var(--text); }
+.pf-list li::before{ content:""; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:var(--accent); opacity:.65; }
+.pf-list li b{ font-weight:700; }
+.pf-list li span{ display:block; font-size:11.5px; color:var(--muted); margin-top:2px; }
+.pf-now{ display:inline-block; margin-left:6px; font-style:normal; font-size:9.5px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; padding:2px 8px; border-radius:99px;
+  background:rgba(0,245,212,.12); color:var(--accent); }
+.pf-inv{ margin-top:11px; padding-top:10px; border-top:1px solid var(--line); font-size:11.5px; line-height:1.45; color:var(--muted); }
+.pf-inv b{ color:var(--text); font-weight:700; }
+
+.pf-skills{ display:flex; flex-direction:column; gap:8px; margin-top:16px; }
+.pf-sk{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.pf-sk .c{ min-width:104px; font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+.pf-sk .s{ font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:99px;
+  background:rgba(255,255,255,.04); border:1px solid var(--line); color:var(--text); }
+
+.pf-links{ display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap; margin-top:20px; }
+.pf-links a{ font-size:12.5px; font-weight:600; color:var(--muted); text-decoration:none; transition:color .2s; }
+.pf-links a:hover{ color:var(--accent); }
+
+@media (max-width:1080px){
+  .pf-grid{ grid-template-columns:230px 1fr; gap:24px; }
+  .pf-stats{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:820px){
+  .pf-grid{ grid-template-columns:1fr; }
+  .pf-frame{ max-width:240px; margin:0 auto; }
+  .pf-cols{ grid-template-columns:1fr; }
+  .pf-sk .c{ min-width:0; width:100%; }
+}
+
+/* --- rejilla de los módulos del curso --- */
+.mod-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:24px; }
+.mod-card{
+  padding:18px 18px 16px; border-radius:18px; background:var(--surface);
+  border:1px solid var(--line); position:relative; overflow:hidden;
+  transition:transform .3s, border-color .3s;
+}
+.mod-card::before{ content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--accent); opacity:.5; }
+.mod-card:hover{ transform:translateY(-3px); border-color:rgba(0,245,212,.4); }
+.mod-card .mod-n{
+  font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.18em;
+  color:var(--accent); text-transform:uppercase;
+}
+.mod-card h3{ font-size:17px; margin-top:7px; line-height:1.25; }
+.mod-card p{ font-size:12.5px; color:var(--muted); margin-top:8px; line-height:1.45; }
+@media (max-width:620px){ .mod-grid{ grid-template-columns:1fr; } }
+
 /* ==========================================================================
    ¿QUÉ ES LA IA? · anillos concéntricos
    ========================================================================== */
 .ia{ width:100%; max-width:1140px; }
 .ia-grid{ display:grid; grid-template-columns:.95fr 1.05fr; gap:26px; margin-top:24px; align-items:center; }
-.rings{ position:relative; width:340px; height:340px; margin:0 auto; }
+/* el círculo escala con la altura de pantalla para que la slide no desborde
+   en portátiles; las posiciones internas van en % para no deformarse */
+.rings{ position:relative; width:min(340px,38vh); height:min(340px,38vh); margin:0 auto; }
 .ring-l{ position:absolute; border-radius:50%; display:flex; align-items:flex-start; justify-content:center; font-size:11.5px; font-weight:800; letter-spacing:.04em; text-align:center; padding-top:12px; }
 .r1{ inset:0; background:rgba(66,133,244,.10); border:1px solid rgba(66,133,244,.45); color:#8fb4ff; }
-.r2{ inset:52px; background:rgba(0,245,212,.09); border:1px solid rgba(0,245,212,.4); color:#7ff2e3; }
-.r3{ inset:104px; background:rgba(255,209,102,.10); border:1px solid rgba(255,209,102,.45); color:var(--gold); }
-.r4{ inset:150px; background:rgba(217,119,87,.16); border:1px solid rgba(217,119,87,.55); color:#f0a488; display:grid; place-items:center; padding:0; text-align:center; line-height:1.25; animation:pulseC 2.6s ease-in-out infinite; }
+.r2{ inset:15.3%; background:rgba(0,245,212,.09); border:1px solid rgba(0,245,212,.4); color:#7ff2e3; }
+.r3{ inset:30.6%; background:rgba(255,209,102,.10); border:1px solid rgba(255,209,102,.45); color:var(--gold); }
+.r4{ inset:44.1%; background:rgba(217,119,87,.16); border:1px solid rgba(217,119,87,.55); color:#f0a488; display:grid; place-items:center; padding:0; text-align:center; line-height:1.25; animation:pulseC 2.6s ease-in-out infinite; }
 @keyframes pulseC{ 0%,100%{ box-shadow:0 0 0 0 rgba(217,119,87,.4);} 50%{ box-shadow:0 0 0 12px rgba(217,119,87,0);} }
 .rings .rdot{ position:absolute; top:50%; left:50%; width:8px; height:8px; margin:-4px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent); }
 .rings .spin{ position:absolute; inset:0; animation:spin 16s linear infinite; }
@@ -395,7 +500,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .t-vscode .ag-logo{ background:rgba(0,152,255,.16); color:var(--vscode); } .ag-card.t-vscode:hover{ border-color:var(--vscode); }
 .t-node   .ag-logo{ background:rgba(60,135,58,.2);  color:#5fc45c; }        .ag-card.t-node:hover{ border-color:#5fc45c; }
 .t-claude .ag-logo{ background:rgba(217,119,87,.16); color:var(--claude); } .ag-card.t-claude:hover{ border-color:var(--claude); }
-.t-codebuff .ag-logo{ background:rgba(25,195,125,.16); color:var(--codebuff); } .ag-card.t-codebuff:hover{ border-color:var(--codebuff); }
+.t-freebuff .ag-logo{ background:rgba(0,245,212,.14); color:var(--freebuff); } .ag-card.t-freebuff:hover{ border-color:var(--freebuff); }
 .t-git    .ag-logo{ background:rgba(240,81,51,.16); color:var(--git); }     .ag-card.t-git:hover{ border-color:var(--git); }
 .t-github .ag-logo{ background:rgba(139,92,246,.16); color:var(--github); } .ag-card.t-github:hover{ border-color:var(--github); }
 .ag-others{ margin-top:18px; padding:14px 18px; border-radius:16px; background:rgba(255,255,255,.02); border:1px dashed var(--line); }
@@ -478,6 +583,21 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .CodeMirror-lines{ padding:10px 0; }
 .CodeMirror-gutters{ border-right:1px solid #44475a !important; background-color:#282a36 !important; }
 .console-output{ background:#000; color:#22c55e; padding:12px 15px; min-height:80px; max-height:150px; overflow-y:auto; border-top:1px solid #44475a; white-space:pre-wrap; }
+.kw-group{ background:rgba(15,23,42,.5); border:1px solid rgba(148,163,184,.18); border-radius:12px; padding:9px 11px; }
+.kw-group h4{ font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.kw{ display:inline-block; font-family:var(--mono); font-size:.76rem; color:var(--lime);
+  background:rgba(200,242,90,.10); border:1px solid rgba(200,242,90,.22);
+  border-radius:6px; padding:1px 7px; margin:2px 3px 2px 0; }
+.kw.soon{ color:var(--amber); background:rgba(242,177,52,.10); border-color:rgba(242,177,52,.28); }
+/* rótulos y consolas compactas para la slide de print() con 4 ventanas */
+.pw-label{ display:flex; align-items:center; gap:8px; font-size:.84rem; font-weight:700; color:var(--lime); margin-bottom:6px; }
+.pw-label i{ display:grid; place-items:center; width:21px; height:21px; flex:none; border-radius:50%;
+  background:rgba(200,242,90,.16); color:var(--lime); font-family:var(--mono); font-style:normal; font-size:.7rem; }
+.pw-label em{ font-style:normal; color:var(--muted); font-weight:500; }
+.console-mini{ min-height:44px; max-height:82px; }
+.in-row{ display:inline-flex; align-items:center; gap:6px; }
+.in-field{ background:transparent; border:none; border-bottom:1px dashed #22c55e; color:#22c55e;
+  font-family:var(--mono); font-size:inherit; padding:0 4px; min-width:140px; outline:none; caret-color:#22c55e; }
 .run-btn{ background:#2563eb; color:#fff; padding:4px 12px; border-radius:4px; font-size:.8rem; font-weight:700; display:flex; align-items:center; gap:6px; transition:background .2s; border:none; cursor:pointer; }
 .run-btn:hover{ background:#1d4ed8; }
 .reto-card{ background:linear-gradient(145deg,#152033,#0b1320); box-shadow:0 15px 30px rgba(0,0,0,.4);
@@ -513,7 +633,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 /* ==========================================================================
    ÍNDICE / MENÚ (estilo panel editorial de fundamentos)
    ========================================================================== */
-.topbar{ position:fixed; top:0; left:0; right:0; z-index:55; display:flex; justify-content:space-between;
+.topbar{ position:fixed; top:0; left:0; right:0; z-index:55; display:flex; justify-content:flex-end;
   align-items:center; padding:.9rem 1.3rem; pointer-events:none; }
 .brand-badge{ font-family:var(--mono); font-size:.64rem; letter-spacing:.2em; text-transform:uppercase;
   color:var(--ink); background:var(--lime); padding:.45em .9em; border-radius:100px;
@@ -570,9 +690,6 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 @media (max-width:820px){
   .slide{ padding:5.5rem 6vw 6rem; align-items:flex-start; }
   .slide-scroll{ max-height:none; }
-  #prev,#next{ bottom:16px; padding:11px 16px; }
-  #prev .lbl,#next .lbl{ display:none; }
-  #navHint{ display:none; }
   .progress-num{ top:auto; bottom:22px; left:50%; transform:translateX(-50%); }
   .block-tag{ font-size:9px; padding:5px 12px; }
   .tool-grid,.def-grid,.checks{ grid-template-columns:1fr; }
@@ -595,11 +712,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 <div class="block-tag" id="blockTag">Sesión 1 · Conceptos</div>
 
 <div class="topbar">
-  <span class="brand-badge">Trabajo Científico · Sesiones 1 y 2</span>
-  <div style="display:flex;gap:.5rem;align-items:center;pointer-events:auto">
-    <a class="brand-badge" href="../../index.html" style="background:var(--paper)">← Curso</a>
-    <button class="menu-btn" id="menuBtn" aria-label="Índice de secciones">☰ Índice</button>
-  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Índice de secciones">☰ Índice</button>
 </div>
 
 <div class="menu-overlay" id="menuOverlay">
@@ -628,8 +741,6 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
         <ellipse cx="32" cy="32" rx="28" ry="11" stroke="#ffd166" stroke-opacity=".6" stroke-width="2" transform="rotate(120 32 32)"/>
         <circle cx="60" cy="32" r="3" fill="#4285f4"/><circle cx="18" cy="53" r="3" fill="#ffd166"/><circle cx="14" cy="20" r="2.4" fill="#00f5d4"/>
       </svg>
-      <div class="badge">SESIONES 1 Y 2 · <b>EN VIVO</b></div>
-      <div class="badge gold">CONCEPTOS · <b>HERRAMIENTAS · PYTHON</b></div>
     </div>
     <div class="mc-name">
       <h1>
@@ -638,55 +749,145 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
         <span class="ln3">De la idea al algoritmo</span>
       </h1>
     </div>
-    <a class="docente" href="../../proximos_eventos/perfil.html">
-      <span class="d-label">Docente</span>
-      <span class="d-name">Oscar Iván Vargas Pineda, <b>PhD</b></span>
-      <span class="d-role">Científico de Datos · Earth Innovation Institute<br>Docente universitario · Creador de <b>Trabajo Científico</b></span>
-      <span class="d-link">Ver perfil →</span>
-    </a>
+    <div class="hero-author">
+      <span class="ha-name">Oscar Iván Vargas Pineda</span>
+      <span class="ha-role">Docente</span>
+    </div>
     <div class="hero-cta">
-      <button class="btn-primary" onclick="go(1)">Empezar →</button>
-      <button class="btn-ghost" onclick="go(14)">Ir a la instalación</button>
-      <button class="btn-ghost" onclick="go(18)">Ir a Python</button>
+      <button class="btn-primary" onclick="go(3)">Conceptos de IA</button>
+      <button class="btn-ghost" onclick="go(15)">Instalación de herramientas</button>
+      <button class="btn-ghost" onclick="go(19)">Fundamentos de Python</button>
     </div>
   </div>
 </section>
 
-<!-- 02 · RUTA DE LAS DOS SESIONES -->
-<section class="slide" data-block="Sesión 1 · Conceptos" data-title="La ruta" data-sub="Cómo se conectan las dos sesiones">
+<!-- 02 · PERFIL DEL DOCENTE -->
+<section class="slide" data-block="Sesión 1 · Conceptos" data-title="Quién dicta el curso" data-sub="Oscar Iván Vargas Pineda, PhD">
+  <div class="slide-scroll pf">
+    <div class="pf-grid">
+
+      <!-- columna izquierda: foto + formación -->
+      <aside class="pf-side">
+        <div class="pf-frame">
+          <img src="oscar-vargas.png" alt="Oscar Iván Vargas Pineda" loading="lazy">
+        </div>
+        <div class="pf-edu">
+          <div class="pf-edu-t">Formación académica</div>
+          <div class="pf-edu-row"><span class="n">01</span><span class="lv">Pregrado</span><span class="dg">Ingeniero Agroindustrial</span></div>
+          <div class="pf-edu-row"><span class="n">02</span><span class="lv">Especialista</span><span class="dg">Gestión del Agua</span></div>
+          <div class="pf-edu-row"><span class="n">03</span><span class="lv">Magíster</span><span class="dg">Gestión Ambiental Sostenible</span></div>
+          <div class="pf-edu-row"><span class="n">04</span><span class="lv">Magíster</span><span class="dg">Inteligencia Artificial Aplicada</span></div>
+          <div class="pf-edu-row phd"><span class="n">05</span><span class="lv">Doctor</span><span class="dg">Ciencias Agrarias</span></div>
+        </div>
+
+        <div class="pf-social">
+          <div class="pf-edu-t">Sígueme</div>
+          <div class="pf-soc-grid">
+            <a class="soc yt" href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" title="YouTube · @TCientifico">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z"/></svg>
+              <span>YouTube</span>
+            </a>
+            <a class="soc li" href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" rel="noopener" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43A2.06 2.06 0 113.27 5.37a2.06 2.06 0 012.07 2.06zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a class="soc ig" href="https://www.instagram.com/trabajocientifico/" target="_blank" rel="noopener" title="Instagram · @trabajocientifico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>
+              <span>Instagram</span>
+            </a>
+            <a class="soc wa" href="https://wa.me/573184280112" target="_blank" rel="noopener" title="WhatsApp · +57 318 428 0112">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.359.101 11.945c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.585 0 11.946-5.359 11.949-11.945a11.87 11.87 0 0 0-3.497-8.4"/></svg>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- columna derecha: identidad + trayectoria -->
+      <div class="pf-main">
+        <span class="eyebrow">Científico de datos · Docente investigador</span>
+        <h2 class="pf-name">Oscar Iván <span class="hl">Vargas Pineda</span><span class="pf-phd">PhD</span></h2>
+        <p class="pf-bio">Más de diez años transformando datos en decisiones. Conecto la <b>academia, la consultoría internacional y la divulgación</b> para enseñar ciencia de datos a investigadores, docentes y profesionales que nunca han programado.</p>
+
+        <div class="pf-stats">
+          <div class="pf-stat"><div class="v">10+</div><div class="k">Años de experiencia profesional</div></div>
+          <div class="pf-stat"><div class="v">7</div><div class="k">Años como docente universitario</div></div>
+          <div class="pf-stat"><div class="v">5</div><div class="k">Años como consultor de datos</div></div>
+          <div class="pf-stat"><div class="v">9</div><div class="k">Publicaciones como primer autor</div></div>
+        </div>
+
+        <div class="pf-cols">
+          <div class="pf-box">
+            <div class="pf-box-t">Docencia universitaria</div>
+            <ul class="pf-list">
+              <li><b>Universidad de los Llanos</b><span>Ingeniería Agroindustrial</span></li>
+              <li><b>Universidad Santo Tomás</b><span>Ingeniería Industrial</span></li>
+              <li><b>Universidad Jorge Tadeo Lozano</b><span>Posgrado · Diseño y Creación con IA</span></li>
+              <li><b>Universidad Central</b><span>Pregrado y posgrado</span></li>
+            </ul>
+            <div class="pf-inv">Invitado: <b>Politécnica de Madrid</b> (España) · <b>Montpellier</b> (Francia) · <b>El Bosque</b> (Colombia)</div>
+          </div>
+
+          <div class="pf-box">
+            <div class="pf-box-t">Consultoría en datos</div>
+            <ul class="pf-list">
+              <li><b>Earth Innovation Institute</b><span>Científico de datos · IA aplicada a sostenibilidad <em class="pf-now">Actual</em></span></li>
+              <li><b>Banco Mundial</b><span>Análisis de datos</span></li>
+              <li><b>Banco Interamericano de Desarrollo</b><span>Análisis de datos</span></li>
+              <li><b>ECOPETROL</b> · <b>Fundación ALISOS</b><span>Datos para industria y modelamiento</span></li>
+            </ul>
+            <div class="pf-inv">Creador del <b>Diplomado en Ciencia de Datos y Machine Learning</b> y de 6 cursos de profundización.</div>
+          </div>
+        </div>
+
+        <div class="pf-skills">
+          <div class="pf-sk"><span class="c">Lenguajes</span><span class="s">Python</span><span class="s">R</span><span class="s">SQL</span></div>
+          <div class="pf-sk"><span class="c">Análisis</span><span class="s">Machine Learning</span><span class="s">Visualización</span><span class="s">Automatización</span></div>
+          <div class="pf-sk"><span class="c">IA · Asistentes</span><span class="s">Claude Code</span><span class="s">Codex</span><span class="s">Antigravity</span></div>
+          <div class="pf-sk"><span class="c">Software</span><span class="s">ArcGIS Pro</span><span class="s">VENSIM</span><span class="s">Power BI</span></div>
+        </div>
+
+        <div class="pf-links">
+          <a href="https://trabajocientifico.org/" target="_blank" rel="noopener">trabajocientifico.org</a>
+          <a href="mailto:oscarvargas@trabajocientifico.org">oscarvargas@trabajocientifico.org</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 03 · LOS CUATRO MÓDULOS DEL CURSO -->
+<section class="slide" data-block="Sesión 1 · Conceptos" data-title="La ruta" data-sub="Los cuatro módulos del curso">
   <div class="slide-scroll wrapA">
     <div class="slide-head">
       <span class="eyebrow">Cómo vamos a avanzar</span>
-      <h2>Primero <span class="hl">entender</span>, luego <span class="hl">instalar</span>, luego <span class="hl">programar</span></h2>
-      <p class="lead">Tres bloques en orden. Cada uno se apoya en el anterior: sin los conceptos, instalar no tiene sentido; sin las herramientas, no hay dónde escribir el código.</p>
+      <h2>Cuatro módulos: de <span class="hl">entender la IA</span> a <span class="hl">automatizar tu trabajo</span></h2>
+      <p class="lead">Cada módulo se apoya en el anterior. Empezamos por comprender qué es una IA y cómo se escribe código, seguimos por poner los datos en orden, y terminamos convirtiendo ese análisis en algo que se ejecuta solo.</p>
     </div>
-    <div class="duo">
-      <div class="pane">
-        <span class="tag">Bloque 1</span>
-        <h3>Conceptos: IA y programación</h3>
-        <div class="dur">Sesión 1 · 2 horas</div>
-        <ul>
-          <li>Qué es la IA, el machine learning y la IA generativa</li>
-          <li>Cómo "piensa" un modelo de lenguaje</li>
-          <li>IA que responde vs. agente que ejecuta</li>
-          <li>Qué es hacer ciencia de datos</li>
-          <li>Qué es un algoritmo y por qué Python</li>
-        </ul>
+    <div class="mod-grid">
+      <div class="mod-card">
+        <div class="mod-n">Módulo 1</div>
+        <h3>Fundamentos de IA y Python</h3>
+        <p>Qué es la IA, cómo "piensa" un modelo de lenguaje y en qué se diferencia una IA que responde de un agente que ejecuta. Y las bases de Python desde cero.</p>
       </div>
-      <div class="pane now">
-        <span class="tag">Bloques 2 y 3</span>
-        <h3>Herramientas + primeros pasos</h3>
-        <div class="dur">Sesión 2 · 3 horas</div>
-        <ul>
-          <li>Instalación guiada de las 7 herramientas del curso</li>
-          <li>Verificación: que a todos les funcione</li>
-          <li>Variables, tipos y colecciones de datos</li>
-          <li>Condicionales, bucles y funciones</li>
-          <li>Retos "manos al teclado" en cada tema</li>
-        </ul>
+      <div class="mod-card">
+        <div class="mod-n">Módulo 2</div>
+        <h3>Gestión de Datos Inteligentes</h3>
+        <p>Cargar, limpiar y transformar datos reales hasta dejarlos listos para analizar, apoyándote en agentes de IA para el trabajo pesado.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-n">Módulo 3</div>
+        <h3>Visualización gráfica y Dashboard</h3>
+        <p>Convertir tablas en gráficos que se entienden a la primera y reunirlos en tableros que respondan las preguntas que importan.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-n">Módulo 4</div>
+        <h3>Automatización de Tareas con App</h3>
+        <p>Empaquetar todo lo anterior en aplicaciones que hagan por ti el trabajo repetitivo, sin volver a abrir el código cada vez.</p>
       </div>
     </div>
-    <p class="note-foot"><b>Regla de la casa:</b> nadie avanza solo. Si algo no instala, lo resolvemos en vivo antes de pasar al siguiente bloque.</p>
+    <p class="note-foot"><b>Regla de la casa:</b> nadie avanza solo. Si algo no funciona, lo resolvemos en vivo antes de pasar al siguiente módulo.</p>
   </div>
 </section>
 
@@ -727,8 +928,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
         <div class="ring-l r2">Machine Learning</div>
         <div class="ring-l r3">Deep Learning</div>
         <div class="ring-l r4">IA<br>Generativa</div>
-        <div class="spin"><div class="rdot" style="transform:translate(150px,0)"></div></div>
-        <div class="spin" style="animation-duration:24s"><div class="rdot" style="transform:translate(-120px,0); background:#4285f4; box-shadow:0 0 12px #4285f4"></div></div>
+        <div class="spin"><div class="rdot" style="left:94.1%"></div></div>
+        <div class="spin" style="animation-duration:24s"><div class="rdot" style="left:14.7%; background:#4285f4; box-shadow:0 0 12px #4285f4"></div></div>
       </div>
       <div class="ia-flow">
         <div class="ia-def">La IA es <b>software que aprende de datos</b> para realizar tareas que antes requerían inteligencia humana: reconocer, predecir, decidir y generar.</div>
@@ -1104,43 +1305,43 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <p class="lead">Siete piezas, cada una con un papel distinto. Se instalan <b>en este orden</b> porque unas dependen de otras. Toca una tarjeta para ir directo a su instalación.</p>
     </div>
     <div class="tool-grid">
-      <div class="ag-card t-python" onclick="go(15,'python')">
+      <div class="ag-card t-python" onclick="go(16,'python')">
         <span class="step-idx">01</span>
         <div class="ag-logo"><i class="fa-brands fa-python"></i></div>
         <h3>Python</h3><div class="maker">El lenguaje</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-vscode" onclick="go(15,'vscode')">
+      <div class="ag-card t-vscode" onclick="go(16,'vscode')">
         <span class="step-idx">02</span>
         <div class="ag-logo"><i class="fa-solid fa-code"></i></div>
         <h3>VS Code</h3><div class="maker">El editor</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-node" onclick="go(15,'node')">
+      <div class="ag-card t-node" onclick="go(16,'node')">
         <span class="step-idx">03</span>
         <div class="ag-logo"><i class="fa-brands fa-node-js"></i></div>
         <h3>Node.js</h3><div class="maker">Requisito de los agentes</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-claude" onclick="go(15,'claude')">
+      <div class="ag-card t-claude" onclick="go(16,'claude')">
         <span class="step-idx">04</span>
         <div class="ag-logo">✳</div>
         <h3>Claude Code</h3><div class="maker">Agente · Anthropic</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-codebuff" onclick="go(15,'codebuff')">
+      <div class="ag-card t-freebuff" onclick="go(16,'freebuff')">
         <span class="step-idx">05</span>
-        <div class="ag-logo">CB</div>
-        <h3>Codebuff</h3><div class="maker">Agente · alternativa</div>
+        <div class="ag-logo">FB</div>
+        <h3>FreeBuff</h3><div class="maker">Opción gratuita</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-git" onclick="go(15,'git')">
+      <div class="ag-card t-git" onclick="go(16,'git')">
         <span class="step-idx">06</span>
         <div class="ag-logo"><i class="fa-brands fa-git-alt"></i></div>
         <h3>Git</h3><div class="maker">Control de versiones</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-github" onclick="go(15,'github')">
+      <div class="ag-card t-github" onclick="go(16,'github')">
         <span class="step-idx">07</span>
         <div class="ag-logo"><i class="fa-brands fa-github"></i></div>
         <h3>GitHub</h3><div class="maker">Tu código en la nube</div>
@@ -1168,7 +1369,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <button class="inst-tab" data-key="vscode"><span class="tl" style="background:var(--vscode)">&lt;&gt;</span> VS Code</button>
       <button class="inst-tab" data-key="node"><span class="tl" style="background:var(--node)">JS</span> Node.js</button>
       <button class="inst-tab" data-key="claude"><span class="tl" style="background:var(--claude)">✳</span> Claude Code</button>
-      <button class="inst-tab" data-key="codebuff"><span class="tl" style="background:var(--codebuff)">CB</span> Codebuff</button>
+      <button class="inst-tab" data-key="freebuff"><span class="tl" style="background:var(--freebuff)">FB</span> FreeBuff</button>
       <button class="inst-tab" data-key="git"><span class="tl" style="background:var(--git)">⑂</span> Git</button>
       <button class="inst-tab" data-key="github"><span class="tl" style="background:var(--github)">GH</span> GitHub</button>
     </div>
@@ -1235,13 +1436,13 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <div class="check"><b>VS Code</b><span>extensiones Python + Jupyter</span></div>
       <div class="check"><b>Node.js</b><span>node --version</span></div>
       <div class="check"><b>Claude Code</b><span>claude → sesión iniciada</span></div>
-      <div class="check"><b>Codebuff</b><span>codebuff → sesión iniciada</span></div>
+      <div class="check"><b>FreeBuff</b><span>freebuff → sesión iniciada</span></div>
       <div class="check"><b>Git</b><span>git config --list</span></div>
       <div class="check"><b>GitHub</b><span>cuenta + repo curso-datos</span></div>
       <div class="check"><b>Carpeta</b><span>curso-datos abierta en VS Code</span></div>
     </div>
     <div class="hero-cta" style="opacity:1;animation:none;margin-top:30px">
-      <button class="btn-primary" onclick="go(18)">Empezar con Python →</button>
+      <button class="btn-primary" onclick="go(19)">Empezar con Python →</button>
     </div>
   </div>
 </section>
@@ -1262,17 +1463,21 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       </p>
     </div>
     <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">01</span><p class="font-bold mt-1">Comentarios</p><p class="text-xs text-slate-400">notas para humanos</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">02</span><p class="font-bold mt-1">print()</p><p class="text-xs text-slate-400">el megáfono</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">03</span><p class="font-bold mt-1">Variables</p><p class="text-xs text-slate-400">cajas de almacenamiento</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">01</span><p class="font-bold mt-1">Variables</p><p class="text-xs text-slate-400">cajas de almacenamiento</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">02</span><p class="font-bold mt-1">Palabras reservadas</p><p class="text-xs text-slate-400">las 35 que ya están ocupadas</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">03</span><p class="font-bold mt-1">Comentarios</p><p class="text-xs text-slate-400">notas para humanos</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">04</span><p class="font-bold mt-1">Tipos de datos</p><p class="text-xs text-slate-400">int · float · str · bool</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">05</span><p class="font-bold mt-1">Listas</p><p class="text-xs text-slate-400">mochilas de datos</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">06</span><p class="font-bold mt-1">Tuplas</p><p class="text-xs text-slate-400">la caja sellada</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">07</span><p class="font-bold mt-1">Diccionarios</p><p class="text-xs text-slate-400">clave y valor</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">08</span><p class="font-bold mt-1">Conjuntos</p><p class="text-xs text-slate-400">sin repetidos</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">09</span><p class="font-bold mt-1">Condicionales</p><p class="text-xs text-slate-400">if · elif · else</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">10</span><p class="font-bold mt-1">Bucles</p><p class="text-xs text-slate-400">el trabajador incansable</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">11</span><p class="font-bold mt-1">Funciones</p><p class="text-xs text-slate-400">recetas guardadas</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">05</span><p class="font-bold mt-1">print()</p><p class="text-xs text-slate-400">el megáfono</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">06</span><p class="font-bold mt-1">type()</p><p class="text-xs text-slate-400">¿de qué tipo es?</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">07</span><p class="font-bold mt-1">input()</p><p class="text-xs text-slate-400">el micrófono</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">08</span><p class="font-bold mt-1">Operadores</p><p class="text-xs text-slate-400">calcular y comparar</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">09</span><p class="font-bold mt-1">Listas</p><p class="text-xs text-slate-400">mochilas de datos</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">10</span><p class="font-bold mt-1">Tuplas</p><p class="text-xs text-slate-400">la caja sellada</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">11</span><p class="font-bold mt-1">Diccionarios</p><p class="text-xs text-slate-400">clave y valor</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">12</span><p class="font-bold mt-1">Conjuntos</p><p class="text-xs text-slate-400">sin repetidos</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">13</span><p class="font-bold mt-1">Condicionales</p><p class="text-xs text-slate-400">if · elif · else</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">14</span><p class="font-bold mt-1">Bucles</p><p class="text-xs text-slate-400">el trabajador incansable</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">15</span><p class="font-bold mt-1">Funciones</p><p class="text-xs text-slate-400">recetas guardadas</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(242,177,52,.4)"><span class="code-font text-xs" style="color:var(--amber)">6×</span><p class="font-bold mt-1">Retos</p><p class="text-xs text-slate-400">manos al teclado</p></div>
     </div>
     <div class="reveal mt-6 p-4 rounded-lg text-sm text-slate-300" style="background:rgba(31,93,76,.25);border-left:4px solid var(--lime)">
@@ -1282,11 +1487,112 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   </div>
 </section>
 
-<!-- 20 · COMENTARIOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="01 · Comentarios" data-sub="Notas para humanos">
+<!-- 19b · PALABRAS RESERVADAS -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="01 · Variables" data-sub="Cajas de almacenamiento">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 1</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-box-open mr-2" style="color:var(--lime)"></i>Variables: <span class="em">cajas de almacenamiento</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Una variable es una caja con una etiqueta donde guardas un dato para usarlo después. El signo <code>=</code> significa "guarda esto aquí".
+        </p>
+        <div class="p-4 rounded-lg border border-slate-600 bg-slate-800/60">
+          <p class="font-bold mb-2" style="color:var(--lime)">Reglas OBLIGATORIAS para nombrar cajas (variables):</p>
+          <ul class="text-sm text-slate-300 space-y-1 list-disc list-inside marker:text-lime-300">
+            <li>Sin espacios: usa guion bajo → <code>nombre_estudiante</code></li>
+            <li>No pueden empezar por un número</li>
+            <li>No pueden ser una <strong>palabra reservada</strong> del lenguaje (capítulo 02)</li>
+            <li>Sin tildes ni <code>ñ</code></li>
+            <li>Distingue mayúsculas: <code>Edad</code> y <code>edad</code> son cajas distintas</li>
+            <li>Usa nombres que se entiendan: <code>total_ventas</code>, no <code>x</code></li>
+          </ul>
+        </div>
+        <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded text-sm text-slate-300">
+          <i class="fa-solid fa-circle-info text-yellow-300 mr-2"></i> Pulsa <strong>Ejecutar</strong> y verás que <strong>no aparece nada</strong>. Es correcto: los datos ya están guardados, pero todavía no le hemos pedido a Python que los muestre. Eso llega en el capítulo 05.
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-vars','out-vars')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-vars" class="python-editor">nombre_estudiante = "Ana"
+edad = 25
+estatura = 1.68
+es_estudiante = True</textarea>
+        <div id="out-vars" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="02 · Palabras reservadas" data-sub="Las 35 que Python ya tiene ocupadas">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-5 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 2</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-key mr-2" style="color:var(--lime)"></i>Palabras <span class="em">reservadas</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Python tiene <strong>35 palabras</strong> con un significado fijo en el lenguaje. Son suyas: no puedes usarlas para nombrar las <strong>variables</strong> que acabas de aprender a crear. Si lo intentas, el programa se detiene con un error.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Valores</h4>
+            <span class="kw">True</span><span class="kw">False</span><span class="kw">None</span></div>
+          <div class="kw-group"><h4>Decisiones y lógica</h4>
+            <span class="kw soon">if</span><span class="kw soon">elif</span><span class="kw soon">else</span><span class="kw soon">and</span><span class="kw soon">or</span><span class="kw soon">not</span><span class="kw soon">in</span><span class="kw">is</span></div>
+          <div class="kw-group"><h4>Repetición</h4>
+            <span class="kw soon">for</span><span class="kw soon">while</span><span class="kw soon">break</span><span class="kw soon">continue</span><span class="kw">pass</span></div>
+          <div class="kw-group"><h4>Funciones y clases</h4>
+            <span class="kw soon">def</span><span class="kw soon">return</span><span class="kw">lambda</span><span class="kw">class</span><span class="kw">yield</span></div>
+          <div class="kw-group"><h4>Módulos</h4>
+            <span class="kw">import</span><span class="kw">from</span><span class="kw">as</span></div>
+          <div class="kw-group"><h4>Errores</h4>
+            <span class="kw">try</span><span class="kw">except</span><span class="kw">finally</span><span class="kw">raise</span><span class="kw">assert</span></div>
+          <div class="kw-group"><h4>Alcance</h4>
+            <span class="kw">global</span><span class="kw">nonlocal</span><span class="kw">del</span></div>
+          <div class="kw-group"><h4>Otras</h4>
+            <span class="kw">with</span><span class="kw">async</span><span class="kw">await</span></div>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
+          <i class="fa-solid fa-circle-info mr-2" style="color:var(--amber)"></i>
+          Las marcadas en <span style="color:var(--amber);font-weight:700">ámbar</span> las usarás en este mismo bloque. No hay que memorizarlas: el editor las colorea distinto cuando las escribes.
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-keywords','out-keywords')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-keywords" class="python-editor"># 'class' es palabra reservada: Python la tiene ocupada.
+# Quita el # de la línea de abajo y ejecuta para ver el error.
+
+# class = "Matemáticas"
+
+# La solución es simple: usa otro nombre.
+clase = "Matemáticas"
+nota = 4.5
+
+# Truco para reconocerlas: el editor las pinta de otro color.
+# Si al escribir un nombre se colorea solo, elige otro.</textarea>
+        <div id="out-keywords" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="03 · Comentarios" data-sub="Notas para humanos">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 3</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-hashtag mr-2" style="color:var(--lime)"></i>Comentarios: <span class="em">notas para humanos</span>
       </h2>
@@ -1310,107 +1616,20 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
           <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
           <button class="run-btn" onclick="runCode('code-comments','out-comments')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
         </div>
-        <textarea id="code-comments" class="python-editor"># Esto es un comentario. El computador no lo lee.
-# Los usamos para explicar qué hace el código.
+        <textarea id="code-comments" class="python-editor"># Esto es un comentario: Python lo ignora por completo.
+# Lo usamos para explicar qué hace el código.
 
-print("¡Esto sí se ejecuta en la pantalla!")
+precio = 15000      # también puede ir al final de una línea
+cantidad = 3
 
-# print("Esto está comentado, así que no hará nada")</textarea>
+# precio = 20000
+# La línea de arriba está desactivada: no cambia nada.</textarea>
         <div id="out-comments" class="console-output code-font text-sm"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 21 · PRINT -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="02 · print()" data-sub="El megáfono del programa">
-  <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 2</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
-        <i class="fa-solid fa-bullhorn mr-2" style="color:var(--lime)"></i>La función <code>print()</code>: <span class="em">el megáfono</span>
-      </h2>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-xl text-slate-300">
-          Una computadora procesa millones de datos en silencio. Si queremos que nos muestre un resultado, necesitamos ordenarle que "hable".
-        </p>
-        <p class="text-lg text-slate-400">
-          Para eso usamos <code>print()</code>. Todo lo que pongas dentro de los paréntesis (y entre comillas si es texto) aparecerá en la consola.
-        </p>
-        <div class="p-4 bg-yellow-900/30 border border-yellow-600 rounded-lg text-yellow-300">
-          <i class="fa-solid fa-hand-pointer mr-2"></i> <strong>¡Inténtalo!</strong> Edita el texto entre comillas, pon tu propio nombre y presiona Ejecutar.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-print','out-print')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-print" class="python-editor"># Imprimiendo un texto (String)
-print("¡Hola, futuros programadores!")
-
-# Imprimiendo un número
-print(2025)
-
-# Imprimiendo una operación matemática
-print("El resultado de 5 + 5 es:")
-print(5 + 5)</textarea>
-        <div id="out-print" class="console-output code-font text-sm"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 22 · VARIABLES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="03 · Variables" data-sub="Cajas de almacenamiento">
-  <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 3</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
-        <i class="fa-solid fa-box-open mr-2" style="color:var(--lime)"></i>Variables: <span class="em">cajas de almacenamiento</span>
-      </h2>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Una variable es una caja con una etiqueta donde guardas un dato para usarlo después. El signo <code>=</code> significa "guarda esto aquí".
-        </p>
-        <div class="p-4 rounded-lg border border-slate-600 bg-slate-800/60">
-          <p class="font-bold mb-2" style="color:var(--lime)">Reglas OBLIGATORIAS para nombrar cajas (variables):</p>
-          <ul class="text-sm text-slate-300 space-y-1 list-disc list-inside marker:text-lime-300">
-            <li>Sin espacios: usa guion bajo → <code>nombre_estudiante</code></li>
-            <li>No pueden empezar por un número</li>
-            <li>Sin tildes ni <code>ñ</code></li>
-            <li>Distingue mayúsculas: <code>Edad</code> y <code>edad</code> son cajas distintas</li>
-            <li>Usa nombres que se entiendan: <code>total_ventas</code>, no <code>x</code></li>
-          </ul>
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-vars','out-vars')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-vars" class="python-editor"># Creamos variables (etiquetamos cajas)
-nombre_estudiante = "Ana"
-edad = 25
-estatura = 1.68
-
-# Usamos el megáfono para ver qué hay en la caja
-print("El nombre guardado es:")
-print(nombre_estudiante)
-
-print("La edad es:")
-print(edad)</textarea>
-        <div id="out-vars" class="console-output code-font text-sm"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 23 · TIPOS DE DATOS -->
 <section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="04 · Tipos de datos" data-sub="int · float · str · bool">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
@@ -1443,7 +1662,7 @@ print(edad)</textarea>
           </div>
         </div>
         <div class="p-3 bg-blue-900/30 border-l-4 border-blue-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-lightbulb text-yellow-300 mr-2"></i> La función <code>type()</code> te dice de qué material está hecho un dato. Con <code>int()</code>, <code>str()</code> o <code>float()</code> puedes convertir de un tipo a otro.
+          <i class="fa-solid fa-lightbulb text-yellow-300 mr-2"></i> Con <code>int()</code>, <code>str()</code> o <code>float()</code> conviertes un dato de un tipo a otro. Para <strong>comprobar</strong> de qué tipo es algo existe <code>type()</code>, que veremos en el capítulo 06.
         </div>
       </div>
       <div class="ide-window h-fit">
@@ -1451,23 +1670,190 @@ print(edad)</textarea>
           <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
           <button class="run-btn" onclick="runCode('code-tipos','out-tipos')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
         </div>
-        <textarea id="code-tipos" class="python-editor"># type() revela el tipo de cada dato
-edad = 25             # int  (entero)
-estatura = 1.75       # float (decimal)
-nombre = "Ana"        # str  (texto)
-es_estudiante = True  # bool (verdadero/falso)
+        <textarea id="code-tipos" class="python-editor"># Cada dato está hecho de un "material" distinto
+edad = 25             # int   · entero
+estatura = 1.75       # float · decimal
+nombre = "Ana"        # str   · texto
+es_estudiante = True  # bool  · verdadero o falso
+
+# Y se puede convertir de un material a otro
+edad_texto = str(edad)      # el número 25 pasa a ser el texto "25"
+numero = int("10") + 5      # el texto "10" pasa a ser número</textarea>
+        <div id="out-tipos" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="05 · print()" data-sub="Cuatro formas de mostrar un dato">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 5</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-bullhorn mr-2" style="color:var(--lime)"></i>La función <code>print()</code>: <span class="em">el megáfono</span>
+      </h2>
+      <p class="text-base text-slate-400 mt-2">
+        Hasta ahora guardábamos datos y no se veía nada. <code>print()</code> es la orden de "habla". Ejecuta las cuatro ventanas en orden.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+
+      <div>
+        <p class="pw-label"><i>1</i> Texto tal cual <em>· entre comillas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-print1','out-print1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-print1" class="python-editor">print("¡Hola, futuros programadores!")
+print("Bienvenidos al curso")</textarea>
+          <div id="out-print1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Números y cuentas <em>· sin comillas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-print2','out-print2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-print2" class="python-editor">print(2025)
+print(5 + 5)
+print(10 / 4)</textarea>
+          <div id="out-print2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> El contenido de una variable <em>· sin comillas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-print3','out-print3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-print3" class="python-editor">nombre = "Ana"
+edad = 25
+
+print(nombre)
+print("Hola,", nombre, "· tienes", edad)</textarea>
+          <div id="out-print3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>4</i> Texto y variables mezclados <em>· f-string</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-print4','out-print4')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-print4" class="python-editor">nombre = "Ana"
+edad = 25
+
+print(f"Hola, {nombre}. Tienes {edad} años.")
+print(f"El año que viene tendrás {edad + 1}.")</textarea>
+          <div id="out-print4" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+    </div>
+    <p class="text-sm text-slate-400 mt-3">
+      <i class="fa-solid fa-lightbulb mr-1" style="color:var(--amber)"></i>
+      Fíjate en la diferencia: <code>print("nombre")</code> muestra la palabra <em>nombre</em>; <code>print(nombre)</code> muestra lo que hay <strong>dentro</strong> de la caja. La <code>f</code> antes de las comillas permite meter variables entre llaves <code>{ }</code> sin cortar el texto.
+    </p>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="06 · type()" data-sub="Comprobar de qué tipo es un dato">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 6</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-magnifying-glass-chart mr-2" style="color:var(--lime)"></i>La función <code>type()</code>: <span class="em">¿de qué está hecho?</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Ya sabes que existen <code>int</code>, <code>float</code>, <code>str</code> y <code>bool</code>. Y ya sabes mostrar cosas con <code>print()</code>. Al juntarlos obtienes la herramienta que responde: <strong>¿de qué tipo es este dato?</strong>
+        </p>
+        <p class="text-lg text-slate-400">
+          Se usa siempre igual: metes el dato en <code>type()</code> y lo envuelves en <code>print()</code> para verlo.
+        </p>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>¿Para qué sirve en la práctica?</p>
+          <p class="text-slate-300 text-sm">
+            Cuando un cálculo falle sin motivo aparente, <code>type()</code> suele dar la respuesta: casi siempre es un número que en realidad era texto. Lo verás en el capítulo siguiente.
+          </p>
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-type','out-type')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-type" class="python-editor">edad = 25
+estatura = 1.75
+nombre = "Ana"
+es_estudiante = True
 
 print(type(edad))
 print(type(estatura))
 print(type(nombre))
 print(type(es_estudiante))
 
-# Convertir de un tipo a otro
-edad_texto = str(edad)     # el número 25 se vuelve texto "25"
-numero = int("10") + 5     # el texto "10" se vuelve número
-print("Edad como texto:", edad_texto)
-print("Suma convertida:", numero)</textarea>
-        <div id="out-tipos" class="console-output code-font text-sm"></div>
+# Sirve para comprobar que una conversión salió bien
+edad_texto = str(edad)
+print(edad_texto)
+print(type(edad_texto))</textarea>
+        <div id="out-type" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="07 · input()" data-sub="Preguntarle algo al usuario">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 7</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-keyboard mr-2" style="color:var(--lime)"></i>La función <code>input()</code>: <span class="em">el micrófono</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Si <code>print()</code> es el megáfono que saca información, <code>input()</code> es el micrófono que la <strong>recibe</strong>: muestra un mensaje, espera a que la persona escriba y guarda lo que escribió.
+        </p>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>El error más común de todo el curso</p>
+          <p class="text-slate-300 text-sm">
+            <code>input()</code> devuelve <strong>siempre</strong> texto (<code>str</code>), aunque escribas un número. Por eso <code>"25" + 1</code> falla: hay que convertirlo antes con <code>int()</code> o <code>float()</code>.
+          </p>
+        </div>
+        <ul class="text-lg text-slate-400 space-y-2 list-disc list-inside marker:text-lime-300">
+          <li>El texto dentro del paréntesis es la <strong>pregunta</strong> que se ve en pantalla.</li>
+          <li>Guarda el resultado en una variable, o se pierde.</li>
+          <li>Aquí une los cuatro temas anteriores: variable + tipo + conversión + <code>print()</code>.</li>
+        </ul>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-input','out-input')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-input" class="python-editor"># Escribe tu respuesta en la consola negra y pulsa Enter.
+nombre = input("¿Cómo te llamas? ")
+print("Mucho gusto,", nombre)
+
+edad = input("¿Cuántos años tienes? ")
+print("Python lo guardó como:", type(edad))
+
+# Para operar con él, hay que convertirlo a número
+edad = int(edad)
+print("El año que viene tendrás", edad + 1)</textarea>
+        <div id="out-input" class="console-output code-font text-sm"></div>
       </div>
     </div>
   </div>
@@ -1512,11 +1898,77 @@ print(mi_edad)</pre>
   </div>
 </section>
 
-<!-- 25 · LISTAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="05 · Listas" data-sub="Mochilas de datos">
+<!-- 24b · OPERADORES -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="08 · Operadores" data-sub="Calcular, comparar y decidir">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 5</span>
+      <span class="kicker mb-2">Capítulo 8</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-calculator mr-2" style="color:var(--lime)"></i>Operadores: <span class="em">los verbos del código</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Si las variables son los sustantivos, los operadores son los <strong>verbos</strong>: lo que de verdad hace algo con los datos que ya sabes guardar.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Aritméticos · calcular</h4>
+            <span class="kw">+</span><span class="kw">-</span><span class="kw">*</span><span class="kw">/</span><span class="kw">//</span><span class="kw">%</span><span class="kw">**</span></div>
+          <div class="kw-group"><h4>Comparación · preguntar</h4>
+            <span class="kw soon">==</span><span class="kw soon">!=</span><span class="kw soon">&lt;</span><span class="kw soon">&gt;</span><span class="kw soon">&lt;=</span><span class="kw soon">&gt;=</span></div>
+          <div class="kw-group"><h4>Lógicos · combinar</h4>
+            <span class="kw soon">and</span><span class="kw soon">or</span><span class="kw soon">not</span></div>
+          <div class="kw-group"><h4>Asignación · guardar</h4>
+            <span class="kw">=</span><span class="kw">+=</span><span class="kw">-=</span><span class="kw">*=</span><span class="kw">/=</span></div>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>No confundas <code>=</code> con <code>==</code></p>
+          <p class="text-slate-300 text-sm">
+            Uno solo <strong>guarda</strong> un valor (<code>edad = 25</code>). Dos <strong>preguntan</strong> si son iguales y responden <code>True</code> o <code>False</code> (<code>edad == 25</code>).
+          </p>
+        </div>
+        <p class="text-base text-slate-400">
+          Los de <span style="color:var(--amber);font-weight:700">ámbar</span> son la base de los condicionales: sin ellos, el programa no puede decidir nada.
+        </p>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-operadores','out-operadores')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-operadores" class="python-editor"># Aritméticos
+print(7 + 3)     # 10  suma
+print(7 / 2)     # 3.5 división exacta
+print(7 // 2)    # 3   división entera (sin decimales)
+print(7 % 2)     # 1   resto: ¿sobra algo?
+print(2 ** 3)    # 8   potencia
+
+# Comparación: siempre devuelven True o False
+nota = 4.2
+print(nota >= 3.0)      # ¿aprobó?
+print(nota == 5.0)      # ¿sacó la nota máxima?
+
+# Lógicos: combinan condiciones
+asistio = True
+print(nota >= 3.0 and asistio)   # las dos cosas
+print(nota >= 4.5 or asistio)    # al menos una
+
+# Asignación abreviada
+puntos = 10
+puntos += 5      # equivale a: puntos = puntos + 5
+print(puntos)</textarea>
+        <div id="out-operadores" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 · LISTAS -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas" data-sub="Mochilas de datos">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 9</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-list-ul mr-2" style="color:var(--lime)"></i>Listas: <span class="em">mochilas de datos</span>
       </h2>
@@ -1552,6 +2004,133 @@ mochila.append("Regla")
 print("Mochila actualizada:")
 print(mochila)</textarea>
         <div id="out-list" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25b · LISTAS · CONSULTAR -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas · consultar" data-sub="Índices, rebanadas y búsquedas">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 9 · continuación</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-magnifying-glass mr-2" style="color:var(--lime)"></i>Listas: <span class="em">sacar lo que necesitas</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Rara vez quieres la lista entera. Casi siempre necesitas <strong>un trozo</strong>: el último, los tres primeros, o saber si algo está dentro.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Contar y ubicar</h4>
+            <span class="kw">len()</span><span class="kw">.index()</span><span class="kw">.count()</span></div>
+          <div class="kw-group"><h4>Posiciones negativas</h4>
+            <span class="kw">[-1]</span><span class="kw">[-2]</span></div>
+          <div class="kw-group"><h4>Rebanadas</h4>
+            <span class="kw">[1:3]</span><span class="kw">[:2]</span><span class="kw">[3:]</span></div>
+          <div class="kw-group"><h4>¿Está dentro?</h4>
+            <span class="kw soon">in</span></div>
+        </div>
+        <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded text-sm text-slate-300">
+          <i class="fa-solid fa-lightbulb text-yellow-300 mr-2"></i> En una rebanada <code>[1:3]</code> el primer número <strong>entra</strong> y el segundo <strong>no</strong>. Suena raro al principio; con dos ejemplos se te queda.
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-list2','out-list2')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-list2" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
+
+# ¿Cuántos elementos hay?
+print(len(compras))
+
+# El último, sin necesidad de saber cuántos son
+print(compras[-1])
+print(compras[-2])
+
+# Rebanadas: desde el 1 hasta ANTES del 3
+print(compras[1:3])
+print(compras[:2])     # los dos primeros
+print(compras[3:])     # del tercero en adelante
+
+# ¿Está en la lista? Devuelve True o False
+print("leche" in compras)
+print("azúcar" in compras)
+
+# ¿En qué posición? ¿Cuántas veces aparece?
+print(compras.index("café"))
+print(compras.count("pan"))</textarea>
+        <div id="out-list2" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25c · LISTAS · MODIFICAR -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas · modificar" data-sub="Añadir, quitar y ordenar">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 9 · continuación</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-pen-to-square mr-2" style="color:var(--lime)"></i>Listas: <span class="em">cambiarlas a tu gusto</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Aquí es donde las listas se ganan el nombre de <strong>mutables</strong>: puedes reescribirlas entera o parcialmente sin crear una nueva.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Añadir</h4>
+            <span class="kw">.append()</span><span class="kw">.insert()</span></div>
+          <div class="kw-group"><h4>Quitar</h4>
+            <span class="kw">.remove()</span><span class="kw">.pop()</span><span class="kw soon">del</span></div>
+          <div class="kw-group"><h4>Reordenar</h4>
+            <span class="kw">.sort()</span><span class="kw">.reverse()</span></div>
+          <div class="kw-group"><h4>Cambiar uno</h4>
+            <span class="kw">lista[2] = ...</span></div>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Modifican la lista original</p>
+          <p class="text-slate-300 text-sm">
+            <code>.sort()</code> no te devuelve una lista ordenada: <strong>reordena la que ya tenías</strong>. Si necesitas conservar el orden original, haz antes una copia.
+          </p>
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-list3','out-list3')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-list3" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+
+# Cambiar un elemento por su posición
+notas[2] = 3.2
+print(notas)
+
+# Añadir al final, o en una posición concreta
+notas.append(5.0)
+notas.insert(0, 1.8)
+print(notas)
+
+# Quitar por valor
+notas.remove(1.8)
+print(notas)
+
+# .pop() saca el último Y te lo devuelve
+sacada = notas.pop()
+print("Saqué:", sacada)
+print(notas)
+
+# Ordenar y dar la vuelta
+notas.sort()
+print("Ordenadas:", notas)
+notas.reverse()
+print("Al revés:", notas)</textarea>
+        <div id="out-list3" class="console-output code-font text-sm"></div>
       </div>
     </div>
   </div>
@@ -1596,10 +2175,10 @@ print(mis_colores[0])</pre>
 </section>
 
 <!-- 27 · TUPLAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="06 · Tuplas" data-sub="Datos que no cambian">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="10 · Tuplas" data-sub="Datos que no cambian">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 6</span>
+      <span class="kicker mb-2">Capítulo 10</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-lock mr-2" style="color:var(--lime)"></i>Tuplas: <span class="em">la caja sellada</span>
       </h2>
@@ -1644,10 +2223,10 @@ print(colores_bandera)
 </section>
 
 <!-- 28 · DICCIONARIOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="07 · Diccionarios" data-sub="Etiqueta y contenido">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios" data-sub="Etiqueta y contenido">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 7</span>
+      <span class="kicker mb-2">Capítulo 11</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-book mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">etiqueta y contenido</span>
       </h2>
@@ -1688,6 +2267,125 @@ persona["profesion"] = "Científica de datos"
 print("Diccionario actualizado:")
 print(persona)</textarea>
         <div id="out-dic" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 28b · DICCIONARIOS · CONSULTAR -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios · consultar" data-sub="get(), claves y valores">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 11 · continuación</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-key mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">preguntar sin romper nada</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Con datos reales, tarde o temprano pides una clave que no existe. Lo que hagas en ese momento decide si tu programa <strong>sigue o se cae</strong>.
+        </p>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Corchetes frente a <code>.get()</code></p>
+          <p class="text-slate-300 text-sm">
+            <code>persona["telefono"]</code> revienta con <code>KeyError</code> si esa clave no está. <code>persona.get("telefono")</code> devuelve <code>None</code> tranquilamente, y puedes darle un valor por defecto.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Consultar a salvo</h4>
+            <span class="kw">.get()</span><span class="kw soon">in</span><span class="kw">len()</span></div>
+          <div class="kw-group"><h4>Recorrer el contenido</h4>
+            <span class="kw">.keys()</span><span class="kw">.values()</span><span class="kw">.items()</span></div>
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-dic2','out-dic2')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-dic2" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25, "ciudad": "Bogotá"}
+
+# Quita el # de la línea siguiente para ver el error:
+# print(estudiante["telefono"])
+
+# .get() no rompe el programa
+print(estudiante.get("telefono"))
+print(estudiante.get("telefono", "sin registrar"))
+
+# ¿Existe esa clave? ¿Cuántos pares hay?
+print("edad" in estudiante)
+print(len(estudiante))
+
+# Las claves, los valores, o ambos a la vez
+print(list(estudiante.keys()))
+print(list(estudiante.values()))
+print(list(estudiante.items()))</textarea>
+        <div id="out-dic2" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 28c · DICCIONARIOS · MODIFICAR Y ANIDAR -->
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios · modificar" data-sub="Actualizar, quitar y anidar">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 11 · continuación</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-layer-group mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">de un dato a una tabla</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Un diccionario puede guardar dentro <strong>listas y otros diccionarios</strong>. Y ahí aparece la estructura más importante de todo el curso.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="kw-group"><h4>Añadir o cambiar</h4>
+            <span class="kw">dic["clave"] = ...</span><span class="kw">.update()</span></div>
+          <div class="kw-group"><h4>Quitar</h4>
+            <span class="kw">.pop()</span><span class="kw soon">del</span></div>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+          <p class="font-bold mb-1" style="color:var(--lime)"><i class="fa-solid fa-table mr-2"></i>Una lista de diccionarios es una tabla</p>
+          <p class="text-slate-300 text-sm">
+            Cada diccionario es una <strong>fila</strong>; cada clave, una <strong>columna</strong>. Así es exactamente como llegan los datos de un Excel, de una encuesta o de internet. Es la puerta de entrada a pandas.
+          </p>
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-dic3','out-dic3')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-dic3" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
+
+# Añadir y cambiar usan la misma sintaxis
+estudiante["ciudad"] = "Bogotá"
+estudiante["edad"] = 26
+print(estudiante)
+
+# Varios cambios de una sola vez
+estudiante.update({"carrera": "Biología", "semestre": 4})
+print(estudiante)
+
+# Quitar de dos formas
+estudiante.pop("semestre")
+del estudiante["carrera"]
+print(estudiante)
+
+# Un diccionario puede contener una lista
+estudiante["notas"] = [4.5, 3.8, 5.0]
+print(estudiante["notas"][0])
+
+# Y una LISTA DE DICCIONARIOS es, en la práctica, una tabla
+curso = [
+    {"nombre": "Ana",  "nota": 4.5},
+    {"nombre": "Luis", "nota": 3.2}
+]
+print(curso[1]["nombre"], "sacó", curso[1]["nota"])</textarea>
+        <div id="out-dic3" class="console-output code-font text-sm"></div>
       </div>
     </div>
   </div>
@@ -1737,10 +2435,10 @@ print(mi_perfil)</pre>
 </section>
 
 <!-- 30 · CONJUNTOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="08 · Conjuntos" data-sub="Elementos únicos">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="12 · Conjuntos" data-sub="Elementos únicos">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 8</span>
+      <span class="kicker mb-2">Capítulo 12</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-layer-group mr-2" style="color:var(--lime)"></i>Conjuntos: <span class="em">la bolsa sin repetidos</span>
       </h2>
@@ -1783,10 +2481,10 @@ print(sin_repetidos)</textarea>
 </section>
 
 <!-- 31 · CONDICIONALES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Condicionales" data-sub="if · elif · else">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="13 · Condicionales" data-sub="if · elif · else">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 9</span>
+      <span class="kicker mb-2">Capítulo 13</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-code-branch mr-2" style="color:var(--lime)"></i>Condicionales: <span class="em">encrucijadas y decisiones</span>
       </h2>
@@ -1881,10 +2579,10 @@ else:
 </section>
 
 <!-- 33 · BUCLES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="10 · Bucles" data-sub="El trabajador incansable">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="14 · Bucles" data-sub="El trabajador incansable">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 10</span>
+      <span class="kicker mb-2">Capítulo 14</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-rotate mr-2" style="color:var(--lime)"></i>Bucles: <span class="em">el trabajador incansable</span>
       </h2>
@@ -1968,10 +2666,10 @@ for i in range(1, 11):
 </section>
 
 <!-- 35 · FUNCIONES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Funciones" data-sub="Recetas guardadas">
+<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="15 · Funciones" data-sub="Recetas guardadas">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
-      <span class="kicker mb-2">Capítulo 11</span>
+      <span class="kicker mb-2">Capítulo 15</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-utensils mr-2" style="color:var(--lime)"></i>Funciones: <span class="em">recetas de cocina</span>
       </h2>
@@ -2094,9 +2792,6 @@ else:
 
 </div>
 
-<button id="prev" class="nav-btn" aria-label="Anterior"><span class="arr">‹</span><span class="lbl">Anterior</span></button>
-<button id="next" class="nav-btn" aria-label="Siguiente"><span class="lbl">Siguiente</span><span class="arr">›</span></button>
-<div id="navHint"><span>Navega</span><kbd>←</kbd><kbd>→</kbd></div>
 
 <script>
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -2203,17 +2898,17 @@ const installs = {
       'Inicia sesión cuando lo pida<small>Se abre el navegador para autorizar el acceso.</small>',
       'Pruébalo: "crea un archivo hola.py que salude por pantalla"'
     ]},
-  codebuff:{ name:'Codebuff', brand:'#19c37d', kind:'cli', promptChar:'$',
-    meta:[['Requisito','Node.js'],['Costo','Plan gratuito inicial']],
+  freebuff:{ name:'FreeBuff', brand:'#00f5d4', kind:'cli', promptChar:'$',
+    meta:[['Requisito','Node.js'],['Costo','100% gratis']],
     lines:[
-      {cmd:'npm install -g codebuff', out:'✓ instalado', ok:true},
-      {cmd:'cd curso-datos && codebuff', out:'✓ sesión iniciada · listo', ok:true}
+      {cmd:'npm install -g freebuff', out:'✓ instalado', ok:true},
+      {cmd:'cd curso-datos && freebuff', out:'✓ sin API key ni tarjeta · listo', ok:true}
     ],
     steps:[
-      'Instala: <code>npm install -g codebuff</code><small>Usa el mismo Node.js que ya instalamos.</small>',
+      'Instala: <code>npm install -g freebuff</code><small>Usa el mismo Node.js que ya instalamos.</small>',
       'Ve a tu carpeta: <code>cd curso-datos</code>',
-      'Ejecuta <code>codebuff</code>',
-      'Inicia sesión la primera vez<small>Te dará un enlace para crear la cuenta.</small>',
+      'Ejecuta <code>freebuff</code>',
+      'Empieza sin API key ni tarjeta<small>No necesitas registrar medio de pago para usarlo.</small>',
       'Repite el mismo ejercicio que con Claude Code<small>Así comparas cómo responde cada agente.</small>'
     ]},
   git:{ name:'Git', brand:'#f05133', kind:'cli', promptChar:'$',
@@ -2297,8 +2992,6 @@ let current = 0;
 const progress = document.getElementById('progress');
 const curNum = document.getElementById('curNum');
 const blockTag = document.getElementById('blockTag');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
 document.getElementById('totNum').textContent = total;
 
 function render(){
@@ -2313,8 +3006,6 @@ function render(){
   progress.style.width = ((current+1)/total*100) + '%';
   curNum.textContent = current + 1;
   blockTag.textContent = s.dataset.block || '';
-  prevBtn.classList.toggle('is-disabled', current === 0);
-  nextBtn.classList.toggle('is-disabled', current === total-1);
   if(s.id === 'installSlide') loadTool(currentTool);
   /* CodeMirror necesita recalcular su tamaño al mostrarse una slide oculta */
   setTimeout(() => {
@@ -2331,8 +3022,6 @@ function go(i, toolKey){
 }
 function next(){ go(current+1); }
 function prev(){ go(current-1); }
-nextBtn.addEventListener('click', next);
-prevBtn.addEventListener('click', prev);
 document.addEventListener('keydown', e => {
   if(e.target.closest('.CodeMirror, textarea')) return;   /* no navegar mientras se escribe código */
   if(e.key === 'Escape'){ openMenu(false); return; }
@@ -2541,7 +3230,33 @@ function runPython(code, outEl){
       throw "No se encontró el módulo: '" + x + "'";
     return Sk.builtinFiles["files"][x];
   }
-  Sk.configure({ output:outf, read:builtinRead, __future__:Sk.python3 });
+  /* input() se responde dentro de la misma consola. Sin esto Skulpt abre un
+     prompt() nativo del navegador, que bloquea la presentación en clase. */
+  function inputf(promptText){
+    return new Promise(function(resolve){
+      const label = promptText || '';
+      const row = document.createElement('span');
+      row.className = 'in-row';
+      const ask = document.createElement('span');
+      ask.textContent = label;
+      const field = document.createElement('input');
+      field.type = 'text'; field.className = 'in-field'; field.spellcheck = false;
+      row.appendChild(ask); row.appendChild(field);
+      outEl.appendChild(row);
+      outEl.scrollTop = outEl.scrollHeight;
+      field.focus();
+      field.addEventListener('keydown', function(e){
+        if(e.key !== 'Enter') return;
+        e.preventDefault();
+        const value = field.value;
+        row.replaceWith(document.createTextNode(label + value + '\n'));
+        outEl.scrollTop = outEl.scrollHeight;
+        resolve(value);
+      });
+    });
+  }
+  Sk.configure({ output:outf, read:builtinRead, __future__:Sk.python3,
+                 inputfun:inputf, inputfunTakesPrompt:true });
   Sk.misceval.asyncToPromise(function(){
     return Sk.importMainWithBody("<stdin>", false, code, true);
   }).then(function(){
