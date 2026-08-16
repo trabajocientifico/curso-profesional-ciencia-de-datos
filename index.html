@@ -595,6 +595,12 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   background:rgba(200,242,90,.16); color:var(--lime); font-family:var(--mono); font-style:normal; font-size:.7rem; }
 .pw-label em{ font-style:normal; color:var(--muted); font-weight:500; }
 .console-mini{ min-height:44px; max-height:82px; }
+/* bloques de código NO ejecutables (no llevan .python-editor, CodeMirror los ignora) */
+.static-code{ background:#0d1117; color:#c8f25a; font-family:var(--mono); font-size:.78rem;
+  padding:12px 14px; line-height:1.6; overflow-x:auto; white-space:pre; margin:0; }
+.static-code .cm{ color:#5b6b63; }
+.static-out{ background:#000; color:#8b94b3; font-family:var(--mono); font-size:.7rem;
+  padding:10px 14px; line-height:1.5; border-top:1px solid #44475a; overflow-x:auto; white-space:pre; margin:0; }
 .in-row{ display:inline-flex; align-items:center; gap:6px; }
 .in-field{ background:transparent; border:none; border-bottom:1px dashed #22c55e; color:#22c55e;
   font-family:var(--mono); font-size:inherit; padding:0 4px; min-width:140px; outline:none; caret-color:#22c55e; }
@@ -615,6 +621,13 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .py-hero{ background:#0d1b18; }
 .course-title{ font-family:var(--serif); font-weight:900; line-height:.95; letter-spacing:-.02em;
   font-size:clamp(2.4rem,5.6vw,4.6rem); text-shadow:0 4px 30px rgba(200,242,90,.18); }
+
+/* separadoras de grupo: una pantalla, un título grande */
+.grp{ height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.grp-title{ font-family:var(--serif); font-weight:900; line-height:.95; letter-spacing:-.03em; color:#fff;
+  font-size:clamp(2.6rem,min(8vw,16vh),6.6rem); text-shadow:0 6px 40px rgba(200,242,90,.22); margin-top:20px; }
+.grp-lead{ margin-top:22px; max-width:58ch; font-size:1.05rem; line-height:1.6; color:var(--muted); }
+.grp-chips{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:30px; max-width:74ch; }
 .slide.active .reveal{ animation:rise .65s cubic-bezier(.2,.85,.25,1) backwards; }
 .slide.active .reveal:nth-child(1){ animation-delay:.05s; }
 .slide.active .reveal:nth-child(2){ animation-delay:.13s; }
@@ -1452,7 +1465,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
      ================================================================ -->
 
 <!-- 19 · PORTADA BLOQUE B + TABLA DE CONTENIDO -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Fundamentos de Python" data-sub="El recorrido del bloque B">
+<section class="slide s-py" data-block="Sesión 2 · Escribir código" data-title="Fundamentos de Python" data-sub="El recorrido del bloque B">
   <div class="py-stage flex flex-col justify-center">
     <div class="reveal mb-8">
       <span class="kicker mb-3">Sesión 2 · Bloque B</span>
@@ -1478,6 +1491,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">13</span><p class="font-bold mt-1">Condicionales</p><p class="text-xs text-slate-400">if · elif · else</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">14</span><p class="font-bold mt-1">Bucles</p><p class="text-xs text-slate-400">el trabajador incansable</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">15</span><p class="font-bold mt-1">Funciones</p><p class="text-xs text-slate-400">recetas guardadas</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">16</span><p class="font-bold mt-1">Errores</p><p class="text-xs text-slate-400">try · except</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">17</span><p class="font-bold mt-1">Librerías</p><p class="text-xs text-slate-400">las que ya escribió otro</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(242,177,52,.4)"><span class="code-font text-xs" style="color:var(--amber)">6×</span><p class="font-bold mt-1">Retos</p><p class="text-xs text-slate-400">manos al teclado</p></div>
     </div>
     <div class="reveal mt-6 p-4 rounded-lg text-sm text-slate-300" style="background:rgba(31,93,76,.25);border-left:4px solid var(--lime)">
@@ -1488,7 +1503,17 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 </section>
 
 <!-- 19b · PALABRAS RESERVADAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="01 · Variables" data-sub="Cajas de almacenamiento">
+<!-- SEPARADORA · BLOQUE 1 -->
+<section class="slide s-py" data-block="Sesión 2 · Escribir código" data-title="Bloque 1 · Escribir código" data-sub="Cómo se escribe Python">
+  <div class="py-stage grp">
+    <span class="kicker reveal">Bloque 1 de 5</span>
+    <h1 class="grp-title reveal">Escribir <span style="color:var(--lime)">código</span></h1>
+    <p class="grp-lead reveal">Antes de calcular nada hay que saber escribirlo: dónde se guardan los datos, qué nombres están prohibidos y cómo dejar notas que el computador ignora.</p>
+    <div class="grp-chips reveal"><span class="kw">01 · Variables</span><span class="kw">02 · Palabras reservadas</span><span class="kw">03 · Comentarios</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Escribir código" data-title="01 · Variables" data-sub="Cajas de almacenamiento">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 1</span>
@@ -1531,65 +1556,43 @@ es_estudiante = True</textarea>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="02 · Palabras reservadas" data-sub="Las 35 que Python ya tiene ocupadas">
+<section class="slide s-py" data-block="Sesión 2 · Escribir código" data-title="02 · Palabras reservadas" data-sub="Las 35 que Python ya tiene ocupadas">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-5 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 2</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
         <i class="fa-solid fa-key mr-2" style="color:var(--lime)"></i>Palabras <span class="em">reservadas</span>
       </h2>
+      <p class="text-lg text-slate-300 mt-3 max-w-4xl">
+        Python tiene <strong>35 palabras</strong> con un significado fijo en el lenguaje. Son suyas: no puedes usarlas para nombrar las <strong>variables</strong> que acabas de aprender a crear. Si lo intentas, el programa se detiene con un error.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Python tiene <strong>35 palabras</strong> con un significado fijo en el lenguaje. Son suyas: no puedes usarlas para nombrar las <strong>variables</strong> que acabas de aprender a crear. Si lo intentas, el programa se detiene con un error.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Valores</h4>
-            <span class="kw">True</span><span class="kw">False</span><span class="kw">None</span></div>
-          <div class="kw-group"><h4>Decisiones y lógica</h4>
-            <span class="kw soon">if</span><span class="kw soon">elif</span><span class="kw soon">else</span><span class="kw soon">and</span><span class="kw soon">or</span><span class="kw soon">not</span><span class="kw soon">in</span><span class="kw">is</span></div>
-          <div class="kw-group"><h4>Repetición</h4>
-            <span class="kw soon">for</span><span class="kw soon">while</span><span class="kw soon">break</span><span class="kw soon">continue</span><span class="kw">pass</span></div>
-          <div class="kw-group"><h4>Funciones y clases</h4>
-            <span class="kw soon">def</span><span class="kw soon">return</span><span class="kw">lambda</span><span class="kw">class</span><span class="kw">yield</span></div>
-          <div class="kw-group"><h4>Módulos</h4>
-            <span class="kw">import</span><span class="kw">from</span><span class="kw">as</span></div>
-          <div class="kw-group"><h4>Errores</h4>
-            <span class="kw">try</span><span class="kw">except</span><span class="kw">finally</span><span class="kw">raise</span><span class="kw">assert</span></div>
-          <div class="kw-group"><h4>Alcance</h4>
-            <span class="kw">global</span><span class="kw">nonlocal</span><span class="kw">del</span></div>
-          <div class="kw-group"><h4>Otras</h4>
-            <span class="kw">with</span><span class="kw">async</span><span class="kw">await</span></div>
-        </div>
-        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
-          <i class="fa-solid fa-circle-info mr-2" style="color:var(--amber)"></i>
-          Las marcadas en <span style="color:var(--amber);font-weight:700">ámbar</span> las usarás en este mismo bloque. No hay que memorizarlas: el editor las colorea distinto cuando las escribes.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-keywords','out-keywords')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-keywords" class="python-editor"># 'class' es palabra reservada: Python la tiene ocupada.
-# Quita el # de la línea de abajo y ejecuta para ver el error.
-
-# class = "Matemáticas"
-
-# La solución es simple: usa otro nombre.
-clase = "Matemáticas"
-nota = 4.5
-
-# Truco para reconocerlas: el editor las pinta de otro color.
-# Si al escribir un nombre se colorea solo, elige otro.</textarea>
-        <div id="out-keywords" class="console-output code-font text-sm"></div>
-      </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div class="kw-group"><h4>Valores</h4>
+        <span class="kw">True</span><span class="kw">False</span><span class="kw">None</span></div>
+      <div class="kw-group"><h4>Decisiones y lógica</h4>
+        <span class="kw soon">if</span><span class="kw soon">elif</span><span class="kw soon">else</span><span class="kw soon">and</span><span class="kw soon">or</span><span class="kw soon">not</span><span class="kw soon">in</span><span class="kw">is</span></div>
+      <div class="kw-group"><h4>Repetición</h4>
+        <span class="kw soon">for</span><span class="kw soon">while</span><span class="kw soon">break</span><span class="kw soon">continue</span><span class="kw">pass</span></div>
+      <div class="kw-group"><h4>Funciones y clases</h4>
+        <span class="kw soon">def</span><span class="kw soon">return</span><span class="kw">lambda</span><span class="kw">class</span><span class="kw">yield</span></div>
+      <div class="kw-group"><h4>Módulos</h4>
+        <span class="kw">import</span><span class="kw">from</span><span class="kw">as</span></div>
+      <div class="kw-group"><h4>Errores</h4>
+        <span class="kw">try</span><span class="kw">except</span><span class="kw">finally</span><span class="kw">raise</span><span class="kw">assert</span></div>
+      <div class="kw-group"><h4>Alcance</h4>
+        <span class="kw">global</span><span class="kw">nonlocal</span><span class="kw">del</span></div>
+      <div class="kw-group"><h4>Otras</h4>
+        <span class="kw">with</span><span class="kw">async</span><span class="kw">await</span></div>
+    </div>
+    <div class="p-3 mt-4 rounded text-sm text-slate-300" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
+      <i class="fa-solid fa-circle-info mr-2" style="color:var(--amber)"></i>
+      Las marcadas en <span style="color:var(--amber);font-weight:700">ámbar</span> las usarás en este mismo bloque. No hay que memorizarlas: el editor las colorea distinto cuando las escribes, y esa es la señal de que ese nombre está ocupado.
     </div>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="03 · Comentarios" data-sub="Notas para humanos">
+<section class="slide s-py" data-block="Sesión 2 · Escribir código" data-title="03 · Comentarios" data-sub="Notas para humanos">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 3</span>
@@ -1630,7 +1633,17 @@ cantidad = 3
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="04 · Tipos de datos" data-sub="int · float · str · bool">
+<!-- SEPARADORA · BLOQUE 2 -->
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="Bloque 2 · Datos y operaciones" data-sub="De qué están hechos y qué hacer con ellos">
+  <div class="py-stage grp">
+    <span class="kicker reveal">Bloque 2 de 5</span>
+    <h1 class="grp-title reveal">Datos y <span style="color:var(--lime)">operaciones</span></h1>
+    <p class="grp-lead reveal">De qué material está hecho cada dato, cómo mostrarlo en pantalla, cómo pedírselo al usuario y cómo calcular y comparar con él.</p>
+    <div class="grp-chips reveal"><span class="kw">04 · Tipos de datos</span><span class="kw">05 · print()</span><span class="kw">06 · type()</span><span class="kw">07 · input()</span><span class="kw">08 · Operadores</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="04 · Tipos de datos" data-sub="int · float · str · bool">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 4</span>
@@ -1685,7 +1698,7 @@ numero = int("10") + 5      # el texto "10" pasa a ser número</textarea>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="05 · print()" data-sub="Cuatro formas de mostrar un dato">
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="05 · print()" data-sub="Cuatro formas de mostrar un dato">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 5</span>
@@ -1765,7 +1778,7 @@ print(f"El año que viene tendrás {edad + 1}.")</textarea>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="06 · type()" data-sub="Comprobar de qué tipo es un dato">
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="06 · type()" data-sub="Comprobar de qué tipo es un dato">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 6</span>
@@ -1813,7 +1826,7 @@ print(type(edad_texto))</textarea>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="07 · input()" data-sub="Preguntarle algo al usuario">
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="07 · input()" data-sub="Preguntarle algo al usuario">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 7</span>
@@ -1860,7 +1873,7 @@ print("El año que viene tendrás", edad + 1)</textarea>
 </section>
 
 <!-- 24 · RETO VARIABLES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Variables y tipos" data-sub="¡Manos al teclado!">
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="Reto · Variables y tipos" data-sub="¡Manos al teclado!">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -1899,7 +1912,7 @@ print(mi_edad)</pre>
 </section>
 
 <!-- 24b · OPERADORES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="08 · Operadores" data-sub="Calcular, comparar y decidir">
+<section class="slide s-py" data-block="Sesión 2 · Datos y operaciones" data-title="08 · Operadores" data-sub="Calcular, comparar y decidir">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 8</span>
@@ -1965,7 +1978,17 @@ print(puntos)</textarea>
 </section>
 
 <!-- 25 · LISTAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas" data-sub="Mochilas de datos">
+<!-- SEPARADORA · BLOQUE 3 -->
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="Bloque 3 · Estructuras de datos" data-sub="Contenedores para muchos datos">
+  <div class="py-stage grp">
+    <span class="kicker reveal">Bloque 3 de 5</span>
+    <h1 class="grp-title reveal">Estructuras de <span style="color:var(--lime)">datos</span></h1>
+    <p class="grp-lead reveal">Hasta aquí, una caja para un dato. Ahora, contenedores capaces de guardar muchos a la vez: así es como llegan los datos del mundo real.</p>
+    <div class="grp-chips reveal"><span class="kw">09 · Listas</span><span class="kw">10 · Tuplas</span><span class="kw">11 · Diccionarios</span><span class="kw">12 · Conjuntos</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="09 · Listas" data-sub="Mochilas de datos">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 9</span>
@@ -2010,7 +2033,7 @@ print(mochila)</textarea>
 </section>
 
 <!-- 25b · LISTAS · CONSULTAR -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas · consultar" data-sub="Índices, rebanadas y búsquedas">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="09 · Listas · consultar" data-sub="Índices, rebanadas y búsquedas">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 9 · continuación</span>
@@ -2070,7 +2093,7 @@ print(compras.count("pan"))</textarea>
 </section>
 
 <!-- 25c · LISTAS · MODIFICAR -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="09 · Listas · modificar" data-sub="Añadir, quitar y ordenar">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="09 · Listas · modificar" data-sub="Añadir, quitar y ordenar">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 9 · continuación</span>
@@ -2137,7 +2160,7 @@ print("Al revés:", notas)</textarea>
 </section>
 
 <!-- 26 · RETO LISTAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Listas" data-sub="¡Manos al teclado!">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="Reto · Listas" data-sub="¡Manos al teclado!">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -2175,7 +2198,7 @@ print(mis_colores[0])</pre>
 </section>
 
 <!-- 27 · TUPLAS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="10 · Tuplas" data-sub="Datos que no cambian">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="10 · Tuplas" data-sub="Datos que no cambian">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 10</span>
@@ -2223,7 +2246,7 @@ print(colores_bandera)
 </section>
 
 <!-- 28 · DICCIONARIOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios" data-sub="Etiqueta y contenido">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="11 · Diccionarios" data-sub="Etiqueta y contenido">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 11</span>
@@ -2273,7 +2296,7 @@ print(persona)</textarea>
 </section>
 
 <!-- 28b · DICCIONARIOS · CONSULTAR -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios · consultar" data-sub="get(), claves y valores">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="11 · Diccionarios · consultar" data-sub="get(), claves y valores">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 11 · continuación</span>
@@ -2328,7 +2351,7 @@ print(list(estudiante.items()))</textarea>
 </section>
 
 <!-- 28c · DICCIONARIOS · MODIFICAR Y ANIDAR -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="11 · Diccionarios · modificar" data-sub="Actualizar, quitar y anidar">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="11 · Diccionarios · modificar" data-sub="Actualizar, quitar y anidar">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 11 · continuación</span>
@@ -2392,7 +2415,7 @@ print(curso[1]["nombre"], "sacó", curso[1]["nota"])</textarea>
 </section>
 
 <!-- 29 · RETO DICCIONARIOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Diccionarios" data-sub="¡Manos al teclado!">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="Reto · Diccionarios" data-sub="¡Manos al teclado!">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -2435,7 +2458,7 @@ print(mi_perfil)</pre>
 </section>
 
 <!-- 30 · CONJUNTOS -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="12 · Conjuntos" data-sub="Elementos únicos">
+<section class="slide s-py" data-block="Sesión 2 · Estructuras de datos" data-title="12 · Conjuntos" data-sub="Elementos únicos">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 12</span>
@@ -2481,7 +2504,17 @@ print(sin_repetidos)</textarea>
 </section>
 
 <!-- 31 · CONDICIONALES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="13 · Condicionales" data-sub="if · elif · else">
+<!-- SEPARADORA · BLOQUE 4 -->
+<section class="slide s-py" data-block="Sesión 2 · Control de flujo" data-title="Bloque 4 · Control de flujo" data-sub="Decidir y repetir">
+  <div class="py-stage grp">
+    <span class="kicker reveal">Bloque 4 de 5</span>
+    <h1 class="grp-title reveal">Control de <span style="color:var(--lime)">flujo</span></h1>
+    <p class="grp-lead reveal">Aquí el programa deja de ser una lista de órdenes que se leen de arriba abajo y empieza a decidir por sí solo qué hacer y cuántas veces.</p>
+    <div class="grp-chips reveal"><span class="kw">13 · Condicionales</span><span class="kw">14 · Bucles</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Control de flujo" data-title="13 · Condicionales" data-sub="if · elif · else">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 13</span>
@@ -2537,7 +2570,7 @@ if edad_usuario >= 13 and tiene_boleto:
 </section>
 
 <!-- 32 · RETO CONDICIONALES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Condicionales" data-sub="¡Manos al teclado!">
+<section class="slide s-py" data-block="Sesión 2 · Control de flujo" data-title="Reto · Condicionales" data-sub="¡Manos al teclado!">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -2579,7 +2612,7 @@ else:
 </section>
 
 <!-- 33 · BUCLES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="14 · Bucles" data-sub="El trabajador incansable">
+<section class="slide s-py" data-block="Sesión 2 · Control de flujo" data-title="14 · Bucles" data-sub="El trabajador incansable">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 14</span>
@@ -2626,7 +2659,7 @@ for fruta in frutas:
 </section>
 
 <!-- 34 · RETO BUCLES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Bucles" data-sub="¡Manos al teclado!">
+<section class="slide s-py" data-block="Sesión 2 · Control de flujo" data-title="Reto · Bucles" data-sub="¡Manos al teclado!">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -2666,7 +2699,17 @@ for i in range(1, 11):
 </section>
 
 <!-- 35 · FUNCIONES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="15 · Funciones" data-sub="Recetas guardadas">
+<!-- SEPARADORA · BLOQUE 5 -->
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="Bloque 5 · Reutilizar y ampliar" data-sub="Funciones, errores y librerías">
+  <div class="py-stage grp">
+    <span class="kicker reveal">Bloque 5 de 5</span>
+    <h1 class="grp-title reveal">Reutilizar y <span style="color:var(--lime)">ampliar</span></h1>
+    <p class="grp-lead reveal">Empaquetar tu código para no repetirlo, protegerlo de los fallos y sumarle el trabajo de miles de personas. Es la puerta a la ciencia de datos.</p>
+    <div class="grp-chips reveal"><span class="kw">15 · Funciones</span><span class="kw">16 · Errores</span><span class="kw">17 · Librerías</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="15 · Funciones" data-sub="Recetas guardadas">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-6 border-b border-slate-700 pb-4">
       <span class="kicker mb-2">Capítulo 15</span>
@@ -2714,7 +2757,7 @@ print(calcular_area_rectangulo(12, 2))</textarea>
 </section>
 
 <!-- 36 · RETO FUNCIONES -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Reto · Funciones" data-sub="El reto final del bloque">
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="Reto · Funciones" data-sub="El reto final del bloque">
   <div class="py-stage flex flex-col justify-center items-center text-center">
     <div class="reveal mb-8 text-center">
       <span class="kicker mb-3" style="color:var(--amber)">¡Manos al teclado!</span>
@@ -2758,8 +2801,156 @@ else:
   </div>
 </section>
 
+<!-- 36b · LIBRERÍAS -->
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="16 · Errores: try/except" data-sub="Que el programa no se caiga">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+      <span class="kicker mb-2">Capítulo 16</span>
+      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+        <i class="fa-solid fa-shield-halved mr-2" style="color:var(--lime)"></i>Errores: <span class="em">el plan B</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
+      <div class="space-y-4">
+        <p class="text-lg text-slate-300">
+          Cuando algo falla, Python <strong>detiene el programa entero</strong> en esa línea. Con <code>try</code> / <code>except</code> le dices: "inténtalo; y si sale mal, haz esto otro en lugar de morirte".
+        </p>
+        <div class="p-4 rounded-lg border border-slate-600 bg-slate-800/60">
+          <p class="font-bold mb-2 text-sm" style="color:var(--lime)">La estructura</p>
+          <pre class="static-code" style="background:transparent;padding:0;font-size:.8rem">try:
+    <span class="cm"># lo que puede fallar</span>
+except TipoDeError:
+    <span class="cm"># el plan B si falla</span></pre>
+        </div>
+        <div class="kw-group">
+          <h4>Los errores más frecuentes</h4>
+          <span class="kw">ValueError</span><span class="kw">KeyError</span><span class="kw">ZeroDivisionError</span><span class="kw">TypeError</span><span class="kw soon">FileNotFoundError</span>
+          <p class="text-xs text-slate-400 mt-2">Los primeros ya te los cruzaste. El de <span style="color:var(--amber);font-weight:700">ámbar</span> llega en el capítulo siguiente, en cuanto intentes abrir un archivo que no está donde creías.</p>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
+          <i class="fa-solid fa-triangle-exclamation mr-2" style="color:var(--amber)"></i>
+          <strong>No sirve para todo.</strong> Un error de sintaxis —como usar <code>class</code> de nombre de variable, del capítulo 02— no se atrapa: hay que arreglarlo. <code>try</code> protege de lo que falla <em>al ejecutar</em>, no de lo que está mal escrito.
+        </div>
+      </div>
+      <div class="ide-window h-fit">
+        <div class="ide-header">
+          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+          <button class="run-btn" onclick="runCode('code-try','out-try')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+        </div>
+        <textarea id="code-try" class="python-editor"># 1 · El usuario escribe algo que no es número
+edad_texto = "veinticinco"
+
+try:
+    edad = int(edad_texto)
+    print("Tu edad es:", edad)
+except ValueError:
+    print("Eso no es un número, escribe solo dígitos")
+
+# 2 · Una clave que no existe en el diccionario
+persona = {"nombre": "Ana"}
+
+try:
+    print(persona["telefono"])
+except KeyError:
+    print("Esa clave no está en el diccionario")
+
+# 3 · Dividir entre cero
+try:
+    print(10 / 0)
+except ZeroDivisionError:
+    print("No se puede dividir entre cero")
+
+print("Y el programa sigue vivo hasta el final")</textarea>
+        <div id="out-try" class="console-output code-font text-sm"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="17 · Librerías" data-sub="Instalar pandas y abrir un CSV">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 17</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-boxes-stacked mr-2" style="color:var(--lime)"></i>Librerías: <span class="em">no reinventes la rueda</span>
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Una librería es una caja de funciones que <strong class="text-slate-200">ya escribió otra persona</strong>. Algunas vienen dentro de Python (<code>math</code>, <code>random</code>). Otras, como <strong class="text-slate-200">pandas</strong>, hay que <strong class="text-slate-200">instalarlas aparte</strong>. Sigue los tres pasos en orden.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+      <div>
+        <p class="pw-label"><i>1</i> Sin instalar <em>· pulsa Ejecutar</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-libs','out-libs')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-libs" class="python-editor">import pandas as pd
+
+df = pd.read_csv("ventas.csv")
+print(df.head())</textarea>
+          <div id="out-libs" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Falla, y está bien que falle: pandas no viene con Python.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Instalarla <em>· en la terminal</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">terminal · una sola vez</span>
+          </div>
+<pre class="static-code">pip install pandas</pre>
+<pre class="static-out">Collecting pandas
+Installing collected packages: pandas
+Successfully installed pandas-2.2.3</pre>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">No se escribe en Python, sino en la terminal. Y solo una vez por computador.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Ahora sí <em>· el mismo código</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · ventas.csv</span>
+          </div>
+<pre class="static-code">import pandas as pd
+
+df = pd.read_csv("ventas.csv")
+print(df.head())</pre>
+<pre class="static-out">        fecha     ciudad  ventas
+0  2026-01-05     Bogotá    1250
+1  2026-01-06   Medellín     980
+2  2026-01-07       Cali    1430</pre>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Tres líneas y el Excel ya está dentro de Python. Si el archivo no aparece, salta <code>FileNotFoundError</code>: ahí usas el <code>try/except</code> del capítulo anterior.</p>
+      </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="kw-group">
+        <h4>Las tres formas de importar</h4>
+        <span class="kw">import pandas</span><span class="kw">from math import sqrt</span><span class="kw">import pandas as pd</span>
+        <p class="text-xs text-slate-400 mt-2">El <code>as pd</code> es solo un apodo para escribir menos. Es la forma que verás en todo internet.</p>
+      </div>
+      <div class="p-3 rounded" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-rocket mr-2"></i>Aquí empieza la ciencia de datos</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <b>pandas</b> para tablas, <b>matplotlib</b> para gráficas, <b>scikit-learn</b> para modelos. Todo el resto del curso son librerías: los fundamentos que acabas de ver son lo que te permite entender qué le estás pidiendo a cada una.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 37 · CIERRE -->
-<section class="slide s-py" data-block="Sesión 2 · Fundamentos" data-title="Cierre" data-sub="Lo que sigue en el curso">
+<section class="slide s-py" data-block="Sesión 2 · Reutilizar y ampliar" data-title="Cierre" data-sub="Lo que sigue en el curso">
   <div class="py-stage flex flex-col justify-center items-center text-center" style="background:transparent">
     <span class="reveal kicker mb-4">Final de las sesiones 1 y 2</span>
     <h2 class="reveal serif-title text-4xl md:text-6xl mb-6 text-white max-w-4xl">
