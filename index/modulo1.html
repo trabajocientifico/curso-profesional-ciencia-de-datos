@@ -842,6 +842,22 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .anim .blob{fill:#152337;stroke:#243B57;stroke-width:1.5}
 .anim .err{fill:none;stroke:var(--amber);stroke-width:1.6}
 .anim .qm{font-size:22px;font-weight:600;fill:var(--slate)}
+
+/* separadora del bloque 3: fichas grandes con el signo de cada estructura */
+.grp-chips.grp-estructuras{ gap:14px; max-width:none; margin-top:clamp(20px,3vh,34px); }
+.est{ display:flex; flex-direction:column; align-items:center; gap:7px;
+  min-width:clamp(126px,15vw,178px); padding:clamp(13px,2vh,20px) 20px clamp(11px,1.6vh,16px);
+  border-radius:18px; background:rgba(200,242,90,.07); border:1px solid rgba(200,242,90,.28);
+  transition:transform .25s, border-color .25s; }
+.est:hover{ transform:translateY(-3px); border-color:var(--lime); }
+.est b{ font-family:var(--mono); font-weight:700; line-height:1; letter-spacing:.04em;
+  color:var(--lime); font-size:clamp(1.7rem,3.6vw,2.8rem); }
+.est i{ font-style:normal; font-weight:700; color:#fff; font-size:clamp(.9rem,1.5vw,1.08rem); }
+.est em{ font-style:normal; font-family:var(--mono); font-size:.61rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--muted); text-align:center; line-height:1.5; }
+.grp-nota{ margin-top:clamp(16px,2.4vh,26px); max-width:62ch; font-size:.92rem; line-height:1.6; color:var(--muted); }
+.grp-nota strong{ color:var(--lime); font-weight:700; }
+
 @media (prefers-reduced-motion:reduce){ .anim *{transition-duration:.001ms !important;animation:none !important} }
 
 @media (prefers-reduced-motion:reduce){
@@ -1661,54 +1677,76 @@ cantidad = 3
 
 <section class="slide s-py" data-block="Datos y operaciones" data-title="04 · Tipos de datos" data-sub="int · float · str · bool">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 4</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-shapes mr-2" style="color:var(--lime)"></i>Tipos de datos: <span class="em">el material de cada caja</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Así como en la vida real hay cosas de <strong class="text-slate-200">madera, vidrio o plástico</strong>, en Python cada dato está hecho de un "material" distinto. Elegir bien el tipo evita errores. Son dos cosas distintas: <strong class="text-slate-200">crear</strong> un dato de cada tipo y <strong class="text-slate-200">convertirlo</strong> a otro.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Así como en la vida real hay cosas de <strong>madera, vidrio o plástico</strong>, en Python cada dato está hecho de un "material" distinto. Elegir bien el tipo evita errores.
-        </p>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
-            <p class="font-bold text-blue-300"><code>int</code> · Entero</p>
-            <p class="text-sm text-slate-400">Números sin decimales: <code>25</code>, <code>-4</code></p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Crear <em>· una caja de cada material</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-tipos1','out-tipos1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
           </div>
-          <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
-            <p class="font-bold text-sky-300"><code>float</code> · Decimal</p>
-            <p class="text-sm text-slate-400">Con punto: <code>1.75</code>, <code>3.14</code></p>
-          </div>
-          <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
-            <p class="font-bold text-green-300"><code>str</code> · Texto</p>
-            <p class="text-sm text-slate-400">Entre comillas: <code>"Ana"</code></p>
-          </div>
-          <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
-            <p class="font-bold text-amber-300"><code>bool</code> · Lógico</p>
-            <p class="text-sm text-slate-400">Solo <code>True</code> o <code>False</code></p>
-          </div>
-        </div>
-        <div class="p-3 bg-blue-900/30 border-l-4 border-blue-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-lightbulb text-yellow-300 mr-2"></i> Con <code>int()</code>, <code>str()</code> o <code>float()</code> conviertes un dato de un tipo a otro. Para <strong>comprobar</strong> de qué tipo es algo existe <code>type()</code>, que veremos en el capítulo 06.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-tipos','out-tipos')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-tipos" class="python-editor"># Cada dato está hecho de un "material" distinto
-edad = 25             # int   · entero
+          <textarea id="code-tipos1" class="python-editor">edad = 25             # int   · entero
 estatura = 1.75       # float · decimal
 nombre = "Ana"        # str   · texto
-es_estudiante = True  # bool  · verdadero o falso
+es_estudiante = True  # bool  · verdadero o falso</textarea>
+          <div id="out-tipos1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# Y se puede convertir de un material a otro
-edad_texto = str(edad)      # el número 25 pasa a ser el texto "25"
-numero = int("10") + 5      # el texto "10" pasa a ser número</textarea>
-        <div id="out-tipos" class="console-output code-font text-sm"></div>
+      <div>
+        <p class="pw-label"><i>2</i> Convertir <em>· de un material a otro</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-tipos2','out-tipos2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-tipos2" class="python-editor">edad = 25
+
+edad_texto = str(edad)    # el número 25 pasa a ser el texto "25"
+numero = int("10") + 5    # el texto "10" pasa a ser número
+decimal = float("3.5")    # el texto "3.5" pasa a ser decimal</textarea>
+          <div id="out-tipos2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+      <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
+        <p class="font-bold text-blue-300 text-sm"><code>int</code> · Entero</p>
+        <p class="text-xs text-slate-400">Números sin decimales: <code>25</code>, <code>-4</code></p>
+      </div>
+      <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
+        <p class="font-bold text-sky-300 text-sm"><code>float</code> · Decimal</p>
+        <p class="text-xs text-slate-400">Con punto: <code>1.75</code>, <code>3.14</code></p>
+      </div>
+      <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
+        <p class="font-bold text-green-300 text-sm"><code>str</code> · Texto</p>
+        <p class="text-xs text-slate-400">Entre comillas: <code>"Ana"</code></p>
+      </div>
+      <div class="bg-slate-800 p-3 rounded-lg border border-slate-600">
+        <p class="font-bold text-amber-300 text-sm"><code>bool</code> · Lógico</p>
+        <p class="text-xs text-slate-400">Solo <code>True</code> o <code>False</code></p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 bg-blue-900/30 border-l-4 border-blue-500 rounded">
+        <p class="font-bold mb-1 text-sm text-blue-200"><i class="fa-solid fa-circle-info mr-2"></i>Los dos recuadros salen en blanco</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Es correcto: los datos quedan guardados, pero todavía no le hemos pedido a Python que los muestre. Eso llega en el capítulo 05.</p>
+      </div>
+      <div class="p-3 rounded" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-arrow-right-long mr-2"></i>Convertir no es comprobar</p>
+        <p class="text-slate-300 text-xs leading-relaxed">El recuadro 2 <strong>cambia</strong> un dato de tipo con <code>int()</code>, <code>str()</code> o <code>float()</code>. Para <strong>comprobar</strong> de qué tipo es algo existe <code>type()</code>, en el capítulo 06.</p>
       </div>
     </div>
   </div>
@@ -1796,33 +1834,25 @@ print(f"El año que viene tendrás {edad + 1}.")</textarea>
 
 <section class="slide s-py" data-block="Datos y operaciones" data-title="06 · type()" data-sub="Comprobar de qué tipo es un dato">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 6</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-magnifying-glass-chart mr-2" style="color:var(--lime)"></i>La función <code>type()</code>: <span class="em">¿de qué está hecho?</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Ya sabes que existen <code>int</code>, <code>float</code>, <code>str</code> y <code>bool</code>, y ya sabes mostrar cosas con <code>print()</code>. Al juntarlos obtienes la herramienta que responde: <strong class="text-slate-200">¿de qué tipo es este dato?</strong> Se usa siempre igual: metes el dato en <code>type()</code> y lo envuelves en <code>print()</code> para verlo.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Ya sabes que existen <code>int</code>, <code>float</code>, <code>str</code> y <code>bool</code>. Y ya sabes mostrar cosas con <code>print()</code>. Al juntarlos obtienes la herramienta que responde: <strong>¿de qué tipo es este dato?</strong>
-        </p>
-        <p class="text-lg text-slate-400">
-          Se usa siempre igual: metes el dato en <code>type()</code> y lo envuelves en <code>print()</code> para verlo.
-        </p>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>¿Para qué sirve en la práctica?</p>
-          <p class="text-slate-300 text-sm">
-            Cuando un cálculo falle sin motivo aparente, <code>type()</code> suele dar la respuesta: casi siempre es un número que en realidad era texto. Lo verás en el capítulo siguiente.
-          </p>
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-type','out-type')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-type" class="python-editor">edad = 25
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Preguntar el tipo <em>· uno por cada material</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-type1','out-type1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-type1" class="python-editor">edad = 25
 estatura = 1.75
 nombre = "Ana"
 es_estudiante = True
@@ -1830,13 +1860,42 @@ es_estudiante = True
 print(type(edad))
 print(type(estatura))
 print(type(nombre))
-print(type(es_estudiante))
+print(type(es_estudiante))</textarea>
+          <div id="out-type1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# Sirve para comprobar que una conversión salió bien
+      <div>
+        <p class="pw-label"><i>2</i> Comprobar una conversión <em>· ¿salió bien?</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-type2','out-type2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-type2" class="python-editor">edad = 25
+print(type(edad))
+
+# str() lo convierte en texto: mismo 25, otro material
 edad_texto = str(edad)
 print(edad_texto)
 print(type(edad_texto))</textarea>
-        <div id="out-type" class="console-output code-font text-sm"></div>
+          <div id="out-type2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>¿Para qué sirve en la práctica?</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          Cuando un cálculo falle sin motivo aparente, <code>type()</code> suele dar la respuesta: casi siempre es un número que en realidad era texto. Lo verás en el capítulo siguiente.
+        </p>
+      </div>
+      <div class="p-3 rounded" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-code-compare mr-2"></i>Compara las dos consolas</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          En el recuadro 1 cada dato responde con su clase. En el recuadro 2 el <strong>mismo</strong> 25 aparece dos veces: primero como <code>int</code> y después, tras <code>str()</code>, como <code>str</code>.
+        </p>
       </div>
     </div>
   </div>
@@ -1844,46 +1903,71 @@ print(type(edad_texto))</textarea>
 
 <section class="slide s-py" data-block="Datos y operaciones" data-title="07 · input()" data-sub="Preguntarle algo al usuario">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 7</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-keyboard mr-2" style="color:var(--lime)"></i>La función <code>input()</code>: <span class="em">el micrófono</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Si <code>print()</code> es el megáfono que saca información, <code>input()</code> es el micrófono que la <strong class="text-slate-200">recibe</strong>: muestra un mensaje, espera a que la persona escriba y guarda lo que escribió. Ejecuta los tres recuadros y <strong class="text-slate-200">responde dentro de la consola negra</strong>.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Si <code>print()</code> es el megáfono que saca información, <code>input()</code> es el micrófono que la <strong>recibe</strong>: muestra un mensaje, espera a que la persona escriba y guarda lo que escribió.
-        </p>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>El error más común de todo el curso</p>
-          <p class="text-slate-300 text-sm">
-            <code>input()</code> devuelve <strong>siempre</strong> texto (<code>str</code>), aunque escribas un número. Por eso <code>"25" + 1</code> falla: hay que convertirlo antes con <code>int()</code> o <code>float()</code>.
-          </p>
-        </div>
-        <ul class="text-lg text-slate-400 space-y-2 list-disc list-inside marker:text-lime-300">
-          <li>El texto dentro del paréntesis es la <strong>pregunta</strong> que se ve en pantalla.</li>
-          <li>Guarda el resultado en una variable, o se pierde.</li>
-          <li>Aquí une los cuatro temas anteriores: variable + tipo + conversión + <code>print()</code>.</li>
-        </ul>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-input','out-input')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-input" class="python-editor"># Escribe tu respuesta en la consola negra y pulsa Enter.
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> Preguntar y guardar <em>· lo básico</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-input1','out-input1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-input1" class="python-editor"># Escribe y pulsa Enter
 nombre = input("¿Cómo te llamas? ")
-print("Mucho gusto,", nombre)
 
-edad = input("¿Cuántos años tienes? ")
-print("Python lo guardó como:", type(edad))
-
-# Para operar con él, hay que convertirlo a número
-edad = int(edad)
-print("El año que viene tendrás", edad + 1)</textarea>
-        <div id="out-input" class="console-output code-font text-sm"></div>
+print("Mucho gusto,", nombre)</textarea>
+          <div id="out-input1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">El texto del paréntesis es la <strong>pregunta</strong>. Si no guardas el resultado en una variable, se pierde.</p>
       </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Siempre devuelve texto <em>· aunque escribas un número</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-input2','out-input2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-input2" class="python-editor">edad = input("¿Cuántos años tienes? ")
+
+print("Python lo guardó como:")
+print(type(edad))</textarea>
+          <div id="out-input2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Escribe <code>25</code> y fíjate: responde <code>str</code>, no <code>int</code>.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Convertir para operar <em>· con int() o float()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-input3','out-input3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-input3" class="python-editor">edad = input("¿Cuántos años tienes? ")
+
+edad = int(edad)      # ahora sí es número
+print("El año que viene tendrás", edad + 1)</textarea>
+          <div id="out-input3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Quita la línea del <code>int()</code> y verás el error: aquí une variable + tipo + conversión + <code>print()</code>.</p>
+      </div>
+    </div>
+
+    <div class="p-3 mt-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+      <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>El error más común de todo el curso</p>
+      <p class="text-slate-300 text-xs leading-relaxed">
+        <code>input()</code> devuelve <strong>siempre</strong> texto (<code>str</code>), aunque escribas un número: eso es lo que demuestra el recuadro 2. Por eso <code>"25" + 1</code> falla; hay que convertirlo antes con <code>int()</code> o <code>float()</code>, como en el recuadro 3.
+      </p>
     </div>
   </div>
 </section>
@@ -1930,65 +2014,98 @@ print(mi_edad)</pre>
 <!-- 24b · OPERADORES -->
 <section class="slide s-py" data-block="Datos y operaciones" data-title="08 · Operadores" data-sub="Calcular, comparar y decidir">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 8</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-calculator mr-2" style="color:var(--lime)"></i>Operadores: <span class="em">los verbos del código</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Si las variables son los sustantivos, los operadores son los <strong class="text-slate-200">verbos</strong>. Son cuatro familias: ejecuta cada recuadro por separado.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Si las variables son los sustantivos, los operadores son los <strong>verbos</strong>: lo que de verdad hace algo con los datos que ya sabes guardar.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Aritméticos · calcular</h4>
-            <span class="kw">+</span><span class="kw">-</span><span class="kw">*</span><span class="kw">/</span><span class="kw">//</span><span class="kw">%</span><span class="kw">**</span></div>
-          <div class="kw-group"><h4>Comparación · preguntar</h4>
-            <span class="kw soon">==</span><span class="kw soon">!=</span><span class="kw soon">&lt;</span><span class="kw soon">&gt;</span><span class="kw soon">&lt;=</span><span class="kw soon">&gt;=</span></div>
-          <div class="kw-group"><h4>Lógicos · combinar</h4>
-            <span class="kw soon">and</span><span class="kw soon">or</span><span class="kw soon">not</span></div>
-          <div class="kw-group"><h4>Asignación · guardar</h4>
-            <span class="kw">=</span><span class="kw">+=</span><span class="kw">-=</span><span class="kw">*=</span><span class="kw">/=</span></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Aritméticos <em>· calcular</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-op1','out-op1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-op1" class="python-editor">print(7 + 3)     # 10   suma
+print(7 - 3)     # 4    resta
+print(7 * 3)     # 21   multiplicación
+print(7 / 2)     # 3.5  división exacta
+print(7 // 2)    # 3    división entera
+print(7 % 2)     # 1    resto: ¿sobra algo?
+print(2 ** 3)    # 8    potencia</textarea>
+          <div id="out-op1" class="console-output console-mini code-font text-sm"></div>
         </div>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>No confundas <code>=</code> con <code>==</code></p>
-          <p class="text-slate-300 text-sm">
-            Uno solo <strong>guarda</strong> un valor (<code>edad = 25</code>). Dos <strong>preguntan</strong> si son iguales y responden <code>True</code> o <code>False</code> (<code>edad == 25</code>).
-          </p>
-        </div>
-        <p class="text-base text-slate-400">
-          Los de <span style="color:var(--amber);font-weight:700">ámbar</span> son la base de los condicionales: sin ellos, el programa no puede decidir nada.
-        </p>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-operadores','out-operadores')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+
+      <div>
+        <p class="pw-label"><i>2</i> Comparación <em>· siempre dan True o False</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-op2','out-op2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-op2" class="python-editor">nota = 4.2
+
+print(nota &gt;= 3.0)   # ¿aprobó?
+print(nota == 5.0)   # ¿sacó la máxima?
+print(nota != 0)     # ¿tiene nota?
+print(nota &lt; 3.0)    # ¿perdió?</textarea>
+          <div id="out-op2" class="console-output console-mini code-font text-sm"></div>
         </div>
-        <textarea id="code-operadores" class="python-editor"># Aritméticos
-print(7 + 3)     # 10  suma
-print(7 / 2)     # 3.5 división exacta
-print(7 // 2)    # 3   división entera (sin decimales)
-print(7 % 2)     # 1   resto: ¿sobra algo?
-print(2 ** 3)    # 8   potencia
+      </div>
 
-# Comparación: siempre devuelven True o False
-nota = 4.2
-print(nota >= 3.0)      # ¿aprobó?
-print(nota == 5.0)      # ¿sacó la nota máxima?
-
-# Lógicos: combinan condiciones
+      <div>
+        <p class="pw-label"><i>3</i> Lógicos <em>· combinar condiciones</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-op3','out-op3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-op3" class="python-editor">nota = 4.2
 asistio = True
-print(nota >= 3.0 and asistio)   # las dos cosas
-print(nota >= 4.5 or asistio)    # al menos una
-print(not asistio)               # not le da la vuelta: True pasa a False
 
-# Asignación abreviada
-puntos = 10
-puntos += 5      # equivale a: puntos = puntos + 5
+print(nota &gt;= 3.0 and asistio)  # las dos
+print(nota &gt;= 4.5 or asistio)   # al menos una
+print(not asistio)              # da la vuelta</textarea>
+          <div id="out-op3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>4</i> Asignación <em>· guardar y actualizar</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-op4','out-op4')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-op4" class="python-editor">puntos = 10
+print(puntos)
+
+puntos += 5     # puntos = puntos + 5
+print(puntos)
+
+puntos -= 3
+puntos *= 2
 print(puntos)</textarea>
-        <div id="out-operadores" class="console-output code-font text-sm"></div>
+          <div id="out-op4" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>No confundas <code>=</code> con <code>==</code></p>
+        <p class="text-slate-300 text-xs leading-relaxed">Uno solo <strong>guarda</strong> un valor (<code>edad = 25</code>). Dos <strong>preguntan</strong> si son iguales y responden <code>True</code> o <code>False</code> (<code>edad == 25</code>).</p>
+      </div>
+      <div class="p-3 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-arrow-right-long mr-2"></i>Los recuadros 2 y 3 son la base de los condicionales</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Sin comparar ni combinar, el programa no puede decidir nada. Vuelven en el capítulo 14.</p>
       </div>
     </div>
   </div>
@@ -1997,58 +2114,87 @@ print(puntos)</textarea>
 <!-- 30b · TEXTO -->
 <section class="slide s-py" data-block="Datos y operaciones" data-title="09 · Texto" data-sub="Limpiar y partir cadenas">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 9</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-quote-right mr-2" style="color:var(--lime)"></i>Texto: <span class="em">dejarlo presentable</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Los datos reales llegan sucios: <code>"&nbsp;Bogotá&nbsp;"</code> con espacios, <code>"BOGOTA"</code> en mayúsculas, <code>"bogota"</code> sin tilde. Para Python son <strong class="text-slate-200">tres ciudades distintas</strong>. Cada recuadro arregla una cosa.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Los datos reales llegan sucios: <code>" Bogotá "</code> con espacios, <code>"BOGOTA"</code> en mayúsculas, <code>"bogota"</code> sin tilde. Para Python son <strong>tres ciudades distintas</strong>, y tus cuentas saldrán mal.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Limpiar</h4>
-            <span class="kw">.strip()</span><span class="kw">.replace()</span></div>
-          <div class="kw-group"><h4>Normalizar</h4>
-            <span class="kw">.lower()</span><span class="kw">.upper()</span></div>
-          <div class="kw-group"><h4>Partir</h4>
-            <span class="kw">.split()</span></div>
-          <div class="kw-group"><h4>Medir</h4>
-            <span class="kw">len()</span></div>
-        </div>
-        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
-          <i class="fa-solid fa-arrow-right-long mr-2" style="color:var(--lime)"></i>
-          Fíjate en lo que devuelve <code>.split()</code>: una <strong>lista</strong>. Es justo con lo que abre el bloque siguiente.
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Limpiar <em>· quitar lo que sobra</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-txt1','out-txt1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-txt1" class="python-editor">ciudad = "   BOGOTA   "
+
+print(ciudad.strip())
+print(ciudad.strip().replace("BOGOTA", "Bogotá"))</textarea>
+          <div id="out-txt1" class="console-output console-mini code-font text-sm"></div>
         </div>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-texto','out-texto')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-texto" class="python-editor">ciudad = "   BOGOTA   "
 
-# .strip() quita los espacios de los extremos
-print(ciudad.strip())
-
-# .lower() y .upper() unifican mayúsculas
-print(ciudad.strip().lower())
+      <div>
+        <p class="pw-label"><i>2</i> Normalizar <em>· unificar mayúsculas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-txt2','out-txt2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-txt2" class="python-editor">print("   BOGOTA   ".strip().lower())
 print("medellin".upper())
 
-# Encadenar limpiezas en una sola línea
-print(ciudad.strip().lower().replace("bogota", "bogotá"))
+# así sí se pueden comparar
+print("Cali".lower() == "cali")</textarea>
+          <div id="out-txt2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# len() mide cuántos caracteres hay
-print(len("Bogotá"))
-print(len(ciudad))          # con los espacios cuenta más
+      <div>
+        <p class="pw-label"><i>3</i> Medir <em>· cuántos caracteres</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-txt3','out-txt3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-txt3" class="python-editor">print(len("Bogotá"))
+print(len("   BOGOTA   "))   # los espacios cuentan
+print(len("   BOGOTA   ".strip()))</textarea>
+          <div id="out-txt3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# .split() parte el texto y DEVUELVE UNA LISTA
-fila = "2026-01-05,Bogotá,1250"
+      <div>
+        <p class="pw-label"><i>4</i> Partir <em>· una lista con las piezas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-txt4','out-txt4')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-txt4" class="python-editor">fila = "2026-01-05,Bogotá,1250"
+
 print(fila.split(","))
-print(fila.split(",")[1])   # la segunda pieza</textarea>
-        <div id="out-texto" class="console-output code-font text-sm"></div>
+print(fila.split(",")[1])    # la segunda pieza
+print(len(fila.split(",")))</textarea>
+          <div id="out-txt4" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-link mr-2"></i>Se pueden encadenar</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Fíjate en el recuadro 2: <code>.strip().lower()</code> aplica una limpieza detrás de otra en la misma línea. Se leen de izquierda a derecha.</p>
+      </div>
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-arrow-right-long mr-2"></i><code>.split()</code> devuelve una <strong>lista</strong></p>
+        <p class="text-slate-300 text-xs leading-relaxed">Míralo en el recuadro 4: aparecen los corchetes. Es justo el objeto con el que abre el bloque siguiente.</p>
       </div>
     </div>
   </div>
@@ -2061,49 +2207,86 @@ print(fila.split(",")[1])   # la segunda pieza</textarea>
     <span class="kicker reveal">Bloque 3 de 5</span>
     <h1 class="grp-title reveal">Estructuras de <span style="color:var(--lime)">datos</span></h1>
     <p class="grp-lead reveal">Hasta aquí, una caja para un dato. Ahora, contenedores capaces de guardar muchos a la vez: así es como llegan los datos del mundo real.</p>
-    <div class="grp-chips reveal"><span class="kw">10 · Listas</span><span class="kw">11 · Tuplas</span><span class="kw">12 · Diccionarios</span><span class="kw">13 · Conjuntos</span></div>
+    <div class="grp-chips grp-estructuras reveal">
+      <span class="est"><b>[&nbsp;]</b><i>10 · Listas</i><em>corchetes</em></span>
+      <span class="est"><b>(&nbsp;)</b><i>11 · Tuplas</i><em>paréntesis</em></span>
+      <span class="est"><b>{&nbsp;:&nbsp;}</b><i>12 · Diccionarios</i><em>llaves con clave: valor</em></span>
+      <span class="est"><b>{&nbsp;}</b><i>13 · Conjuntos</i><em>llaves sin pares</em></span>
+    </div>
+    <p class="grp-nota reveal">Fíjate: diccionarios y conjuntos comparten las mismas <strong>llaves</strong>. Lo que los distingue es si dentro hay pares <code>clave: valor</code> o solo elementos sueltos.</p>
   </div>
 </section>
 
 <section class="slide s-py" data-block="Estructuras de datos" data-title="10 · Listas" data-sub="Mochilas de datos">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 10</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-list-ul mr-2" style="color:var(--lime)"></i>Listas: <span class="em">mochilas de datos</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Una variable es una caja para UN solo objeto. Pero, ¿y si necesitamos llevar muchos, como en una mochila escolar? Para eso están las <strong class="text-slate-200">listas</strong>, con corchetes <code>[]</code>. Son tres gestos distintos: crearla, sacar un objeto y meter otro.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Ya sabemos que una variable es una caja para UN solo objeto. Pero, ¿y si necesitamos llevar muchos, como en una mochila escolar? Para eso usamos las <strong>Listas</strong> (con corchetes <code>[]</code>).
-        </p>
-        <p class="text-lg text-slate-400">
-          <strong>Atención:</strong> las computadoras empiezan a contar desde cero. El primer elemento de tu mochila está en la posición <code>[0]</code>, no en la 1.
-        </p>
-        <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-hand-pointer text-yellow-300 mr-2"></i> Las listas son <strong>mutables</strong>: puedes añadir, quitar o cambiar sus elementos cuando quieras.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-list','out-list')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-list" class="python-editor"># Creamos una lista (mochila)
-mochila = ["Cuaderno", "Lápiz", "Borrador"]
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> Crear <em>· corchetes y comas</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list1','out-list1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list1" class="python-editor">mochila = ["Cuaderno", "Lápiz", "Borrador"]
 
 print("Mi mochila tiene:")
-print(mochila)
+print(mochila)</textarea>
+          <div id="out-list1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-print("El primer objeto (índice 0) es:")
-print(mochila[0])
+      <div>
+        <p class="pw-label"><i>2</i> Leer uno <em>· por su posición</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list1b','out-list1b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list1b" class="python-editor">mochila = ["Cuaderno", "Lápiz", "Borrador"]
 
-# .append() sirve para meter un nuevo objeto al final
+print(mochila[0])   # el PRIMERO
+print(mochila[1])
+print(mochila[2])</textarea>
+          <div id="out-list1b" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Añadir <em>· .append() al final</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list1c','out-list1c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list1c" class="python-editor">mochila = ["Cuaderno", "Lápiz", "Borrador"]
+
 mochila.append("Regla")
+
 print("Mochila actualizada:")
 print(mochila)</textarea>
-        <div id="out-list" class="console-output code-font text-sm"></div>
+          <div id="out-list1c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Se empieza a contar desde cero</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Míralo en el recuadro 2: el primer objeto de tu mochila está en la posición <code>[0]</code>, no en la 1. Es el despiste número uno de todo principiante.</p>
+      </div>
+      <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded">
+        <p class="font-bold mb-1 text-sm text-blue-200"><i class="fa-solid fa-hand-pointer mr-2"></i>Las listas son <strong>mutables</strong></p>
+        <p class="text-slate-300 text-xs leading-relaxed">El recuadro 3 es la prueba: puedes añadir, quitar o cambiar sus elementos cuando quieras. Las dos pantallas siguientes van justo de eso.</p>
       </div>
     </div>
   </div>
@@ -2112,58 +2295,91 @@ print(mochila)</textarea>
 <!-- 25b · LISTAS · CONSULTAR -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="10 · Listas · consultar" data-sub="Índices, rebanadas y búsquedas">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 10 · continuación</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-magnifying-glass mr-2" style="color:var(--lime)"></i>Listas: <span class="em">sacar lo que necesitas</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Rara vez quieres la lista entera. Casi siempre necesitas <strong class="text-slate-200">un trozo</strong>: el último, los tres primeros, o saber si algo está dentro. Los cuatro recuadros trabajan sobre <strong class="text-slate-200">la misma lista de compras</strong>: ejecútalos uno a uno y compara.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Rara vez quieres la lista entera. Casi siempre necesitas <strong>un trozo</strong>: el último, los tres primeros, o saber si algo está dentro.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Contar y ubicar</h4>
-            <span class="kw">len()</span><span class="kw">.index()</span><span class="kw">.count()</span></div>
-          <div class="kw-group"><h4>Posiciones negativas</h4>
-            <span class="kw">[-1]</span><span class="kw">[-2]</span></div>
-          <div class="kw-group"><h4>Rebanadas</h4>
-            <span class="kw">[1:3]</span><span class="kw">[:2]</span><span class="kw">[3:]</span></div>
-          <div class="kw-group"><h4>¿Está dentro?</h4>
-            <span class="kw soon">in</span></div>
-        </div>
-        <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-lightbulb text-yellow-300 mr-2"></i> En una rebanada <code>[1:3]</code> el primer número <strong>entra</strong> y el segundo <strong>no</strong>. Suena raro al principio; con dos ejemplos se te queda.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-list2','out-list2')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-list2" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Contar <em>· len()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list2a','out-list2a')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list2a" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
 
 # ¿Cuántos elementos hay?
-print(len(compras))
+print(len(compras))</textarea>
+          <div id="out-list2a" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# El último, sin necesidad de saber cuántos son
+      <div>
+        <p class="pw-label"><i>2</i> Contar desde el final <em>· índices negativos</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list2b','out-list2b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list2b" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
+
+# El último, sin saber cuántos son
 print(compras[-1])
-print(compras[-2])
+print(compras[-2])</textarea>
+          <div id="out-list2b" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# Rebanadas: desde el 1 hasta ANTES del 3
-print(compras[1:3])
+      <div>
+        <p class="pw-label"><i>3</i> Rebanadas <em>· un trozo de la lista</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list2c','out-list2c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list2c" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
+
+print(compras[1:3])    # del 1 hasta ANTES del 3
 print(compras[:2])     # los dos primeros
-print(compras[3:])     # del tercero en adelante
+print(compras[3:])     # del tercero en adelante</textarea>
+          <div id="out-list2c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# ¿Está en la lista? Devuelve True o False
-print("leche" in compras)
+      <div>
+        <p class="pw-label"><i>4</i> Buscar <em>· in · .index() · .count()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list2d','out-list2d')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list2d" class="python-editor">compras = ["pan", "leche", "huevos", "café", "arroz"]
+
+print("leche" in compras)     # ¿está? True o False
 print("azúcar" in compras)
+print(compras.index("café"))  # ¿en qué posición?
+print(compras.count("pan"))   # ¿cuántas veces?</textarea>
+          <div id="out-list2d" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
 
-# ¿En qué posición? ¿Cuántas veces aparece?
-print(compras.index("café"))
-print(compras.count("pan"))</textarea>
-        <div id="out-list2" class="console-output code-font text-sm"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded">
+        <p class="font-bold mb-1 text-sm text-blue-200"><i class="fa-solid fa-lightbulb mr-2"></i>El truco de las rebanadas</p>
+        <p class="text-slate-300 text-xs leading-relaxed">En <code>[1:3]</code> el primer número <strong>entra</strong> y el segundo <strong>no</strong>. Suena raro al principio; mira las tres líneas del recuadro 3 y se te queda.</p>
+      </div>
+      <div class="kw-group">
+        <h4>Todo lo que acabas de ejecutar</h4>
+        <span class="kw">len()</span><span class="kw">[-1]</span><span class="kw">[-2]</span><span class="kw">[1:3]</span><span class="kw">[:2]</span><span class="kw">[3:]</span><span class="kw soon">in</span><span class="kw">.index()</span><span class="kw">.count()</span>
+        <p class="text-xs text-slate-400 mt-2">Ninguno de estos <strong class="text-slate-200">modifica</strong> la lista: solo preguntan. Cambiarla es la pantalla siguiente.</p>
       </div>
     </div>
   </div>
@@ -2172,65 +2388,101 @@ print(compras.count("pan"))</textarea>
 <!-- 25c · LISTAS · MODIFICAR -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="10 · Listas · modificar" data-sub="Añadir, quitar y ordenar">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 10 · continuación</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-pen-to-square mr-2" style="color:var(--lime)"></i>Listas: <span class="em">cambiarlas a tu gusto</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Aquí es donde las listas se ganan el nombre de <strong class="text-slate-200">mutables</strong>: puedes reescribirlas entera o parcialmente sin crear una nueva. Los cuatro recuadros parten siempre de <strong class="text-slate-200">las mismas notas</strong>, así ves exactamente qué cambia cada método.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Aquí es donde las listas se ganan el nombre de <strong>mutables</strong>: puedes reescribirlas entera o parcialmente sin crear una nueva.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Añadir</h4>
-            <span class="kw">.append()</span><span class="kw">.insert()</span></div>
-          <div class="kw-group"><h4>Quitar</h4>
-            <span class="kw">.remove()</span><span class="kw">.pop()</span><span class="kw soon">del</span></div>
-          <div class="kw-group"><h4>Reordenar</h4>
-            <span class="kw">.sort()</span><span class="kw">.reverse()</span></div>
-          <div class="kw-group"><h4>Cambiar uno</h4>
-            <span class="kw">lista[2] = ...</span></div>
-        </div>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Modifican la lista original</p>
-          <p class="text-slate-300 text-sm">
-            <code>.sort()</code> no te devuelve una lista ordenada: <strong>reordena la que ya tenías</strong>. Si necesitas conservar el orden original, haz antes una copia.
-          </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Cambiar uno <em>· por su posición</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list3a','out-list3a')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list3a" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+
+notas[2] = 3.2       # el tercero pasa a valer 3.2
+print(notas)</textarea>
+          <div id="out-list3a" class="console-output console-mini code-font text-sm"></div>
         </div>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-list3','out-list3')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
+
+      <div>
+        <p class="pw-label"><i>2</i> Añadir <em>· .append() y .insert()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list3b','out-list3b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list3b" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+
+notas.append(5.0)      # al final
+print(notas)
+
+notas.insert(0, 1.8)   # en la posición 0
+print(notas)</textarea>
+          <div id="out-list3b" class="console-output console-mini code-font text-sm"></div>
         </div>
-        <textarea id="code-list3" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+      </div>
 
-# Cambiar un elemento por su posición
-notas[2] = 3.2
+      <div>
+        <p class="pw-label"><i>3</i> Quitar <em>· .remove() · .pop() · del</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list3c','out-list3c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list3c" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+
+notas.remove(2.9)         # por valor
 print(notas)
 
-# Añadir al final, o en una posición concreta
-notas.append(5.0)
-notas.insert(0, 1.8)
-print(notas)
-
-# Quitar por valor
-notas.remove(1.8)
-print(notas)
-
-# .pop() saca el último Y te lo devuelve
-sacada = notas.pop()
+sacada = notas.pop()      # saca el último Y lo devuelve
 print("Saqué:", sacada)
-print(notas)
 
-# Ordenar y dar la vuelta
+del notas[0]              # por posición
+print(notas)</textarea>
+          <div id="out-list3c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>4</i> Reordenar <em>· .sort() y .reverse()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-list3d','out-list3d')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-list3d" class="python-editor">notas = [3.5, 4.8, 2.9, 4.1]
+
 notas.sort()
 print("Ordenadas:", notas)
+
 notas.reverse()
 print("Al revés:", notas)</textarea>
-        <div id="out-list3" class="console-output code-font text-sm"></div>
+          <div id="out-list3d" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Modifican la lista original</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <code>.sort()</code> no te devuelve una lista ordenada: <strong>reordena la que ya tenías</strong>. Fíjate en el recuadro 4: después de <code>.sort()</code> la variable <code>notas</code> ya no es la de antes. Si necesitas conservar el orden original, haz una copia primero.
+        </p>
+      </div>
+      <div class="kw-group">
+        <h4>Un recuadro por familia</h4>
+        <span class="kw">lista[2] = ...</span><span class="kw">.append()</span><span class="kw">.insert()</span><span class="kw">.remove()</span><span class="kw">.pop()</span><span class="kw soon">del</span><span class="kw">.sort()</span><span class="kw">.reverse()</span>
+        <p class="text-xs text-slate-400 mt-2"><b class="text-slate-200">.remove()</b> quita por valor · <b class="text-slate-200">del</b> y <b class="text-slate-200">.pop()</b> quitan por posición, pero solo <code>.pop()</code> te devuelve lo que sacó.</p>
       </div>
     </div>
   </div>
@@ -2277,47 +2529,73 @@ print(mis_colores[0])</pre>
 <!-- 27 · TUPLAS -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="11 · Tuplas" data-sub="Datos que no cambian">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 11</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-lock mr-2" style="color:var(--lime)"></i>Tuplas: <span class="em">la caja sellada</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Una <strong class="text-slate-200">tupla</strong> es como una lista, pero <strong class="text-slate-200">sellada con pegamento</strong>: una vez la creas, sus elementos no se pueden cambiar. Se escribe con paréntesis <code>()</code> y se lee igual que una lista, con índices. Ejecuta los tres recuadros: el último falla <strong class="text-slate-200">a propósito</strong>.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Una <strong>tupla</strong> es como una lista, pero <strong>sellada con pegamento</strong>: una vez la creas, sus elementos <strong>no se pueden cambiar</strong>. Se escriben con paréntesis <code>()</code>.
-        </p>
-        <p class="text-lg text-slate-400">
-          Se usan para datos que <strong>no deben modificarse</strong>: las coordenadas de un mapa, los colores de una bandera, tu fecha de nacimiento. Se leen igual que las listas, con índices <code>[0]</code>, <code>[1]</code>…
-        </p>
-        <div class="p-3 bg-slate-800 border-l-4 border-red-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-triangle-exclamation text-red-400 mr-2"></i> Si intentas cambiar una tupla (<code>coordenada[0] = 5</code>), Python dará un error. ¡Están protegidas!
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-tupla','out-tupla')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-tupla" class="python-editor"># Una tupla se crea con paréntesis ()
-coordenada = (4, 10)   # latitud, longitud
 
-print("La tupla completa es:")
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> Crear y leer <em>· paréntesis e índices</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-tupla1','out-tupla1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-tupla1" class="python-editor">coordenada = (4, 10)   # latitud, longitud
+
 print(coordenada)
-
-print("El primer valor (índice 0) es:")
-print(coordenada[0])
-
-# Sirven para datos fijos que no deben cambiar
-colores_bandera = ("Amarillo", "Azul", "Rojo")
-print("Colores de la bandera:")
-print(colores_bandera)
-
-# Si quitas el # de abajo, verás el error:
-# coordenada[0] = 99   # ¡Las tuplas no se pueden cambiar!</textarea>
-        <div id="out-tupla" class="console-output code-font text-sm"></div>
+print(coordenada[0])   # el primero
+print(coordenada[1])</textarea>
+          <div id="out-tupla1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Mismos índices que las listas: se empieza a contar en <code>[0]</code>.</p>
       </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Para qué sirven <em>· datos que no cambian</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-tupla2','out-tupla2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-tupla2" class="python-editor">colores_bandera = ("Amarillo", "Azul", "Rojo")
+fecha_nacimiento = (1998, 5, 14)
+
+print(colores_bandera)
+print(fecha_nacimiento)</textarea>
+          <div id="out-tupla2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Coordenadas de un mapa, colores de una bandera, tu fecha de nacimiento: nada de eso debería poder cambiarse por accidente.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Intentar cambiarla <em>· error garantizado</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-tupla3','out-tupla3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-tupla3" class="python-editor">coordenada = (4, 10)
+
+# Las tuplas están selladas: esto NO se puede hacer
+coordenada[0] = 99</textarea>
+          <div id="out-tupla3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Falla, y está bien que falle: esa protección es justo para lo que existen. En una lista la misma línea funcionaría.</p>
+      </div>
+    </div>
+
+    <div class="p-3 mt-4 bg-slate-800 border-l-4 border-red-500 rounded">
+      <p class="font-bold mb-1 text-sm text-red-300"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Lista o tupla: la decisión</p>
+      <p class="text-slate-300 text-xs leading-relaxed">
+        Si el dato va a crecer o a corregirse, usa una <strong>lista</strong> (corchetes). Si tiene que quedarse tal cual, usa una <strong>tupla</strong> (paréntesis) y Python te avisará —como en el recuadro 3— cuando alguien intente tocarla.
+      </p>
     </div>
   </div>
 </section>
@@ -2325,48 +2603,76 @@ print(colores_bandera)
 <!-- 28 · DICCIONARIOS -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="12 · Diccionarios" data-sub="Etiqueta y contenido">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 12</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-book mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">etiqueta y contenido</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Guardan pares <strong class="text-slate-200">clave: valor</strong> con llaves <code>{}</code>. En vez de buscar por posición, buscas por nombre: <code>persona["edad"]</code>. Tres gestos, tres recuadros: crearlo, consultarlo y actualizarlo.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Guardan pares <strong>clave: valor</strong> con llaves <code>{}</code>. En vez de buscar por posición, buscas por nombre: <code>persona["edad"]</code>.
-        </p>
-        <p class="text-lg text-slate-400">
-          Es la estructura más parecida a una <strong>fila de Excel</strong>: cada columna tiene un nombre y un valor. Por eso son clave en ciencia de datos.
-        </p>
-        <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-hand-pointer text-yellow-300 mr-2"></i> Para añadir o cambiar un dato basta con asignarlo: <code>persona["ciudad"] = "Bogotá"</code>.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-dic','out-dic')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-dic" class="python-editor"># Un diccionario guarda pares clave: valor
-persona = {
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> Crear <em>· llaves y pares clave: valor</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic1','out-dic1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic1" class="python-editor">persona = {
     "nombre": "Ana",
     "edad": 25,
     "ciudad": "Bogotá"
 }
 
-# Accedemos al valor usando su clave (no un número)
-print("Nombre:")
-print(persona["nombre"])
-
-print("Edad:")
-print(persona["edad"])
-
-# Podemos añadir o cambiar datos por su clave
-persona["profesion"] = "Científica de datos"
-print("Diccionario actualizado:")
 print(persona)</textarea>
-        <div id="out-dic" class="console-output code-font text-sm"></div>
+          <div id="out-dic1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Consultar <em>· por su clave, no por número</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic1b','out-dic1b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic1b" class="python-editor">persona = {"nombre": "Ana", "edad": 25, "ciudad": "Bogotá"}
+
+print(persona["nombre"])
+print(persona["edad"])
+print(persona["ciudad"])</textarea>
+          <div id="out-dic1b" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Añadir o cambiar <em>· basta con asignar</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic1c','out-dic1c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic1c" class="python-editor">persona = {"nombre": "Ana", "edad": 25}
+
+persona["profesion"] = "Científica de datos"
+
+print(persona)</textarea>
+          <div id="out-dic1c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-table mr-2"></i>Es una fila de Excel</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Cada clave es el <strong>nombre de una columna</strong> y cada valor, su contenido. Por eso los diccionarios son la estructura clave en ciencia de datos.</p>
+      </div>
+      <div class="p-3 bg-slate-800 border-l-4 border-blue-500 rounded">
+        <p class="font-bold mb-1 text-sm text-blue-200"><i class="fa-solid fa-hand-pointer mr-2"></i>Añadir y cambiar se escriben igual</p>
+        <p class="text-slate-300 text-xs leading-relaxed">En el recuadro 3, <code>persona["profesion"] = ...</code> crea la clave porque no existía. Si ya existiera, la <strong>sobrescribiría</strong>. Misma línea, dos efectos.</p>
       </div>
     </div>
   </div>
@@ -2375,53 +2681,93 @@ print(persona)</textarea>
 <!-- 28b · DICCIONARIOS · CONSULTAR -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="12 · Diccionarios · consultar" data-sub="get(), claves y valores">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 12 · continuación</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-key mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">preguntar sin romper nada</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Con datos reales, tarde o temprano pides una clave que no existe. Lo que hagas en ese momento decide si tu programa <strong class="text-slate-200">sigue o se cae</strong>. Ejecuta los recuadros 1 y 2 seguidos: mismo dato que falta, dos finales distintos.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Con datos reales, tarde o temprano pides una clave que no existe. Lo que hagas en ese momento decide si tu programa <strong>sigue o se cae</strong>.
-        </p>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Corchetes frente a <code>.get()</code></p>
-          <p class="text-slate-300 text-sm">
-            <code>persona["telefono"]</code> revienta con <code>KeyError</code> si esa clave no está. <code>persona.get("telefono")</code> devuelve <code>None</code> tranquilamente, y puedes darle un valor por defecto.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Consultar a salvo</h4>
-            <span class="kw">.get()</span><span class="kw soon">in</span><span class="kw">len()</span></div>
-          <div class="kw-group"><h4>Recorrer el contenido</h4>
-            <span class="kw">.keys()</span><span class="kw">.values()</span><span class="kw">.items()</span></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Con corchetes <em>· se cae con KeyError</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic2a','out-dic2a')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic2a" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
+
+# Esa clave no existe: el programa se detiene aquí
+print(estudiante["telefono"])
+print("Esta línea NO llega a ejecutarse")</textarea>
+          <div id="out-dic2a" class="console-output console-mini code-font text-sm"></div>
         </div>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-dic2','out-dic2')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-dic2" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25, "ciudad": "Bogotá"}
 
-# Quita el # de la línea siguiente para ver el error:
-# print(estudiante["telefono"])
+      <div>
+        <p class="pw-label"><i>2</i> Con <code>.get()</code> <em>· responde y sigue</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic2b','out-dic2b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic2b" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
 
-# .get() no rompe el programa
 print(estudiante.get("telefono"))
 print(estudiante.get("telefono", "sin registrar"))
+print("Y el programa sigue vivo")</textarea>
+          <div id="out-dic2b" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# ¿Existe esa clave? ¿Cuántos pares hay?
-print("edad" in estudiante)
-print(len(estudiante))
+      <div>
+        <p class="pw-label"><i>3</i> Comprobar <em>· in y len()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic2c','out-dic2c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic2c" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25, "ciudad": "Bogotá"}
 
-# Las claves, los valores, o ambos a la vez
-print(list(estudiante.keys()))
-print(list(estudiante.values()))
-print(list(estudiante.items()))</textarea>
-        <div id="out-dic2" class="console-output code-font text-sm"></div>
+print("edad" in estudiante)       # ¿existe la clave?
+print("telefono" in estudiante)
+print(len(estudiante))            # ¿cuántos pares hay?</textarea>
+          <div id="out-dic2c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>4</i> Ver el contenido <em>· keys · values · items</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic2d','out-dic2d')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic2d" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25, "ciudad": "Bogotá"}
+
+print(list(estudiante.keys()))    # solo las etiquetas
+print(list(estudiante.values()))  # solo los contenidos
+print(list(estudiante.items()))   # los pares completos</textarea>
+          <div id="out-dic2d" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Corchetes frente a <code>.get()</code></p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          Compara las consolas 1 y 2. <code>estudiante["telefono"]</code> revienta con <code>KeyError</code> y corta el programa; <code>.get("telefono")</code> devuelve <code>None</code>, o el valor por defecto que le pongas, y el programa continúa.
+        </p>
+      </div>
+      <div class="kw-group">
+        <h4>Lo que preguntaste en cada recuadro</h4>
+        <span class="kw">dic["clave"]</span><span class="kw">.get()</span><span class="kw soon">in</span><span class="kw">len()</span><span class="kw">.keys()</span><span class="kw">.values()</span><span class="kw">.items()</span>
+        <p class="text-xs text-slate-400 mt-2">Las tres últimas se envuelven en <code>list()</code> solo para poder verlas impresas; en un <code>for</code> se usan tal cual.</p>
       </div>
     </div>
   </div>
@@ -2430,62 +2776,100 @@ print(list(estudiante.items()))</textarea>
 <!-- 28c · DICCIONARIOS · MODIFICAR Y ANIDAR -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="12 · Diccionarios · modificar" data-sub="Actualizar, quitar y anidar">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 12 · continuación</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-layer-group mr-2" style="color:var(--lime)"></i>Diccionarios: <span class="em">de un dato a una tabla</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Los tres primeros recuadros son las formas de <strong class="text-slate-200">cambiar</strong> un diccionario. El cuarto es el que importa de verdad: un diccionario puede guardar dentro listas y otros diccionarios, y ahí aparece la estructura más importante de todo el curso.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Un diccionario puede guardar dentro <strong>listas y otros diccionarios</strong>. Y ahí aparece la estructura más importante de todo el curso.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Añadir o cambiar</h4>
-            <span class="kw">dic["clave"] = ...</span><span class="kw">.update()</span></div>
-          <div class="kw-group"><h4>Quitar</h4>
-            <span class="kw">.pop()</span><span class="kw soon">del</span></div>
-        </div>
-        <div class="p-4 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
-          <p class="font-bold mb-1" style="color:var(--lime)"><i class="fa-solid fa-table mr-2"></i>Una lista de diccionarios es una tabla</p>
-          <p class="text-slate-300 text-sm">
-            Cada diccionario es una <strong>fila</strong>; cada clave, una <strong>columna</strong>. Así es exactamente como llegan los datos de un Excel, de una encuesta o de internet. Es la puerta de entrada a pandas.
-          </p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Añadir y cambiar <em>· misma sintaxis</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic3a','out-dic3a')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic3a" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
+
+estudiante["ciudad"] = "Bogotá"   # no existía: la crea
+estudiante["edad"] = 26           # ya existía: la cambia
+print(estudiante)</textarea>
+          <div id="out-dic3a" class="console-output console-mini code-font text-sm"></div>
         </div>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-dic3','out-dic3')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-dic3" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
 
-# Añadir y cambiar usan la misma sintaxis
-estudiante["ciudad"] = "Bogotá"
-estudiante["edad"] = 26
-print(estudiante)
+      <div>
+        <p class="pw-label"><i>2</i> Varios de una vez <em>· .update()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic3b','out-dic3b')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic3b" class="python-editor">estudiante = {"nombre": "Ana", "edad": 25}
 
-# Varios cambios de una sola vez
 estudiante.update({"carrera": "Biología", "semestre": 4})
-print(estudiante)
 
-# Quitar de dos formas
-estudiante.pop("semestre")
-del estudiante["carrera"]
-print(estudiante)
+print(estudiante)</textarea>
+          <div id="out-dic3b" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# Un diccionario puede contener una lista
+      <div>
+        <p class="pw-label"><i>3</i> Quitar <em>· .pop() y del</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic3c','out-dic3c')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic3c" class="python-editor">estudiante = {"nombre": "Ana", "carrera": "Biología", "semestre": 4}
+
+quitado = estudiante.pop("semestre")   # lo saca y lo devuelve
+print("Quité:", quitado)
+
+del estudiante["carrera"]              # lo borra sin más
+print(estudiante)</textarea>
+          <div id="out-dic3c" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>4</i> Anidar <em>· listas dentro y lista de diccionarios</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-dic3d','out-dic3d')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-dic3d" class="python-editor">estudiante = {"nombre": "Ana"}
 estudiante["notas"] = [4.5, 3.8, 5.0]
 print(estudiante["notas"][0])
 
-# Y una LISTA DE DICCIONARIOS es, en la práctica, una tabla
+# Una LISTA DE DICCIONARIOS es, en la práctica, una tabla
 curso = [
     {"nombre": "Ana",  "nota": 4.5},
     {"nombre": "Luis", "nota": 3.2}
 ]
 print(curso[1]["nombre"], "sacó", curso[1]["nota"])</textarea>
-        <div id="out-dic3" class="console-output code-font text-sm"></div>
+          <div id="out-dic3d" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-table mr-2"></i>El recuadro 4 es la puerta a pandas</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          Cada diccionario es una <strong>fila</strong>; cada clave, una <strong>columna</strong>. Así es exactamente como llegan los datos de un Excel, de una encuesta o de internet.
+        </p>
+      </div>
+      <div class="kw-group">
+        <h4>Cambiar un diccionario</h4>
+        <span class="kw">dic["clave"] = ...</span><span class="kw">.update()</span><span class="kw">.pop()</span><span class="kw soon">del</span>
+        <p class="text-xs text-slate-400 mt-2">Igual que en las listas: <code>.pop()</code> te <strong class="text-slate-200">devuelve</strong> lo que quitó (recuadro 3), <code>del</code> simplemente lo borra.</p>
       </div>
     </div>
   </div>
@@ -2537,44 +2921,59 @@ print(mi_perfil)</pre>
 <!-- 30 · CONJUNTOS -->
 <section class="slide s-py" data-block="Estructuras de datos" data-title="13 · Conjuntos" data-sub="Elementos únicos">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 13</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-layer-group mr-2" style="color:var(--lime)"></i>Conjuntos: <span class="em">la bolsa sin repetidos</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Un <strong class="text-slate-200">conjunto</strong> (<code>set</code>) guarda elementos <strong class="text-slate-200">únicos</strong>: si metes algo dos veces, solo queda una copia. Se escribe con llaves <code>{}</code>, pero sin pares <code>clave: valor</code>. Un recuadro para verlo y otro para el uso que le darás de verdad.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Un <strong>conjunto</strong> (<code>set</code>) guarda elementos <strong>únicos</strong>: si metes algo dos veces, solo queda una copia. También se escribe con llaves <code>{}</code>, pero sin pares clave:valor.
-        </p>
-        <p class="text-lg text-slate-400">
-          No mantienen un orden fijo: sirven para saber <strong>qué hay</strong>, no en qué posición está.
-        </p>
-        <div class="p-3 bg-slate-800 border-l-4 rounded text-sm text-slate-300" style="border-color:var(--lime)">
-          <i class="fa-solid fa-wand-magic-sparkles mr-2" style="color:var(--lime)"></i> Truco muy usado en datos: convertir una lista a <code>set()</code> para <strong>quitar duplicados</strong> en una sola línea.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-conj','out-conj')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-conj" class="python-editor"># Un conjunto se crea con llaves {}
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Crear un conjunto <em>· lo repetido se descarta</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-conj1','out-conj1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-conj1" class="python-editor"># Escribimos "manzana" dos veces...
 frutas = {"manzana", "pera", "manzana", "uva"}
 
-# Aunque escribimos "manzana" dos veces, solo queda una
 print("Frutas únicas:")
-print(frutas)
+print(frutas)      # ...pero solo queda una</textarea>
+          <div id="out-conj1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
 
-# Truco: quitar duplicados de una lista
-numeros = [1, 2, 2, 3, 3, 3, 4]
+      <div>
+        <p class="pw-label"><i>2</i> Quitar duplicados <em>· set() sobre una lista</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-conj2','out-conj2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-conj2" class="python-editor">numeros = [1, 2, 2, 3, 3, 3, 4]
+
 sin_repetidos = set(numeros)
-print("Lista original:")
-print(numeros)
-print("Sin repetidos:")
-print(sin_repetidos)</textarea>
-        <div id="out-conj" class="console-output code-font text-sm"></div>
+
+print("Lista original:", numeros)
+print("Sin repetidos:", sin_repetidos)</textarea>
+          <div id="out-conj2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 bg-slate-800 border-l-4 rounded" style="border-color:var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>El truco del recuadro 2</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Convertir una lista a <code>set()</code> quita los duplicados en <strong>una sola línea</strong>. Es de lo más usado cuando llegan datos repetidos de un Excel.</p>
+      </div>
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-shuffle mr-2"></i>No tienen orden fijo</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Ejecuta el recuadro 1 varias veces: los elementos pueden salir en distinto orden. Un conjunto sirve para saber <strong>qué hay</strong>, no en qué posición está.</p>
       </div>
     </div>
   </div>
@@ -2593,54 +2992,87 @@ print(sin_repetidos)</textarea>
 
 <section class="slide s-py" data-block="Control de flujo" data-title="14 · Condicionales" data-sub="if · elif · else">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 14</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-code-branch mr-2" style="color:var(--lime)"></i>Condicionales: <span class="em">encrucijadas y decisiones</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Con <code>if</code> el programa decide: <strong class="text-slate-200">si</strong> se cumple una condición, haz esto; <strong class="text-slate-200">si no</strong>, haz aquello. Aquí es donde tu código empieza a "pensar". Los tres recuadros van de menos a más: <strong class="text-slate-200">cambia el número de <code>edad</code></strong> en cada uno y vuelve a ejecutar.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Con <code>if</code> el programa decide: <strong>si</strong> se cumple una condición, haz esto; <strong>si no</strong>, haz aquello. Aquí es donde tu código empieza a "pensar".
-        </p>
-        <div class="p-4 rounded-lg border border-slate-600 bg-slate-800/60">
-          <p class="font-bold mb-2" style="color:var(--lime)">Los operadores que usarás:</p>
-          <div class="grid grid-cols-2 gap-2 text-sm text-slate-300">
-            <p><code>==</code> igual que</p><p><code>!=</code> distinto de</p>
-            <p><code>&gt;</code> mayor · <code>&lt;</code> menor</p><p><code>&gt;=</code> · <code>&lt;=</code></p>
-            <p><code>and</code> ambas</p><p><code>or</code> alguna</p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> Dos caminos <em>· if / else</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-cond1','out-cond1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
           </div>
+          <textarea id="code-cond1" class="python-editor">edad = 15
+
+if edad &gt;= 18:
+    print("Eres mayor de edad")
+else:
+    print("Todavía no")</textarea>
+          <div id="out-cond1" class="console-output console-mini code-font text-sm"></div>
         </div>
-        <div class="p-3 bg-slate-800 border-l-4 border-red-500 rounded text-sm text-slate-300">
-          <i class="fa-solid fa-triangle-exclamation text-red-400 mr-2"></i> <strong>La sangría importa.</strong> Los 4 espacios no son decoración: le dicen a Python qué está dentro del <code>if</code>.
+        <p class="text-xs text-slate-400 mt-2">O se cumple, o no. Nunca se ejecutan las dos ramas.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> Varios caminos <em>· elif</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-cond2','out-cond2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-cond2" class="python-editor">edad = 15
+
+if edad &gt;= 18:
+    print("Puedes entrar al concierto")
+elif edad &gt;= 13:
+    print("Puedes entrar con un adulto")
+else:
+    print("Acceso denegado")</textarea>
+          <div id="out-cond2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2"><code>elif</code> es "si no, PERO…": solo se revisa cuando la condición de arriba fue falsa.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> Condiciones combinadas <em>· and / or</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-cond3','out-cond3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-cond3" class="python-editor">edad = 15
+tiene_boleto = True
+
+if edad &gt;= 13 and tiene_boleto:
+    print("¡Disfruta el show!")
+
+if edad &lt; 13 or not tiene_boleto:
+    print("Hoy no puede ser")</textarea>
+          <div id="out-cond3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Pon <code>tiene_boleto = False</code> y vuelve a ejecutar: cambia qué línea se imprime.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg border border-slate-600 bg-slate-800/60">
+        <p class="font-bold mb-2 text-sm" style="color:var(--lime)">Los operadores que usarás (capítulo 08)</p>
+        <div class="grid grid-cols-3 gap-2 text-xs text-slate-300">
+          <p><code>==</code> igual que</p><p><code>!=</code> distinto de</p><p><code>&gt;</code> mayor · <code>&lt;</code> menor</p>
+          <p><code>&gt;=</code> · <code>&lt;=</code></p><p><code>and</code> ambas</p><p><code>or</code> alguna</p>
         </div>
       </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-cond','out-cond')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-cond" class="python-editor"># Cambia este número para ver cómo decide el programa
-edad_usuario = 15
-
-print("Verificando permisos de acceso...")
-
-if edad_usuario >= 18:
-    # Se cumple SI la primera condición es verdadera
-    print("Eres mayor de edad. Puedes entrar al concierto.")
-elif edad_usuario >= 13:
-    # "Si no, PERO...": se revisa solo si la de arriba fue falsa
-    print("Eres adolescente. Puedes entrar con un adulto.")
-else:
-    # En cualquier otro caso
-    print("Eres muy pequeño. Acceso denegado.")
-
-# Combinar condiciones con and / or
-tiene_boleto = True
-if edad_usuario >= 13 and tiene_boleto:
-    print("¡Y además tienes boleto: disfruta el show!")</textarea>
-        <div id="out-cond" class="console-output code-font text-sm"></div>
+      <div class="p-3 bg-slate-800 border-l-4 border-red-500 rounded">
+        <p class="font-bold mb-1 text-sm text-red-300"><i class="fa-solid fa-triangle-exclamation mr-2"></i>La sangría importa</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Los 4 espacios de los tres recuadros no son decoración: son lo que le dice a Python qué está <strong>dentro</strong> del <code>if</code>. Quítalos y el programa no arranca.</p>
       </div>
     </div>
   </div>
@@ -2691,45 +3123,61 @@ else:
 <!-- 33 · BUCLES -->
 <section class="slide s-py" data-block="Control de flujo" data-title="15 · Bucles" data-sub="El trabajador incansable">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 15</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-rotate mr-2" style="color:var(--lime)"></i>Bucles: <span class="em">el trabajador incansable</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Un <code>for</code> repite las mismas instrucciones para cada elemento. Es lo que convierte "hazlo una vez" en "hazlo 10.000 veces". Se escribe igual en los dos casos; lo único que cambia es <strong class="text-slate-200">qué va después del <code>in</code></strong>: un rango de números o una lista.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Un <code>for</code> repite las mismas instrucciones para cada elemento de una lista o de un rango de números. Es lo que convierte "hazlo una vez" en "hazlo 10.000 veces".
-        </p>
-        <ul class="text-lg text-slate-400 space-y-2 list-disc list-inside marker:text-lime-300">
-          <li><code>range(1, 6)</code> genera los números del 1 al <strong>5</strong> (el último no entra).</li>
-          <li>También puedes recorrer una lista: <code>for fruta in frutas:</code></li>
-          <li>Todo lo que va indentado dentro del <code>for</code> se repite.</li>
-        </ul>
-        <div class="p-3 bg-slate-800 border-l-4 rounded text-sm text-slate-300" style="border-color:var(--lime)">
-          <i class="fa-solid fa-bolt mr-2" style="color:var(--lime)"></i> Aquí está el verdadero superpoder de programar: procesar miles de filas de datos con tres líneas de código.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-loop','out-loop')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-loop" class="python-editor">print("Iniciando la secuencia de repetición...")
 
-# range(1, 6) cuenta del 1 al 5.
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Repetir N veces <em>· for con range()</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-loop1','out-loop1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-loop1" class="python-editor">print("Iniciando...")
+
+# range(1, 6) cuenta del 1 al 5
 for numero in range(1, 6):
-    print("Dando la vuelta número:")
-    print(numero)
+    print("Vuelta número:", numero)
 
-print("¡Secuencia terminada!")
+print("¡Terminado!")</textarea>
+          <div id="out-loop1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Fíjate: el 6 <strong>no</strong> aparece. En <code>range()</code> el último número no entra, igual que en las rebanadas.</p>
+      </div>
 
-# También podemos recorrer una lista
-frutas = ["manzana", "pera", "uva"]
+      <div>
+        <p class="pw-label"><i>2</i> Recorrer una lista <em>· for sobre elementos</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-loop2','out-loop2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-loop2" class="python-editor">frutas = ["manzana", "pera", "uva"]
+
 for fruta in frutas:
     print("Me gusta la " + fruta)</textarea>
-        <div id="out-loop" class="console-output code-font text-sm"></div>
+          <div id="out-loop2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Aquí no hay números: la variable <code>fruta</code> va tomando, una a una, cada palabra de la lista.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 bg-slate-800 border-l-4 rounded" style="border-color:var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-bolt mr-2"></i>El verdadero superpoder de programar</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Cambia la lista del recuadro 2 por 10.000 filas de un Excel y el código sigue siendo <strong>exactamente el mismo</strong>. Eso es lo que estamos comprando aquí.</p>
+      </div>
+      <div class="p-3 bg-slate-800 border-l-4 border-red-500 rounded">
+        <p class="font-bold mb-1 text-sm text-red-300"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Lo indentado es lo que se repite</p>
+        <p class="text-slate-300 text-xs leading-relaxed">En el recuadro 1, el <code>print("Iniciando...")</code> y el <code>print("¡Terminado!")</code> salen <strong>una sola vez</strong> porque están fuera del <code>for</code>. Solo la línea con sangría se repite.</p>
       </div>
     </div>
   </div>
@@ -2738,59 +3186,81 @@ for fruta in frutas:
 <!-- 34b · BUCLES · WHILE -->
 <section class="slide s-py" data-block="Control de flujo" data-title="15 · Bucles · while" data-sub="Repetir sin saber cuántas veces">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 15 · continuación</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-rotate mr-2" style="color:var(--lime)"></i>Bucles: <span class="em">while, break y continue</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Con <code>for</code> repites <strong class="text-slate-200">una vez por elemento</strong>: sabes de antemano cuántas vueltas serán. Con <code>while</code> repites <strong class="text-slate-200">mientras se cumpla una condición</strong>, sin saber cuántas. Y con <code>break</code> y <code>continue</code> cortas la repetición desde dentro. Una idea por recuadro.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Con <code>for</code> repites <strong>una vez por elemento</strong>: sabes de antemano cuántas vueltas serán. Con <code>while</code> repites <strong>mientras se cumpla una condición</strong>, sin saber cuántas veces.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Repetir por condición</h4>
-            <span class="kw">while</span>
-            <p class="text-xs text-slate-400 mt-2">"Mientras queden intentos", "mientras el usuario no acierte".</p></div>
-          <div class="kw-group"><h4>Cortar la repetición</h4>
-            <span class="kw">break</span><span class="kw">continue</span>
-            <p class="text-xs text-slate-400 mt-2"><b class="text-slate-200">break</b> sale del bucle · <b class="text-slate-200">continue</b> salta solo esa vuelta.</p></div>
-        </div>
-        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
-          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>El bucle infinito</p>
-          <p class="text-slate-300 text-sm">
-            Si dentro del <code>while</code> nunca cambias lo que mide la condición, el programa no para nunca. Asegúrate siempre de que <strong>algo avanza</strong> en cada vuelta.
-          </p>
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-while','out-while')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-while" class="python-editor"># while: repite MIENTRAS la condición sea verdadera
-intentos = 3
 
-while intentos > 0:
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> while <em>· repetir por condición</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-while1','out-while1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-while1" class="python-editor">intentos = 3
+
+while intentos &gt; 0:
     print("Te quedan", intentos, "intentos")
-    intentos -= 1      # <- esto es lo que evita el bucle infinito
+    intentos -= 1    # esto evita el bucle infinito
 
-print("Se acabaron los intentos")
+print("Se acabaron los intentos")</textarea>
+          <div id="out-while1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">"Mientras queden intentos", "mientras el usuario no acierte". No sabes cuántas vueltas dará.</p>
+      </div>
 
-# break: salir del bucle antes de tiempo
-for numero in range(1, 10):
+      <div>
+        <p class="pw-label"><i>2</i> break <em>· salir antes de tiempo</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-while2','out-while2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-while2" class="python-editor">for numero in range(1, 10):
     if numero == 4:
         print("Encontré el 4, me salgo")
         break
-    print("Revisando el", numero)
+    print("Revisando el", numero)</textarea>
+          <div id="out-while2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">El bucle iba hasta el 9, pero <code>break</code> lo abandona del todo en el 4.</p>
+      </div>
 
-# continue: saltarse solo esa vuelta
-for nota in [4.5, 0, 3.8, 0, 5.0]:
+      <div>
+        <p class="pw-label"><i>3</i> continue <em>· saltarse solo esa vuelta</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-while3','out-while3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-while3" class="python-editor">for nota in [4.5, 0, 3.8, 0, 5.0]:
     if nota == 0:
-        continue           # no cuenta las notas en cero
+        continue     # se salta las notas en cero
     print("Nota válida:", nota)</textarea>
-        <div id="out-while" class="console-output code-font text-sm"></div>
+          <div id="out-while3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Aquí el bucle <strong>no</strong> se abandona: solo se salta las vueltas que no interesan.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>El bucle infinito</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          Borra la línea <code>intentos -= 1</code> del recuadro 1 y el programa no para nunca. Dentro de un <code>while</code>, asegúrate siempre de que <strong>algo avanza</strong> en cada vuelta.
+        </p>
+      </div>
+      <div class="kw-group">
+        <h4>break frente a continue</h4>
+        <span class="kw">while</span><span class="kw">break</span><span class="kw">continue</span>
+        <p class="text-xs text-slate-400 mt-2">Compara las consolas 2 y 3: <b class="text-slate-200">break</b> sale del bucle y no vuelve · <b class="text-slate-200">continue</b> salta esa vuelta y sigue con la siguiente.</p>
       </div>
     </div>
   </div>
@@ -2849,46 +3319,67 @@ for i in range(1, 11):
 
 <section class="slide s-py" data-block="Reutilizar y ampliar" data-title="16 · Funciones" data-sub="Recetas guardadas">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 16</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-utensils mr-2" style="color:var(--lime)"></i>Funciones: <span class="em">recetas de cocina</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Con <code>def</code> guardas una receta con nombre. No se ejecuta al definirla: se ejecuta cuando la <strong class="text-slate-200">llamas</strong>. Primer recuadro: definirla y usarla una vez. Segundo: la ganancia real, usar <strong class="text-slate-200">la misma receta</strong> con ingredientes distintos.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Con <code>def</code> guardas una receta con nombre. No se ejecuta al definirla: se ejecuta cuando la <strong>llamas</strong>, y puedes llamarla las veces que quieras.
-        </p>
-        <ul class="text-lg text-slate-400 space-y-2 list-disc list-inside marker:text-lime-300">
-          <li><strong>Parámetros:</strong> los ingredientes que recibe → <code>(base, altura)</code></li>
-          <li><strong><code>return</code>:</strong> el plato que devuelve para usarlo después</li>
-          <li><strong>Ventaja:</strong> escribes la lógica una vez y la reutilizas en todo el proyecto</li>
-        </ul>
-        <div class="p-3 bg-slate-800 border-l-4 rounded text-sm text-slate-300" style="border-color:var(--lime)">
-          <i class="fa-solid fa-robot mr-2" style="color:var(--lime)"></i> Cuando le pidas a un agente "hazme una función que…", esto es lo que te va a devolver. Ahora ya sabrás leerlo.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-func','out-func')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-func" class="python-editor"># 1. Definimos la receta (todavía no se ejecuta)
-def calcular_area_rectangulo(base, altura):
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <p class="pw-label"><i>1</i> Definir y llamar <em>· def y return</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-func1','out-func1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-func1" class="python-editor"># 1. La receta: todavía no se ejecuta
+def calcular_area(base, altura):
     area = base * altura
     return area
 
-# 2. La usamos con ingredientes reales
-resultado = calcular_area_rectangulo(5, 10)
+# 2. Ahora sí, con ingredientes reales
+resultado = calcular_area(5, 10)
+print("El área es:", resultado)</textarea>
+          <div id="out-func1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Borra la última línea y ejecuta: no aparece nada. Definir una función no la ejecuta.</p>
+      </div>
 
-print("El área del rectángulo es:")
-print(resultado)
+      <div>
+        <p class="pw-label"><i>2</i> Reutilizar <em>· la misma receta, otros datos</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-func2','out-func2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-func2" class="python-editor">def calcular_area(base, altura):
+    return base * altura
 
-# 3. La reutilizamos cuantas veces queramos
-print(calcular_area_rectangulo(3, 7))
-print(calcular_area_rectangulo(12, 2))</textarea>
-        <div id="out-func" class="console-output code-font text-sm"></div>
+print(calcular_area(5, 10))
+print(calcular_area(3, 7))
+print(calcular_area(12, 2))</textarea>
+          <div id="out-func2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">La lógica se escribe <strong>una vez</strong> y se usa las veces que haga falta. Si mañana cambia la fórmula, la corriges en un solo sitio.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-3 rounded-lg border border-slate-600 bg-slate-800/60">
+        <p class="font-bold mb-2 text-sm" style="color:var(--lime)">Las dos piezas de la receta</p>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <b class="text-slate-200">Parámetros:</b> los ingredientes que recibe → <code>(base, altura)</code>.
+          <b class="text-slate-200">return:</b> el plato que devuelve para poder usarlo después, como en <code>resultado = calcular_area(5, 10)</code>.
+        </p>
+      </div>
+      <div class="p-3 bg-slate-800 border-l-4 rounded" style="border-color:var(--lime)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--lime)"><i class="fa-solid fa-robot mr-2"></i>Esto es lo que te va a devolver un agente</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Cuando le pidas "hazme una función que…", lo que recibirás tiene exactamente la forma del recuadro 1. Ahora ya sabrás leerlo.</p>
       </div>
     </div>
   </div>
@@ -2942,64 +3433,93 @@ else:
 <!-- 36b · LIBRERÍAS -->
 <section class="slide s-py" data-block="Reutilizar y ampliar" data-title="17 · Errores: try/except" data-sub="Que el programa no se caiga">
   <div class="py-stage flex flex-col">
-    <div class="reveal mb-6 border-b border-slate-700 pb-4">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
       <span class="kicker mb-2">Capítulo 17</span>
-      <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-shield-halved mr-2" style="color:var(--lime)"></i>Errores: <span class="em">el plan B</span>
       </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">
+        Cuando algo falla, Python <strong class="text-slate-200">detiene el programa entero</strong> en esa línea. Con <code>try</code> / <code>except</code> le dices: "inténtalo; y si sale mal, haz esto otro en lugar de morirte". Un recuadro por cada error que ya te has cruzado en este bloque.
+      </p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <p class="text-lg text-slate-300">
-          Cuando algo falla, Python <strong>detiene el programa entero</strong> en esa línea. Con <code>try</code> / <code>except</code> le dices: "inténtalo; y si sale mal, haz esto otro en lugar de morirte".
-        </p>
-        <div class="p-4 rounded-lg border border-slate-600 bg-slate-800/60">
-          <p class="font-bold mb-2 text-sm" style="color:var(--lime)">La estructura</p>
-          <pre class="static-code" style="background:transparent;padding:0;font-size:.8rem">try:
-    <span class="cm"># lo que puede fallar</span>
-except TipoDeError:
-    <span class="cm"># el plan B si falla</span></pre>
-        </div>
-        <div class="kw-group">
-          <h4>Los errores más frecuentes</h4>
-          <span class="kw">ValueError</span><span class="kw">KeyError</span><span class="kw">ZeroDivisionError</span><span class="kw">TypeError</span><span class="kw soon">FileNotFoundError</span>
-          <p class="text-xs text-slate-400 mt-2">Los primeros ya te los cruzaste. El de <span style="color:var(--amber);font-weight:700">ámbar</span> llega en el capítulo siguiente, en cuanto intentes abrir un archivo que no está donde creías.</p>
-        </div>
-        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
-          <i class="fa-solid fa-triangle-exclamation mr-2" style="color:var(--amber)"></i>
-          <strong>No sirve para todo.</strong> Un error de sintaxis —como usar <code>class</code> de nombre de variable, del capítulo 02— no se atrapa: hay que arreglarlo. <code>try</code> protege de lo que falla <em>al ejecutar</em>, no de lo que está mal escrito.
-        </div>
-      </div>
-      <div class="ide-window h-fit">
-        <div class="ide-header">
-          <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-          <button class="run-btn" onclick="runCode('code-try','out-try')"><i class="fa-solid fa-play"></i> Ejecutar Código</button>
-        </div>
-        <textarea id="code-try" class="python-editor"># 1 · El usuario escribe algo que no es número
-edad_texto = "veinticinco"
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div>
+        <p class="pw-label"><i>1</i> ValueError <em>· no era un número</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-try1','out-try1')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-try1" class="python-editor">edad_texto = "veinticinco"
 
 try:
     edad = int(edad_texto)
     print("Tu edad es:", edad)
 except ValueError:
-    print("Eso no es un número, escribe solo dígitos")
+    print("Eso no es un número, escribe dígitos")
 
-# 2 · Una clave que no existe en el diccionario
-persona = {"nombre": "Ana"}
+print("El programa sigue")</textarea>
+          <div id="out-try1" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">El error clásico del <code>input()</code> del capítulo 07.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>2</i> KeyError <em>· esa clave no existe</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-try2','out-try2')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-try2" class="python-editor">persona = {"nombre": "Ana"}
 
 try:
     print(persona["telefono"])
 except KeyError:
     print("Esa clave no está en el diccionario")
 
-# 3 · Dividir entre cero
-try:
+print("El programa sigue")</textarea>
+          <div id="out-try2" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Es el mismo error que reventaba el recuadro 1 del capítulo 12, ahora domesticado.</p>
+      </div>
+
+      <div>
+        <p class="pw-label"><i>3</i> ZeroDivisionError <em>· dividir entre cero</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <button class="run-btn" onclick="runCode('code-try3','out-try3')"><i class="fa-solid fa-play"></i> Ejecutar</button>
+          </div>
+          <textarea id="code-try3" class="python-editor">try:
     print(10 / 0)
 except ZeroDivisionError:
     print("No se puede dividir entre cero")
 
-print("Y el programa sigue vivo hasta el final")</textarea>
-        <div id="out-try" class="console-output code-font text-sm"></div>
+print("El programa sigue vivo hasta el final")</textarea>
+          <div id="out-try3" class="console-output console-mini code-font text-sm"></div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Aparece en cuanto calculas un promedio de una lista vacía.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+      <div class="p-3 rounded-lg border border-slate-600 bg-slate-800/60">
+        <p class="font-bold mb-2 text-sm" style="color:var(--lime)">La estructura, idéntica en los tres</p>
+        <pre class="static-code" style="background:transparent;padding:0;font-size:.75rem">try:
+    <span class="cm"># lo que puede fallar</span>
+except TipoDeError:
+    <span class="cm"># el plan B si falla</span></pre>
+      </div>
+      <div class="kw-group">
+        <h4>Los errores más frecuentes</h4>
+        <span class="kw">ValueError</span><span class="kw">KeyError</span><span class="kw">ZeroDivisionError</span><span class="kw">TypeError</span><span class="kw soon">FileNotFoundError</span>
+        <p class="text-xs text-slate-400 mt-2">Los tres primeros son los recuadros de arriba. El de <span style="color:var(--amber);font-weight:700">ámbar</span> llega en el capítulo siguiente, en cuanto intentes abrir un archivo que no está donde creías.</p>
+      </div>
+      <div class="p-3 rounded" style="background:rgba(242,177,52,.12);border-left:4px solid var(--amber)">
+        <p class="font-bold mb-1 text-sm" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>No sirve para todo</p>
+        <p class="text-slate-300 text-xs leading-relaxed">Un error de sintaxis —como usar <code>class</code> de nombre de variable, del capítulo 02— no se atrapa: hay que arreglarlo. <code>try</code> protege de lo que falla <em>al ejecutar</em>, no de lo que está mal escrito.</p>
       </div>
     </div>
   </div>
