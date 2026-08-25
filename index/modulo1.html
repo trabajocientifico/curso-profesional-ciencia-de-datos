@@ -681,6 +681,170 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .menu-list li.current .md{ color:rgba(245,239,228,.75); }
 
 /* ==========================================================================
+   EXPLORAR EN VIVO · tarjetas-botón hacia sitios externos
+   ========================================================================== */
+.xplr{ width:100%; max-width:1120px; }
+.xplr-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px; }
+.xcard{ --brand:var(--accent); position:relative; display:flex; flex-direction:column; gap:11px; overflow:hidden;
+  padding:24px 22px 20px; border-radius:20px; text-decoration:none; color:inherit;
+  background:var(--surface); border:1px solid var(--line);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s, background .3s; }
+.xcard::before{ content:""; position:absolute; inset:0 0 auto; height:3px; background:var(--brand); opacity:.8; }
+.xcard::after{ content:""; position:absolute; width:220px; height:220px; right:-95px; top:-115px; border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--brand) 20%, transparent), transparent 70%); pointer-events:none; }
+.xcard:hover{ transform:translateY(-8px); border-color:var(--brand); background:rgba(255,255,255,.06); }
+.xcard .xn{ position:absolute; top:19px; right:21px; font-family:var(--font-display); font-size:13px; font-weight:700; color:var(--muted); }
+.xcard .xic{ width:52px; height:52px; border-radius:15px; display:grid; place-items:center; font-size:21px;
+  background:color-mix(in srgb, var(--brand) 16%, transparent); color:var(--brand); }
+.xcard h3{ font-family:var(--font-body); font-size:19px; font-weight:800; letter-spacing:-.01em; line-height:1.15; }
+.xcard .xurl{ margin-top:-7px; font-family:var(--font-mono); font-size:10.5px; color:var(--muted); word-break:break-all; }
+.xcard p{ font-size:13.2px; line-height:1.5; color:var(--muted); }
+.xcard p b{ color:var(--text); font-weight:600; }
+.xcard .xtask{ margin-top:auto; padding:11px 13px; border-radius:12px; border:1px dashed var(--line);
+  background:rgba(255,255,255,.02); font-size:12.2px; line-height:1.45; }
+.xcard .xtask b{ display:block; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); margin-bottom:4px; }
+.xcard .xgo{ display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--brand); letter-spacing:.06em; }
+.xcard .xgo i{ transition:transform .25s; }
+.xcard:hover .xgo i{ transform:translateX(5px); }
+.xplr-foot{ margin-top:22px; text-align:center; font-size:13px; color:var(--muted); }
+.xplr-foot b{ color:var(--text); font-weight:600; }
+
+/* ==========================================================================
+   JUEGO · arrastrar cada término a su definición
+   ========================================================================== */
+.dgame{ width:100%; max-width:1180px; }
+.dg-bank{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; align-content:center; min-height:58px;
+  margin-top:18px; padding:11px 14px; border-radius:16px; border:1.5px dashed var(--line); background:rgba(255,255,255,.02);
+  transition:border-color .2s, background .2s; }
+.dg-bank.over{ border-color:var(--accent); background:rgba(0,245,212,.06); }
+.dg-bank .bank-ph{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+.dg-bank.has-chips .bank-ph{ display:none; }
+.dg-chip{ display:inline-flex; align-items:center; gap:7px; padding:9px 15px; border-radius:99px; cursor:grab;
+  background:rgba(0,245,212,.09); border:1px solid rgba(0,245,212,.35); color:var(--text);
+  font-family:var(--font-body); font-size:13.5px; font-weight:700; line-height:1;
+  transition:transform .2s, background .2s, border-color .2s, box-shadow .2s, opacity .2s; }
+.dg-chip:hover{ transform:translateY(-2px); }
+.dg-chip.sel{ background:var(--accent); color:#041210; border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,245,212,.18); }
+.dg-chip.dragging{ opacity:.35; }
+.dg-chip[data-decoy]{ background:rgba(255,209,102,.09); border-color:rgba(255,209,102,.35); }
+.dg-chip[data-decoy].sel{ background:var(--gold); color:#2a1e00; border-color:var(--gold); box-shadow:0 0 0 4px rgba(255,209,102,.18); }
+.dg-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+.dg-card{ position:relative; display:flex; flex-direction:column; gap:10px; padding:15px 16px 14px; border-radius:16px;
+  background:var(--surface); border:1px solid var(--line); transition:border-color .25s; }
+.dg-card .dgn{ font-family:var(--font-display); font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.1em; }
+.dg-card .dgq{ font-size:12.7px; line-height:1.5; color:var(--muted); }
+.dg-card .dgq b{ color:var(--text); font-weight:600; }
+.dg-slot{ margin-top:auto; min-height:46px; padding:6px; border-radius:12px; display:grid; place-items:center;
+  border:1.5px dashed rgba(255,255,255,.16); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); font-weight:700; transition:border-color .2s, background .2s; }
+.dg-slot.over{ border-color:var(--accent); background:rgba(0,245,212,.07); }
+.dg-slot.filled{ border-style:solid; border-color:var(--line); background:rgba(255,255,255,.02); }
+.dg-slot.filled .slot-ph{ display:none; }
+.dg-card.ok{ border-color:rgba(0,245,212,.5); }
+.dg-card.ok .dg-slot{ border-color:var(--accent); background:rgba(0,245,212,.08); }
+.dg-card.bad{ border-color:rgba(255,107,107,.5); }
+.dg-card.bad .dg-slot{ border-color:var(--danger); background:rgba(255,107,107,.08); }
+.dg-card .dgm{ position:absolute; top:12px; right:14px; font-size:15px; font-weight:800; opacity:0; transition:opacity .3s; }
+.dg-card.ok .dgm, .dg-card.bad .dgm{ opacity:1; }
+.dg-card.ok .dgm{ color:var(--accent); } .dg-card.bad .dgm{ color:var(--danger); }
+.dg-controls{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.dg-score{ font-family:var(--font-mono); font-size:12px; color:var(--muted); letter-spacing:.06em; }
+.dg-score b{ color:var(--accent); font-size:14px; }
+.dg-result{ margin-top:12px; padding:13px 18px; border-radius:14px; text-align:center; font-size:13.5px; line-height:1.5;
+  border:1px solid var(--line); background:rgba(255,255,255,.03); display:none; }
+.dg-result.show{ display:block; }
+.dg-result.win{ border-color:rgba(0,245,212,.45); background:rgba(0,245,212,.07); }
+.dg-result b{ color:var(--text); font-weight:700; }
+.dg-extra{ margin-top:10px; display:none; grid-template-columns:repeat(3,1fr); gap:10px; }
+.dg-extra.show{ display:grid; }
+.dg-extra div{ padding:11px 14px; border-radius:13px; border:1px dashed rgba(255,209,102,.35); background:rgba(255,209,102,.05); font-size:12px; line-height:1.45; color:var(--muted); }
+.dg-extra div b{ color:var(--gold); font-weight:700; }
+
+/* ==========================================================================
+   LABORATORIO DE PROMPTS · anatomía + los cuatro ejercicios
+   ========================================================================== */
+.plab{ width:100%; max-width:1160px; }
+
+/* --- caja de prompt (se repite en las cinco diapositivas) --- */
+.pbox{ display:flex; flex-direction:column; border-radius:16px; border:1px solid var(--line); background:#050810; overflow:hidden; }
+.pbox-head{ display:flex; align-items:center; gap:9px; padding:10px 14px; background:rgba(255,255,255,.03); border-bottom:1px solid var(--line); }
+.pbox-head .pdot{ width:9px; height:9px; border-radius:50%; background:var(--accent); }
+.pbox-head .pk{ font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--muted); }
+.pbox-body{ padding:15px 17px; font-family:var(--font-mono); font-size:12.5px; line-height:1.8; white-space:pre-wrap; word-break:break-word; }
+.pbox.weak{ border-style:dashed; }
+.pbox.weak .pdot{ background:var(--danger); }
+.pbox.weak .pbox-body{ color:var(--muted); font-style:italic; }
+.copy-btn{ margin-left:auto; padding:5px 12px; border-radius:99px; border:1px solid var(--line); background:transparent;
+  color:var(--muted); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  cursor:pointer; transition:all .2s; }
+.copy-btn:hover{ border-color:var(--accent); color:var(--accent); }
+.copy-btn.done{ background:var(--accent); color:#041210; border-color:var(--accent); }
+
+/* --- anatomía: cinco piezas + prompt anotado --- */
+.anat{ display:grid; grid-template-columns:.92fr 1.08fr; gap:20px; margin-top:24px; align-items:start; }
+.anat-list{ display:flex; flex-direction:column; gap:8px; }
+.apiece{ --pc:var(--accent); display:flex; gap:11px; align-items:flex-start; padding:11px 14px; border-radius:14px;
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--pc); transition:transform .25s, background .25s; }
+.apiece:hover{ transform:translateX(4px); background:rgba(255,255,255,.06); }
+.apiece .ab{ width:25px; height:25px; min-width:25px; border-radius:8px; display:grid; place-items:center;
+  background:color-mix(in srgb, var(--pc) 20%, transparent); color:var(--pc); font-family:var(--font-display); font-size:12.5px; font-weight:700; }
+.apiece h4{ font-family:var(--font-body); font-size:13.5px; font-weight:800; color:var(--pc); }
+.apiece p{ font-size:12.2px; line-height:1.45; color:var(--muted); margin-top:2px; }
+.apiece p b{ color:var(--text); font-weight:600; }
+.anat-col{ display:flex; flex-direction:column; gap:13px; }
+.annot{ display:flex; flex-direction:column; gap:7px; padding:15px 17px; white-space:normal; }
+.annot .ln{ --pc:var(--accent); display:flex; align-items:baseline; gap:12px; }
+.annot .pfr{ flex:1; padding:6px 11px; border-radius:9px; border:1px solid; font-family:var(--font-mono); font-size:12.3px; line-height:1.5;
+  color:var(--pc); background:color-mix(in srgb, var(--pc) 11%, transparent); border-color:color-mix(in srgb, var(--pc) 32%, transparent); }
+.annot .lb{ min-width:88px; text-align:right; font-family:var(--font-body); font-size:9.5px; letter-spacing:.16em;
+  text-transform:uppercase; font-weight:800; color:var(--pc); }
+.plab-foot{ margin-top:20px; text-align:center; font-size:13px; color:var(--muted); line-height:1.55; }
+.plab-foot b{ color:var(--text); font-weight:600; }
+
+/* --- ejercicios: prompt a la izquierda, guía a la derecha --- */
+.ex-grid{ display:grid; grid-template-columns:1.35fr .65fr; gap:18px; margin-top:22px; align-items:start; }
+.ex-stack{ display:flex; flex-direction:column; gap:12px; }
+.ex-side{ display:flex; flex-direction:column; gap:11px; }
+.where{ display:flex; flex-wrap:wrap; gap:7px; }
+.where span{ display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:99px;
+  background:rgba(255,255,255,.03); border:1px solid var(--line); font-size:11.5px; font-weight:700; color:var(--muted); }
+.where span i{ font-style:normal; }
+.tok-note .where{ margin:9px 0 7px; }
+.tok-note .where:last-child{ margin-bottom:0; }
+.ex-goal{ display:flex; align-items:center; gap:13px; margin-top:18px; padding:13px 18px; border-radius:14px;
+  background:rgba(0,245,212,.06); border:1px solid rgba(0,245,212,.3); font-size:13.2px; line-height:1.5; }
+.ex-goal .gi{ font-size:20px; line-height:1; }
+.ex-goal b{ color:var(--accent); font-weight:700; }
+
+/* --- las cuatro palabras que se confunden (ejercicio 3) --- */
+.quad{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:20px; }
+.quad > div{ --pc:var(--accent); padding:12px 14px; border-radius:13px; background:var(--surface);
+  border:1px solid var(--line); border-top:2px solid var(--pc); }
+.quad b{ display:block; font-size:13px; font-weight:800; color:var(--pc); margin-bottom:4px; }
+.quad span{ font-size:11.8px; line-height:1.45; color:var(--muted); }
+
+/* ==========================================================================
+   HILO CONDUCTOR · diapositivas puente
+   La misma tira de 4 pasos aparece en los dos puentes; solo se mueve el .now.
+   ========================================================================== */
+.bridge{ width:100%; max-width:1000px; text-align:center; }
+.thread{ display:flex; align-items:stretch; justify-content:center; gap:10px; margin-top:34px; }
+.th{ flex:1; max-width:250px; padding:16px 15px; border-radius:16px; text-align:left;
+  background:var(--surface); border:1px solid var(--line); opacity:.5;
+  transition:opacity .3s, transform .3s, border-color .3s, background .3s; }
+.th .tk{ display:block; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase;
+  font-weight:700; color:var(--muted); margin-bottom:6px; }
+.th b{ display:block; font-size:14px; font-weight:700; line-height:1.25; }
+.th small{ display:block; margin-top:5px; font-size:11.5px; color:var(--muted); line-height:1.4; }
+.th.done{ opacity:.55; }
+.th.done .tk::after{ content:" ✓"; color:var(--accent); }
+.th.next{ opacity:.5; border-style:dashed; }
+.th.now{ opacity:1; border-color:var(--accent); background:rgba(0,245,212,.07);
+  transform:translateY(-5px); box-shadow:0 14px 40px -22px rgba(0,245,212,.85); }
+.th.now .tk{ color:var(--accent); }
+.tarr{ align-self:center; color:var(--muted); font-size:13px; }
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width:1100px){
@@ -690,11 +854,18 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .inst-body2{ grid-template-columns:1fr; }
   .ia-grid,.ds-grid,.algo-grid,.demo-grid,.tok-grid{ grid-template-columns:1fr; gap:18px; }
   .rings{ width:300px; height:300px; } .r2{ inset:46px; } .r3{ inset:92px; } .r4{ inset:132px; }
+  .dg-grid,.dg-extra{ grid-template-columns:repeat(2,1fr); }
+  .anat,.ex-grid{ grid-template-columns:1fr; }
+  .quad{ grid-template-columns:repeat(2,1fr); }
 }
 @media (max-width:960px){
   .cmp2-grid,.duo{ grid-template-columns:1fr; gap:14px; }
+  .xplr-grid{ grid-template-columns:1fr; }
   .tf-diag{ grid-template-columns:1fr; gap:12px; }
   .tf-arrows{ transform:rotate(90deg); }
+  .thread{ flex-direction:column; gap:8px; margin-top:26px; }
+  .th{ max-width:none; }
+  .tarr{ transform:rotate(90deg); }
   .tline{ grid-template-columns:1fr; gap:10px; }
   .tline::before{ display:none; }
   .tl{ padding-top:0; padding-left:30px; }
@@ -705,7 +876,9 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .slide-scroll{ max-height:none; }
   .progress-num{ top:auto; bottom:22px; left:50%; transform:translateX(-50%); }
   .block-tag{ font-size:9px; padding:5px 12px; }
-  .tool-grid,.def-grid,.checks{ grid-template-columns:1fr; }
+  .tool-grid,.def-grid,.checks,.dg-grid,.dg-extra,.quad{ grid-template-columns:1fr; }
+  .annot .ln{ flex-direction:column; align-items:stretch; gap:3px; }
+  .annot .lb{ min-width:0; text-align:left; }
   .mc-name h1{ font-size:clamp(42px,13vw,72px); }
   .docente{ margin-top:26px; padding:16px 20px; }
   .hero-top{ flex-direction:column; gap:10px; }
@@ -913,9 +1086,9 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <span class="ha-role">Docente</span>
     </div>
     <div class="hero-cta">
-      <button class="btn-primary" onclick="go(1)">Conceptos de IA</button>
-      <button class="btn-ghost" onclick="go(17)">Instalación de herramientas</button>
-      <button class="btn-ghost" onclick="go(21)">Fundamentos de Python</button>
+      <button class="btn-primary" onclick="goTitle('¿Qué es la IA?')">Conceptos de IA</button>
+      <button class="btn-ghost" onclick="goTitle('Tu estación de trabajo')">Instalación de herramientas</button>
+      <button class="btn-ghost" onclick="goTitle('Fundamentos de Python')">Fundamentos de Python</button>
     </div>
   </div>
 </section>
@@ -1104,6 +1277,110 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   </div>
 </section>
 
+<!-- EXPLORAR EN VIVO · tres herramientas para ver los conceptos por fuera del mazo -->
+<section class="slide" data-block="Conceptos de IA" data-title="Explora en vivo" data-sub="Tres sitios para ver los conceptos por tu cuenta">
+  <div class="slide-scroll xplr">
+    <div class="slide-head">
+      <span class="eyebrow">Manos a la obra</span>
+      <h2>Ahora <span class="hl">míralo tú mismo</span></h2>
+      <p class="lead">Token, vector, predicción, modelo y contexto no son teoría: se pueden <b>tocar</b>. Abre estas tres páginas en otra pestaña y trae de vuelta lo que encuentres.</p>
+    </div>
+    <div class="xplr-grid">
+      <a class="xcard" href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener noreferrer" style="--brand:var(--accent)">
+        <span class="xn">01</span>
+        <div class="xic"><i class="fa-solid fa-scissors"></i></div>
+        <h3>Tokenizer</h3>
+        <div class="xurl">platform.openai.com/tokenizer</div>
+        <p>Escribe cualquier frase y mira <b>cómo se parte en tokens</b>. Verás que una palabra no siempre es un token — y que el español cuesta más tokens que el inglés.</p>
+        <div class="xtask"><b>Reto en clase</b>Escribe tu nombre completo y cuenta los tokens. ¿Quién tiene el nombre más «caro»?</div>
+        <span class="xgo">Abrir el sitio <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="xcard" href="https://artificialanalysis.ai/" target="_blank" rel="noopener noreferrer" style="--brand:#4285f4">
+        <span class="xn">02</span>
+        <div class="xic"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Artificial Analysis</h3>
+        <div class="xurl">artificialanalysis.ai</div>
+        <p>Compara <b>todos los modelos</b> en calidad, velocidad (tokens por segundo) y precio por millón de tokens. Es el tablero para decidir cuál usar.</p>
+        <div class="xtask"><b>Reto en clase</b>Busca el modelo más rápido y el más barato. ¿Son el mismo? ¿Cuál usarías para tus datos?</div>
+        <span class="xgo">Abrir el sitio <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      <a class="xcard" href="https://llm-stats.com/" target="_blank" rel="noopener noreferrer" style="--brand:var(--gold)">
+        <span class="xn">03</span>
+        <div class="xic"><i class="fa-solid fa-table-list"></i></div>
+        <h3>LLM Stats</h3>
+        <div class="xurl">llm-stats.com</div>
+        <p>La ficha técnica de cada modelo: <b>ventana de contexto</b>, parámetros, licencia y resultados en pruebas estándar, todo en una tabla ordenable.</p>
+        <div class="xtask"><b>Reto en clase</b>Encuentra el modelo con la ventana de contexto más grande. ¿Cuántas páginas de texto caben ahí?</div>
+        <span class="xgo">Abrir el sitio <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+    </div>
+    <p class="xplr-foot">Los tres se abren en una <b>pestaña nueva</b>: la presentación se queda donde está. Tomen 5 minutos, exploren y comentamos.</p>
+  </div>
+</section>
+
+<!-- JUEGO · arrastrar cada término a su definición -->
+<section class="slide" data-block="Conceptos de IA" data-title="Juego: término y definición" data-sub="Repaso interactivo de lo visto hasta aquí">
+  <div class="slide-scroll dgame" id="dgame">
+    <div class="slide-head">
+      <span class="eyebrow">Repaso participativo</span>
+      <h2>Arrastra cada término a <span class="hl">su definición</span></h2>
+      <p class="lead">Seis definiciones, nueve términos: <b>tres sobran</b>. Arrastra con el mouse o toca el término y luego la casilla.</p>
+    </div>
+
+    <div class="dg-bank" id="dgBank">
+      <span class="bank-ph">Banco de términos</span>
+    </div>
+
+    <div class="dg-grid" id="dgGrid">
+      <div class="dg-card" data-k="token">
+        <span class="dgm">✓</span>
+        <span class="dgn">01</span>
+        <p class="dgq">Es la <b>pieza mínima</b> en la que se parte el texto para que el modelo pueda procesarlo. Una palabra larga puede valer varias.</p>
+        <div class="dg-slot" data-k="token"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+      <div class="dg-card" data-k="vector">
+        <span class="dgm">✓</span>
+        <span class="dgn">02</span>
+        <p class="dgq">Una <b>lista de números</b> que ubica cada palabra como un punto en el espacio: las de significado parecido quedan cerca.</p>
+        <div class="dg-slot" data-k="vector"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+      <div class="dg-card" data-k="prediccion">
+        <span class="dgm">✓</span>
+        <span class="dgn">03</span>
+        <p class="dgq">En cada paso el modelo calcula <b>qué tan probable</b> es cada candidato y elige uno para continuar el texto.</p>
+        <div class="dg-slot" data-k="prediccion"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+      <div class="dg-card" data-k="modelo">
+        <span class="dgm">✓</span>
+        <span class="dgn">04</span>
+        <p class="dgq">El <b>archivo entrenado</b> donde vive todo lo que aprendió. No guarda los textos originales: guarda los pesos.</p>
+        <div class="dg-slot" data-k="modelo"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+      <div class="dg-card" data-k="contexto">
+        <span class="dgm">✓</span>
+        <span class="dgn">05</span>
+        <p class="dgq">Todo lo que el modelo puede <b>tener a la vista</b> en una conversación. Cuando se llena, lo más viejo se pierde.</p>
+        <div class="dg-slot" data-k="contexto"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+      <div class="dg-card" data-k="generativa">
+        <span class="dgm">✓</span>
+        <span class="dgn">06</span>
+        <p class="dgq">La rama de la IA que <b>crea contenido nuevo</b> —texto, imágenes, código— en lugar de solo clasificar o predecir un número.</p>
+        <div class="dg-slot" data-k="generativa"><span class="slot-ph">Suelta aquí</span></div>
+      </div>
+    </div>
+
+    <div class="dg-controls">
+      <span class="dg-score" id="dgScore">Colocados <b>0</b> / 6</span>
+      <button class="mini-btn on" id="dgCheck" type="button">✓ Comprobar</button>
+      <button class="mini-btn" id="dgReset" type="button">↺ Reiniciar</button>
+    </div>
+
+    <div class="dg-result" id="dgResult"></div>
+    <div class="dg-extra" id="dgExtra"></div>
+  </div>
+</section>
+
 <!-- 08 · IA vs AGENTE -->
 <section class="slide" data-block="Conceptos de IA" data-title="IA vs. Agente de IA" data-sub="El concepto clave del curso">
   <div class="slide-scroll cmp2">
@@ -1141,7 +1418,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
         <div class="tools"><span>⌘ Terminal</span><span>🗂 Archivos</span><span>🌐 Navegador</span></div>
       </div>
     </div>
-    <p class="cmp2-note"><b>En corto:</b> la IA te <b>responde</b>; el agente <b>hace el trabajo</b> mientras tú diriges. En la sesión 2 instalaremos dos agentes en tu computador.</p>
+    <p class="cmp2-note"><b>En corto:</b> la IA te <b>responde</b>; el agente <b>hace el trabajo</b> mientras tú diriges. Más adelante en este módulo instalaremos dos agentes en tu computador.</p>
   </div>
 </section>
 
@@ -1201,6 +1478,255 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       </div>
     </div>
     <p class="note-foot">Python es la herramienta · la IA es el copiloto · <b>tú eres el científico de datos.</b></p>
+  </div>
+</section>
+
+<!-- LAB 0 · ANATOMÍA DE UN BUEN PROMPT -->
+<section class="slide" data-block="Conceptos de IA" data-title="Anatomía de un buen prompt" data-sub="Las cinco piezas que convierten una pregunta en un encargo">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow">Empieza el laboratorio</span>
+      <h2>Ahora le hablamos a la IA. <span class="hl">Bien</span></h2>
+      <p class="lead">Abrimos un modelo conversacional y exploramos. Primero con un <b>prompt suelto</b>, como escribe todo el mundo. Después con las <b>cinco piezas</b> que lo convierten en un encargo.</p>
+    </div>
+    <div class="anat">
+      <div class="anat-list">
+        <div class="apiece" style="--pc:var(--accent)">
+          <div class="ab">1</div>
+          <div><h4>Rol</h4><p>Desde <b>qué oficio</b> quieres que te responda. Cambia el vocabulario, el nivel y qué considera importante.</p></div>
+        </div>
+        <div class="apiece" style="--pc:#4285f4">
+          <div class="ab">2</div>
+          <div><h4>Contexto</h4><p><b>Quién eres tú</b>, para qué lo necesitas y con qué material. Va <b>antes</b> de la tarea: primero encuadras, después pides.</p></div>
+        </div>
+        <div class="apiece" style="--pc:var(--gold)">
+          <div class="ab">3</div>
+          <div><h4>Tarea</h4><p>Un <b>verbo claro</b> y una sola cosa por pedir: explica, resume, compara, calcula, crea. Sin verbo no hay encargo.</p></div>
+        </div>
+        <div class="apiece" style="--pc:var(--claude)">
+          <div class="ab">4</div>
+          <div><h4>Formato</h4><p>Cómo quieres <b>recibirlo</b>: tabla, viñetas, informe, código, JSON. Si no lo dices, el modelo inventa uno.</p></div>
+        </div>
+        <div class="apiece" style="--pc:var(--github)">
+          <div class="ab">5</div>
+          <div><h4>Límites</h4><p>Extensión, idioma, tono y lo que <b>no</b> debe hacer. Las restricciones son las que hacen la respuesta usable.</p></div>
+        </div>
+      </div>
+      <div class="anat-col">
+        <div class="pbox weak">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt suelto · lo que casi todos escriben</span></div>
+          <div class="pbox-body">háblame de productividad</div>
+        </div>
+        <div class="pbox">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">El mismo encargo, con las cinco piezas</span></div>
+          <div class="pbox-body annot">
+            <div class="ln" style="--pc:var(--accent)"><span class="pfr">Actúa como analista de datos.</span><span class="lb">Rol</span></div>
+            <div class="ln" style="--pc:#4285f4"><span class="pfr">Son 3 años de ventas de una tienda en Medellín.</span><span class="lb">Contexto</span></div>
+            <div class="ln" style="--pc:var(--gold)"><span class="pfr">Resúmelas y dime qué producto cayó.</span><span class="lb">Tarea</span></div>
+            <div class="ln" style="--pc:var(--claude)"><span class="pfr">Dame 5 viñetas y una tabla.</span><span class="lb">Formato</span></div>
+            <div class="ln" style="--pc:var(--github)"><span class="pfr">En español, sin jerga técnica.</span><span class="lb">Límites</span></div>
+          </div>
+        </div>
+        <div class="tok-note">
+          <h4>¿Por qué ese orden?</h4>
+          El contexto va <b>antes</b> de la tarea: primero encuadras, después pides. Y como el modelo le da más peso a lo último que lee, formato y límites cierran. Si le pegas un documento o una tabla, eso va <b>arriba de todo</b>.
+        </div>
+      </div>
+    </div>
+    <p class="plab-foot">El prompt suelto sirve para <b>explorar</b>; el estructurado sirve para <b>producir</b>. Hoy usamos los dos, en cuatro ejercicios seguidos.</p>
+  </div>
+</section>
+
+<!-- LAB 1 · PREGUNTA CONVERSACIONAL -->
+<section class="slide" data-block="Conceptos de IA" data-title="Ejercicio 1 · Pregunta conversacional" data-sub="Qué es la productividad y qué tipos existen">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow">Ejercicio 1 de 4</span>
+      <h2>Pregunta conversacional: <span class="hl">productividad</span></h2>
+      <p class="lead">Lanza los dos prompts en la misma conversación y compara. Después compara con tu compañero de al lado, que usó <b>otro modelo</b>.</p>
+    </div>
+    <div class="ex-grid">
+      <div class="ex-stack">
+        <div class="pbox weak">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">1 · Prompt suelto</span>
+            <button class="copy-btn" type="button">Copiar</button></div>
+          <div class="pbox-body">¿Qué es la productividad?</div>
+        </div>
+        <div class="pbox">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">2 · Prompt con anatomía</span>
+            <button class="copy-btn" type="button">Copiar</button></div>
+          <div class="pbox-body">Actúa como docente de economía.
+Soy profesional, sin formación en economía.
+Explícame qué es la productividad y qué tipos existen.
+Formato: definición en 3 líneas + tabla (tipo · qué mide · ejemplo).
+Máximo 250 palabras, en español y sin fórmulas.</div>
+        </div>
+      </div>
+      <div class="ex-side">
+        <div class="tok-note">
+          <h4>Dónde hacerlo</h4>
+          <div class="where"><span>ChatGPT</span><span>Claude</span><span>Gemini</span><span>Copilot</span></div>
+        </div>
+        <div class="tok-note">
+          <h4>Qué observar</h4>
+          El suelto te da una enciclopedia. El segundo te da <b>tu</b> respuesta: al nivel que pediste, en el formato que usarás y con el largo que ibas a leer.
+        </div>
+        <div class="tok-note warn">
+          <h4>Ojo</h4>
+          Dos modelos distintos darán tipologías distintas. Eso no es un error: es la señal de que <b>tú</b> decides cuál sirve.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> salir de aquí con una definición propia de productividad y sus tipos, escrita en tus palabras.</div></div>
+  </div>
+</section>
+
+<!-- LAB 2 · BÚSQUEDA PROFUNDA -->
+<section class="slide" data-block="Conceptos de IA" data-title="Ejercicio 2 · Búsqueda profunda" data-sub="Un informe con fuentes sobre productividad en Colombia">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow">Ejercicio 2 de 4</span>
+      <h2>Modo investigación: <span class="hl">productividad en Colombia</span></h2>
+      <p class="lead">Activa <b>Deep Research</b> / <b>Investigación profunda</b> antes de enviar. La IA navega, lee decenas de fuentes y tarda varios minutos: esto ya no es un chat, es un encargo.</p>
+    </div>
+    <div class="ex-grid">
+      <div class="ex-stack">
+        <div class="pbox">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt de investigación</span>
+            <button class="copy-btn" type="button">Copiar</button></div>
+          <div class="pbox-body">Actúa como analista de productividad.
+Necesito una base documentada para un informe sobre Colombia.
+Investiga el estado de la productividad en Colombia entre 2015 y 2025.
+Cubre: productividad laboral, productividad total de los factores,
+comparación con América Latina y la OCDE, y los 3 cuellos de botella principales.
+Formato: informe de 4 secciones con tablas y conclusiones accionables.
+Cita cada dato con su fuente oficial y enlace (DANE, Banco de la República, DNP, OCDE).</div>
+        </div>
+      </div>
+      <div class="ex-side">
+        <div class="tok-note">
+          <h4>Dónde hacerlo</h4>
+          <div class="where"><span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>Perplexity</span></div>
+          Busca el botón de <b>investigación / research</b> antes de enviar: sin activarlo, es solo otra respuesta rápida.
+        </div>
+        <div class="tok-note">
+          <h4>Qué observar</h4>
+          Mientras trabaja, muestra <b>qué está leyendo</b>. Ese rastro es lo que diferencia un informe de una opinión bien redactada.
+        </div>
+        <div class="tok-note warn">
+          <h4>Verifica siempre</h4>
+          Puede citar una fuente que no dice lo que afirma. Abre al menos <b>dos enlaces</b> y compruébalos: esa parte es tuya, no suya.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">📄</span><div><b>Meta:</b> salir con un documento con fuentes citadas, listo para ser la base de un informe real.</div></div>
+  </div>
+</section>
+
+<!-- LAB 3 · IMÁGENES METAFÓRICAS -->
+<section class="slide" data-block="Conceptos de IA" data-title="Ejercicio 3 · Generar imágenes" data-sub="Eficiencia, productividad, eficacia y efectividad">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow">Ejercicio 3 de 4</span>
+      <h2>Una imagen para <span class="hl">las cuatro palabras</span> que todos confunden</h2>
+      <p class="lead">Cada mesa usa una IA distinta con el <b>mismo prompt</b>. Al final comparamos: ¿cuál entendió la metáfora y cuál solo dibujó bonito?</p>
+    </div>
+    <div class="quad">
+      <div style="--pc:var(--gold)"><b>Eficacia</b><span>¿Lograste el objetivo? Sí o no. El costo aquí no importa.</span></div>
+      <div style="--pc:var(--accent)"><b>Eficiencia</b><span>¿Con cuántos recursos lo lograste? Menos recursos, más eficiencia.</span></div>
+      <div style="--pc:#4285f4"><b>Efectividad</b><span>Eficacia + eficiencia: el objetivo correcto, y bien hecho.</span></div>
+      <div style="--pc:var(--claude)"><b>Productividad</b><span>Cuánto sale por cada unidad que entra. Es una razón: se mide.</span></div>
+    </div>
+    <div class="ex-grid">
+      <div class="ex-stack">
+        <div class="pbox">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt de imagen</span>
+            <button class="copy-btn" type="button">Copiar</button></div>
+          <div class="pbox-body">Ilustración conceptual en 4 viñetas, estilo isométrico plano, fondo oscuro.
+El mismo leñador en las cuatro, cortando árboles:
+1. EFICACIA — tumba el árbol, aunque quede exhausto.
+2. EFICIENCIA — lo tumba en la mitad del tiempo, con motosierra.
+3. EFECTIVIDAD — tumba el árbol correcto, el que el cliente pidió.
+4. PRODUCTIVIDAD — un contador marca los troncos por hora.
+Rotula cada viñeta en español. Sin texto adicional.</div>
+        </div>
+      </div>
+      <div class="ex-side">
+        <div class="tok-note">
+          <h4>Dónde hacerlo</h4>
+          <div class="where"><span>ChatGPT</span><span>Gemini</span><span>Copilot</span><span>Ideogram</span></div>
+        </div>
+        <div class="tok-note">
+          <h4>También tiene anatomía</h4>
+          En imagen las piezas cambian de nombre: <b>estilo</b> (isométrico plano), <b>escena</b> (las 4 viñetas), <b>formato</b> (rótulos en español) y <b>límites</b> (sin texto adicional).
+        </div>
+        <div class="tok-note warn">
+          <h4>El texto es el punto débil</h4>
+          Casi todas escriben mal los rótulos. Si pasa, pide la imagen <b>sin texto</b> y pon tú las etiquetas.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🖼️</span><div><b>Meta:</b> ver que un prompt de imagen se construye igual que uno de texto — y que la metáfora la pones tú.</div></div>
+  </div>
+</section>
+
+<!-- LAB 4 · ARTEFACTO -->
+<section class="slide" data-block="Conceptos de IA" data-title="Ejercicio 4 · Pedir un artefacto" data-sub="Una calculadora de áreas hecha por la IA">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow">Ejercicio 4 de 4</span>
+      <h2>Pide un <span class="hl">artefacto</span>, no un texto</h2>
+      <p class="lead">Un artefacto es una <b>mini-aplicación</b> que la IA escribe y ejecuta ahí mismo: <i>Artifacts</i> en Claude, <i>Canvas</i> en ChatGPT y Gemini. Deja de responder y empieza a construir.</p>
+    </div>
+    <div class="ex-grid">
+      <div class="ex-stack">
+        <div class="pbox">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt de artefacto</span>
+            <button class="copy-btn" type="button">Copiar</button></div>
+          <div class="pbox-body">Crea un artefacto: una calculadora de áreas de figuras geométricas.
+Figuras: cuadrado, rectángulo, triángulo, círculo y trapecio.
+Al elegir una figura muestra su fórmula, pide solo los datos que necesita
+y devuelve el área con 2 decimales y unidades.
+Un solo archivo HTML, en español, diseño limpio y responsive.
+No aceptes números negativos ni campos vacíos.</div>
+        </div>
+      </div>
+      <div class="ex-side">
+        <div class="tok-note">
+          <h4>Dónde hacerlo</h4>
+          <div class="where"><span>Claude · Artifacts</span><span>ChatGPT · Canvas</span><span>Gemini · Canvas</span></div>
+        </div>
+        <div class="tok-note">
+          <h4>Ahora pídele un cambio</h4>
+          Escribe <b>«agrega el rombo»</b> y observa: no rehace todo, <b>edita</b> lo que ya construyó. Eso es trabajar con un agente.
+        </div>
+        <div class="tok-note warn">
+          <h4>Verifica el resultado</h4>
+          Calcula un área a mano y compárala. La IA construye rápido; <b>tú</b> respondes por lo que entrega.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🛠️</span><div><b>Esto ya es programar:</b> tú especificas, la IA construye, tú verificas. Es exactamente lo que haremos con datos reales durante todo el curso.</div></div>
+  </div>
+</section>
+
+<!-- PUENTE 1 · DEL PROMPT AL CÓDIGO -->
+<section class="slide" data-block="Conceptos de IA" data-title="Hilo · Del prompt al código" data-sub="Dónde estamos en el módulo">
+  <div class="slide-scroll bridge">
+    <div class="slide-head">
+      <span class="eyebrow">Hilo conductor</span>
+      <h2>La IA ya escribió el código.<br><span class="hl">¿Y qué es lo que te entregó?</span></h2>
+      <p class="lead">En los cuatro ejercicios le pediste cosas y respondió. Pero si no entiendes lo que devuelve, no puedes verificarlo — y verificar es <b>tu</b> trabajo. Las tres diapositivas que siguen abren esa caja.</p>
+    </div>
+    <div class="thread">
+      <div class="th done"><span class="tk">Ya lo viste</span><b>Cómo piensa la IA y cómo pedirle</b><small>Token · contexto · las 5 piezas · 4 ejercicios</small></div>
+      <span class="tarr">▶</span>
+      <div class="th now"><span class="tk">Estás aquí</span><b>Qué es lo que te entrega</b><small>Algoritmo · por qué Python · demo ejecutable</small></div>
+      <span class="tarr">▶</span>
+      <div class="th next"><span class="tk">Después</span><b>Monta tu taller</b><small>Las 7 herramientas, instaladas en vivo</small></div>
+      <span class="tarr">▶</span>
+      <div class="th next"><span class="tk">Al final</span><b>Escribes tú el código</b><small>18 temas de Python con retos</small></div>
+    </div>
   </div>
 </section>
 
@@ -1288,7 +1814,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     <div class="slide-head">
       <span class="eyebrow">El momento mágico · demo en vivo</span>
       <h2>Prompt en español <span class="hl">→</span> Python real</h2>
-      <p class="lead">Elige una tarea, mira el código que "genera" la IA y <b>ejecútalo aquí mismo</b>. Esto es exactamente lo que harás con tu agente en la sesión 2.</p>
+      <p class="lead">Elige una tarea, mira el código que "genera" la IA y <b>ejecútalo aquí mismo</b>. Esto es exactamente lo que harás con tu agente cuando lo instales en tu computador.</p>
     </div>
     <div class="demo-grid">
       <div>
@@ -1319,73 +1845,76 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   </div>
 </section>
 
-<!-- 14 · CIERRE SESIÓN 1 -->
-<section class="slide" data-block="Conceptos de IA" data-title="Cierre de la sesión 1" data-sub="Qué traer a la sesión 2">
-  <div class="slide-scroll wrapA" style="text-align:center">
-    <span class="eyebrow">Fin de la sesión 1</span>
-    <h2>Ya sabes <span class="hl">de qué se trata</span>.<br>Ahora montamos tu <span class="hl">taller</span></h2>
-    <p class="lead" style="margin:14px auto 0;max-width:640px;color:var(--muted);font-size:15px;line-height:1.55">
-      En la próxima sesión instalamos, paso a paso y en vivo, todo lo que usarás el resto del curso. Llega con esto listo:</p>
-    <div class="checks">
-      <div class="check"><b>Tu computador</b><span>Windows, Mac o Linux · con permisos de instalación</span></div>
-      <div class="check"><b>Cuenta de correo</b><span>la misma para GitHub y los agentes</span></div>
-      <div class="check"><b>Conexión estable</b><span>descargaremos varios instaladores</span></div>
-      <div class="check"><b>Espacio libre</b><span>al menos 5 GB en disco</span></div>
+<!-- ================================================================
+     BLOQUE A — INSTALACIÓN DE HERRAMIENTAS
+     ================================================================ -->
+
+<!-- PUENTE 2 · DEL NAVEGADOR A TU MÁQUINA -->
+<section class="slide" data-block="Instalación de herramientas" data-title="Hilo · Del navegador a tu máquina" data-sub="Por qué toca instalar">
+  <div class="slide-scroll bridge">
+    <div class="slide-head">
+      <span class="eyebrow">Hilo conductor</span>
+      <h2>Todo esto pasó <span class="hl">en el navegador</span></h2>
+      <p class="lead">Usaste la IA de otro, en la web de otro, con datos de ejemplo. Para trabajar con <b>tus</b> archivos —tu Excel, tus 40.000 filas, lo que no puedes subir a una página cualquiera— necesitas el taller en tu propio computador. Eso es lo que sigue.</p>
     </div>
-    <p class="note-foot"><b>Sesión 2 · 3 horas:</b> 1 hora de instalación guiada + 2 horas de fundamentos de Python con retos en vivo.</p>
+    <div class="thread">
+      <div class="th done"><span class="tk">Ya lo viste</span><b>Cómo piensa la IA y cómo pedirle</b><small>Token · contexto · las 5 piezas · 4 ejercicios</small></div>
+      <span class="tarr">▶</span>
+      <div class="th done"><span class="tk">Ya lo viste</span><b>Qué es lo que te entrega</b><small>Algoritmo · por qué Python · demo ejecutable</small></div>
+      <span class="tarr">▶</span>
+      <div class="th now"><span class="tk">Estás aquí</span><b>Monta tu taller</b><small>Las 7 herramientas, instaladas en vivo</small></div>
+      <span class="tarr">▶</span>
+      <div class="th next"><span class="tk">Después</span><b>Escribes tú el código</b><small>18 temas de Python con retos</small></div>
+    </div>
   </div>
 </section>
-
-<!-- ================================================================
-     SESIÓN 2 · BLOQUE A — INSTALACIÓN DE HERRAMIENTAS
-     ================================================================ -->
 
 <!-- 15 · ESTACIÓN DE TRABAJO -->
 <section class="slide" data-block="Instalación de herramientas" data-title="Tu estación de trabajo" data-sub="Las 7 piezas y su orden">
   <div class="slide-scroll ag-wrap">
     <div class="slide-head">
-      <span class="eyebrow">Sesión 2 · Bloque A</span>
+      <span class="eyebrow">Módulo 1 · Bloque A</span>
       <h2>Tu <span class="hl">estación de trabajo</span></h2>
       <p class="lead">Siete piezas, cada una con un papel distinto. Se instalan <b>en este orden</b> porque unas dependen de otras. Toca una tarjeta para ir directo a su instalación.</p>
     </div>
     <div class="tool-grid">
-      <div class="ag-card t-python" onclick="go(18,'python')">
+      <div class="ag-card t-python" onclick="goTitle('Instalación paso a paso','python')">
         <span class="step-idx">01</span>
         <div class="ag-logo"><i class="fa-brands fa-python"></i></div>
         <h3>Python</h3><div class="maker">El lenguaje</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-vscode" onclick="go(18,'vscode')">
+      <div class="ag-card t-vscode" onclick="goTitle('Instalación paso a paso','vscode')">
         <span class="step-idx">02</span>
         <div class="ag-logo"><i class="fa-solid fa-code"></i></div>
         <h3>VS Code</h3><div class="maker">El editor</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-node" onclick="go(18,'node')">
+      <div class="ag-card t-node" onclick="goTitle('Instalación paso a paso','node')">
         <span class="step-idx">03</span>
         <div class="ag-logo"><i class="fa-brands fa-node-js"></i></div>
         <h3>Node.js</h3><div class="maker">Requisito de los agentes</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-claude" onclick="go(18,'claude')">
+      <div class="ag-card t-claude" onclick="goTitle('Instalación paso a paso','claude')">
         <span class="step-idx">04</span>
         <div class="ag-logo">✳</div>
         <h3>Claude Code</h3><div class="maker">Agente · Anthropic</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-freebuff" onclick="go(18,'freebuff')">
+      <div class="ag-card t-freebuff" onclick="goTitle('Instalación paso a paso','freebuff')">
         <span class="step-idx">05</span>
         <div class="ag-logo">FB</div>
         <h3>FreeBuff</h3><div class="maker">Opción gratuita</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-git" onclick="go(18,'git')">
+      <div class="ag-card t-git" onclick="goTitle('Instalación paso a paso','git')">
         <span class="step-idx">06</span>
         <div class="ag-logo"><i class="fa-brands fa-git-alt"></i></div>
         <h3>Git</h3><div class="maker">Control de versiones</div>
         <div class="see">Ver instalación →</div>
       </div>
-      <div class="ag-card t-github" onclick="go(18,'github')">
+      <div class="ag-card t-github" onclick="goTitle('Instalación paso a paso','github')">
         <span class="step-idx">07</span>
         <div class="ag-logo"><i class="fa-brands fa-github"></i></div>
         <h3>GitHub</h3><div class="maker">Tu código en la nube</div>
@@ -1486,12 +2015,12 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <div class="check"><b>Carpeta</b><span>curso-datos abierta en VS Code</span></div>
     </div>
     <div class="hero-cta" style="opacity:1;animation:none;margin-top:30px">
-      <button class="btn-primary" onclick="go(21)">Empezar con Python →</button>
+      <button class="btn-primary" onclick="goTitle('Fundamentos de Python')">Empezar con Python →</button>
     </div>
   </div>
 </section>
 <!-- ================================================================
-     SESIÓN 2 · BLOQUE B — FUNDAMENTOS DE PROGRAMACIÓN EN PYTHON
+     BLOQUE B — FUNDAMENTOS DE PROGRAMACIÓN EN PYTHON
      (formato visual y esquemático de 1_fundamentos-python.html)
      ================================================================ -->
 
@@ -1499,7 +2028,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 <section class="slide s-py" data-block="Escribir código" data-title="Fundamentos de Python" data-sub="El recorrido del bloque B">
   <div class="py-stage flex flex-col justify-center">
     <div class="reveal mb-8">
-      <span class="kicker mb-3">Sesión 2 · Bloque B</span>
+      <span class="kicker mb-3">Módulo 1 · Bloque B</span>
       <h1 class="course-title mt-4 text-white">Fundamentos de <span style="color:var(--lime)">Python</span></h1>
       <p class="text-lg md:text-xl text-slate-300 mt-5 max-w-3xl leading-relaxed">
         Con las herramientas listas, empezamos a escribir. Cada tema trae un ejemplo que puedes
@@ -3954,6 +4483,12 @@ function go(i, toolKey){
   const dir = i >= current ? 1 : -1;
   current = i; render(dir);
 }
+/* Saltar por nombre y no por número: insertar o quitar una diapositiva
+   desplaza los índices, y los onclick con número quedaban apuntando mal. */
+function goTitle(title, toolKey){
+  const i = slides.findIndex(s => (s.dataset.title || '') === title);
+  if(i >= 0) go(i, toolKey);
+}
 function next(){ if(window.__anim && window.__anim.next()) return; go(current+1); }
 function prev(){ if(window.__anim && window.__anim.prev()) return; go(current-1); }
 document.addEventListener('keydown', e => {
@@ -4204,6 +4739,188 @@ function runCode(editorId, outputId){
   const code = ed ? ed.getValue() : document.getElementById(editorId).value;
   runPython(code, document.getElementById(outputId));
 }
+
+/* ================================================================
+   JUEGO · arrastrar cada término a su definición
+   Arrastre nativo (mouse) + toca-término/toca-casilla (táctil).
+   ================================================================ */
+(function(){
+  const root = document.getElementById('dgame');
+  if(!root) return;
+  const bank    = document.getElementById('dgBank');
+  const grid    = document.getElementById('dgGrid');
+  const scoreEl = document.getElementById('dgScore');
+  const resEl   = document.getElementById('dgResult');
+  const extraEl = document.getElementById('dgExtra');
+  const slots   = [...grid.querySelectorAll('.dg-slot')];
+  const cards   = [...grid.querySelectorAll('.dg-card')];
+
+  const TERMS = [
+    { k:'token',      t:'Token' },
+    { k:'vector',     t:'Vector' },
+    { k:'prediccion', t:'Predicción' },
+    { k:'modelo',     t:'Modelo' },
+    { k:'contexto',   t:'Ventana de contexto' },
+    { k:'generativa', t:'IA generativa' },
+    { k:'x-prompt',   t:'Prompt',           decoy:'Es <b>tu</b> parte del trato: la instrucción que escribes. No es una pieza interna del modelo.' },
+    { k:'x-aluc',     t:'Alucinación',      decoy:'Cuando responde con total seguridad algo que es falso. Por eso <b>siempre</b> se verifica.' },
+    { k:'x-ml',       t:'Machine Learning', decoy:'Aprender patrones a partir de <b>datos</b>, en vez de seguir reglas escritas a mano.' }
+  ];
+  const DECOYS = TERMS.filter(t => t.decoy);
+
+  let selected = null;   /* chip elegido con clic/toque */
+  let dragging = null;   /* chip que se está arrastrando */
+
+  function shuffle(a){
+    const r = a.slice();
+    for(let i = r.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [r[i],r[j]] = [r[j],r[i]]; }
+    return r;
+  }
+  function select(chip){
+    if(selected && selected !== chip) selected.classList.remove('sel');
+    selected = (selected === chip) ? null : chip;
+    if(selected) selected.classList.add('sel'); else chip.classList.remove('sel');
+  }
+  function clearSelection(){ if(selected){ selected.classList.remove('sel'); selected = null; } }
+
+  function makeChip(term){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'dg-chip';
+    b.draggable = true;
+    b.dataset.k = term.k;
+    b.textContent = term.t;
+    if(term.decoy) b.dataset.decoy = '1';
+    b.addEventListener('click', e => { e.stopPropagation(); select(b); });
+    b.addEventListener('dragstart', e => {
+      dragging = b; b.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', term.k);
+    });
+    b.addEventListener('dragend', () => { b.classList.remove('dragging'); dragging = null; });
+    return b;
+  }
+
+  /* mueve un chip a un destino (una casilla o el banco) */
+  function place(chip, target){
+    if(!chip || !target) return;
+    const origen = chip.parentElement;
+    if(origen === target){ clearSelection(); return; }
+    if(target.classList.contains('dg-slot')){
+      const previo = target.querySelector('.dg-chip');
+      if(previo) bank.appendChild(previo);
+      target.appendChild(chip);
+      target.classList.add('filled');
+    } else {
+      bank.appendChild(chip);
+    }
+    if(origen && origen.classList.contains('dg-slot') && !origen.querySelector('.dg-chip')) origen.classList.remove('filled');
+    clearSelection();
+    resetMarks();
+    updateScore();
+  }
+  function resetMarks(){
+    cards.forEach(c => c.classList.remove('ok','bad'));
+    resEl.classList.remove('show','win');
+    extraEl.classList.remove('show');
+  }
+  function updateScore(){
+    const n = slots.filter(s => s.querySelector('.dg-chip')).length;
+    scoreEl.innerHTML = 'Colocados <b>' + n + '</b> / ' + slots.length;
+    bank.classList.toggle('has-chips', !!bank.querySelector('.dg-chip'));
+  }
+
+  /* --- zonas de soltado --- */
+  [...slots, bank].forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; zone.classList.add('over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('over');
+      if(dragging) place(dragging, zone);
+    });
+    zone.addEventListener('click', () => {
+      if(selected){ place(selected, zone); return; }
+      /* sin selección: un clic en una casilla llena devuelve el término al banco */
+      const chip = zone.classList.contains('dg-slot') ? zone.querySelector('.dg-chip') : null;
+      if(chip) place(chip, bank);
+    });
+  });
+
+  /* el deslizamiento táctil no debe cambiar de diapositiva mientras se juega */
+  ['touchstart','touchend'].forEach(ev => root.addEventListener(ev, e => e.stopPropagation(), {passive:true}));
+
+  document.getElementById('dgCheck').addEventListener('click', () => {
+    clearSelection();
+    let aciertos = 0, vacias = 0;
+    slots.forEach(s => {
+      const card = s.closest('.dg-card');
+      const chip = s.querySelector('.dg-chip');
+      const marca = card.querySelector('.dgm');
+      if(!chip){ vacias++; card.classList.remove('ok','bad'); return; }
+      const bien = chip.dataset.k === s.dataset.k;
+      card.classList.toggle('ok', bien);
+      card.classList.toggle('bad', !bien);
+      marca.textContent = bien ? '✓' : '✗';
+      if(bien) aciertos++;
+    });
+    const perfecto = aciertos === slots.length;
+    resEl.className = 'dg-result show' + (perfecto ? ' win' : '');
+    if(vacias === slots.length){
+      resEl.innerHTML = 'Aún no hay nada colocado: <b>arrastra un término</b> a la casilla de su definición.';
+      return;
+    }
+    resEl.innerHTML = perfecto
+      ? '🎉 <b>' + aciertos + ' de ' + slots.length + '.</b> Perfecto: ya tienen el vocabulario para el resto del curso.'
+      : '<b>' + aciertos + ' de ' + slots.length + '</b> correctas' + (vacias ? ' · ' + vacias + ' sin responder' : '') +
+        '. Las marcadas en rojo se quedan como están: arrástralas de nuevo y vuelve a comprobar.';
+    if(perfecto || aciertos >= slots.length - 1){
+      extraEl.innerHTML = DECOYS.map(d => '<div><b>' + d.t + '</b> — ' + d.decoy + '</div>').join('');
+      extraEl.classList.add('show');
+    }
+  });
+
+  function reset(){
+    clearSelection();
+    slots.forEach(s => s.classList.remove('filled'));
+    cards.forEach(c => c.classList.remove('ok','bad'));
+    resEl.classList.remove('show','win');
+    extraEl.classList.remove('show');
+    extraEl.innerHTML = '';
+    bank.querySelectorAll('.dg-chip').forEach(c => c.remove());
+    grid.querySelectorAll('.dg-chip').forEach(c => c.remove());
+    shuffle(TERMS).forEach(t => bank.appendChild(makeChip(t)));
+    updateScore();
+  }
+  document.getElementById('dgReset').addEventListener('click', reset);
+  reset();
+})();
+
+/* ================================================================
+   LABORATORIO DE PROMPTS · botones "Copiar"
+   Con respaldo por execCommand: al abrir el archivo con file://
+   el portapapeles moderno no siempre está disponible.
+   ================================================================ */
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const body = btn.closest('.pbox').querySelector('.pbox-body');
+    if(!body) return;
+    const txt = body.innerText.trim();
+    let ok = true;
+    try{
+      await navigator.clipboard.writeText(txt);
+    }catch(err){
+      const ta = document.createElement('textarea');
+      ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+      ta.remove();
+    }
+    const previo = btn.textContent;
+    btn.textContent = ok ? '✓ Copiado' : 'Selecciónalo';
+    btn.classList.toggle('done', ok);
+    setTimeout(() => { btn.textContent = previo; btn.classList.remove('done'); }, 1800);
+  });
+});
 
 /* arranque */
 render();
