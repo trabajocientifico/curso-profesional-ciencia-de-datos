@@ -604,6 +604,83 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .toc-card::after{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
   background:linear-gradient(180deg,var(--moss),var(--lime)); transform:scaleY(0); transform-origin:top; transition:.3s; }
 .toc-card:hover::after{ transform:scaleY(1); }
+
+/* --- árbol de carpetas (slide de rutas) --- */
+.tree{ background:rgba(15,23,42,.5); border:1px solid rgba(148,163,184,.18); border-radius:12px;
+  padding:14px 12px; font-family:var(--mono); font-size:.78rem; line-height:1.85; overflow-x:auto; }
+.tree .rw{ display:block; white-space:pre; padding:1px 8px 1px 5px; border-left:3px solid transparent; border-radius:0 6px 6px 0; }
+.tree i{ font-style:normal; color:var(--muted); }
+.tree .rw.here{ background:rgba(200,242,90,.12); border-left-color:var(--lime); color:#fff; font-weight:700; }
+.tree .rw.here u{ text-decoration:none; color:var(--lime); font-size:.7rem; letter-spacing:.08em; }
+.tree .fileA{ color:var(--lime); }
+.tree .fileB{ color:var(--sky); }
+.tree .dim{ color:var(--muted); }
+
+/* --- tarjetas de ruta --- */
+.path-card{ border-radius:12px; padding:12px 14px; border:1px solid rgba(148,163,184,.18);
+  border-left-width:4px; background:rgba(15,23,42,.5); }
+.path-card h4{ font-family:var(--sans); font-size:.78rem; font-weight:700; color:#f5efe4; margin-bottom:7px; letter-spacing:.01em; }
+.path-card h4 span{ font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:3px; }
+.path-card p{ font-size:.74rem; line-height:1.5; color:var(--muted); margin-top:7px; }
+.path-card p b{ color:#e2e8f0; }
+.path-card.rel-a{ border-left-color:var(--lime); }
+.path-card.rel-a h4 span{ color:var(--lime); }
+.path-card.rel-b{ border-left-color:var(--sky); }
+.path-card.rel-b h4 span{ color:var(--sky); }
+.path-card.abs{ border-left-color:var(--amber); }
+.path-card.abs h4 span{ color:var(--amber); }
+.path-chip{ display:block; font-family:var(--mono); font-size:.8rem; background:#0d1117;
+  border-radius:6px; padding:8px 10px; word-break:break-all; color:#e2e8f0; }
+.path-chip .tail{ color:var(--lime); }
+.path-chip .root{ color:var(--amber); }
+
+/* --- rejilla estilo hoja de cálculo (slide DataFrame) --- */
+.xl{ border:1px solid #3f4c5f; border-radius:6px; overflow:hidden; font-family:var(--mono); font-size:.72rem; background:#0f172a; }
+.xl table{ width:100%; border-collapse:collapse; }
+.xl th,.xl td{ border:1px solid #2c3a4d; padding:4px 8px; text-align:left; white-space:nowrap; }
+.xl thead th,.xl tbody th{ background:#1e293b; color:var(--muted); font-weight:400; text-align:center; font-size:.66rem; }
+.xl td{ color:#e2e8f0; }
+.xl tr.hdr td{ background:rgba(242,177,52,.12); color:var(--amber); font-weight:700; }
+.step-arrow{ display:flex; align-items:center; justify-content:center; gap:9px; color:var(--muted);
+  font-family:var(--mono); font-size:.68rem; padding:6px 0; }
+.step-arrow::before,.step-arrow::after{ content:""; flex:1; height:1px; background:rgba(148,163,184,.25); }
+.note-tag{ font-family:var(--mono); font-size:.62rem; color:var(--muted); letter-spacing:.04em; }
+.note-tag b{ color:var(--lime); font-weight:400; }
+
+/* --- convergencia de formatos (slide tres formatos) --- */
+.fmt-file{ display:flex; align-items:center; gap:11px; background:rgba(15,23,42,.5);
+  border:1px solid rgba(148,163,184,.18); border-radius:12px; padding:10px 13px; }
+.fmt-file .fi{ width:34px; height:34px; flex:none; border-radius:9px; display:grid; place-items:center;
+  background:rgba(200,242,90,.10); color:var(--lime); font-size:16px; }
+.fmt-file .nm{ font-family:var(--mono); font-size:.76rem; color:#e2e8f0; }
+.fmt-file .nm em{ font-style:normal; display:block; font-size:.62rem; color:var(--muted); letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
+.fmt-arrow{ display:grid; place-items:center; color:var(--lime); font-size:20px; }
+.fmt-target{ border:1px solid rgba(200,242,90,.45); border-radius:12px; background:rgba(200,242,90,.05);
+  padding:14px; display:flex; flex-direction:column; gap:9px; }
+.fmt-target .tt{ font-family:var(--mono); font-size:1.15rem; color:var(--lime); font-weight:700; }
+.fmt-target .dim{ font-family:var(--mono); font-size:.68rem; color:var(--muted); letter-spacing:.1em; }
+
+/* --- mapa esquemático (slide shapefile) --- */
+.gmap{ background:#0d1117; border:1px solid #44475a; border-radius:8px; padding:10px 12px 8px; }
+.gmap svg{ display:block; width:auto; max-width:100%; height:auto; max-height:min(26vh,215px); margin:0 auto; }
+.gmap .land{ fill:rgba(31,93,76,.55); stroke:var(--moss-bright); stroke-width:1.2; stroke-linejoin:round; }
+.gmap .pt{ fill:var(--lime); stroke:#0d1117; stroke-width:1.5; }
+.gmap .lbl{ font-family:var(--mono); font-size:7.5px; fill:#e2e8f0; }
+.gmap .lbl .n{ fill:var(--lime); font-weight:700; }
+.gmap .lbl .v{ fill:var(--muted); }
+.gmap-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:7px; padding-top:7px;
+  border-top:1px solid rgba(148,163,184,.15); font-family:var(--mono); font-size:.62rem; color:var(--muted); }
+.gmap-legend b{ color:var(--lime); font-weight:400; }
+
+/* --- franja de conversión entre formatos (slide exportar) --- */
+.conv-strip{ display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  background:rgba(15,23,42,.5); border:1px solid rgba(148,163,184,.18); border-radius:12px; padding:11px 13px; }
+.conv-strip .st{ font-family:var(--mono); font-size:.72rem; padding:5px 10px; border-radius:6px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.2); color:#e2e8f0; }
+.conv-strip .st.in{ color:var(--sky); border-color:rgba(94,200,224,.35); }
+.conv-strip .st.out{ color:var(--amber); border-color:rgba(242,177,52,.35); }
+.conv-strip .st.mid{ color:var(--lime); border-color:rgba(200,242,90,.3); }
+.conv-strip .ar{ color:var(--muted); font-size:13px; }
 .ide-label{ font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--lime); margin-bottom:.4rem; display:inline-flex; align-items:center; gap:.45em; }
 .ide-label .dot{ width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 8px var(--lime); }
@@ -672,6 +749,157 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
+/* ==========================================================================
+   PORTADA DEL BLOQUE DE PRÁCTICA
+   ========================================================================== */
+.prac{ width:100%; max-width:1060px; text-align:center; }
+.prac h2{ font-size:clamp(34px,5.6vw,62px); line-height:1.02; letter-spacing:-.02em; }
+.prac .lead{ margin:14px auto 0; color:var(--muted); font-size:15.5px; line-height:1.6; max-width:640px; }
+.prac .lead b{ color:var(--text); }
+
+/* terminal con el prompt escribiéndose solo */
+.prac-type{ max-width:660px; margin:28px auto 0; text-align:left; border-radius:14px;
+  background:#050810; border:1px solid rgba(0,245,212,.28); overflow:hidden; }
+.pt-bar{ display:flex; align-items:center; gap:6px; padding:8px 12px; background:rgba(255,255,255,.04); border-bottom:1px solid var(--line); }
+.pt-bar i{ width:9px; height:9px; border-radius:50%; background:var(--line); }
+.pt-bar span{ margin-left:6px; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.pt-body{ padding:14px 16px; }
+.pt-who{ font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
+.pt-line{ font-family:var(--font-mono); font-size:13.5px; color:var(--accent); white-space:nowrap; overflow:hidden;
+  border-right:2px solid var(--accent); width:0;
+  animation:typeIn 5.5s steps(24) infinite, caret .75s step-end infinite; }
+@keyframes typeIn{ 0%{ width:0; } 45%,90%{ width:24ch; } 100%{ width:0; } }
+@keyframes caret{ 50%{ border-color:transparent; } }
+.pt-reply{ display:flex; align-items:center; gap:9px; margin-top:12px; padding-top:11px; border-top:1px dashed var(--line);
+  font-size:12.5px; color:var(--muted); opacity:0; animation:ptReply 5.5s ease-in-out infinite; }
+@keyframes ptReply{ 0%,48%{ opacity:0; transform:translateY(6px);} 60%,92%{ opacity:1; transform:none;} 100%{ opacity:0;} }
+.pt-reply b{ color:var(--accent); font-weight:700; }
+.pt-reply .cog{ display:inline-block; animation:spin 3.2s linear infinite; }
+
+/* los tres ejercicios, en fila */
+.prac-flow{ display:flex; align-items:stretch; justify-content:center; gap:10px; margin-top:26px; }
+.prac-card{ flex:1; max-width:280px; display:flex; flex-direction:column; align-items:center; gap:8px;
+  padding:18px 14px 15px; border-radius:16px; background:var(--surface); border:1px solid var(--line);
+  position:relative; transition:transform .3s ease, border-color .3s ease; }
+.prac-card:hover{ transform:translateY(-5px); border-color:rgba(0,245,212,.45); }
+.prac-card .pc-n{ position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+  width:26px; height:26px; border-radius:50%; display:grid; place-items:center;
+  font-weight:800; font-size:13px; color:#041210; background:var(--accent); }
+.prac-card .pc-ic{ font-size:28px; line-height:1; margin-top:6px; animation:floaty 5s ease-in-out infinite; }
+.prac-card:nth-child(3) .pc-ic{ animation-delay:.5s; }
+.prac-card:nth-child(5) .pc-ic{ animation-delay:1s; }
+.prac-card h4{ font-family:var(--font-body); font-size:15px; font-weight:800; color:var(--text); }
+.prac-card p{ font-size:12px; color:var(--muted); line-height:1.45; }
+.prac-card .pc-out{ margin-top:auto; padding-top:9px; font-family:var(--font-mono); font-size:10px; color:var(--accent);
+  background:rgba(0,245,212,.07); border:1px solid rgba(0,245,212,.22); border-radius:99px; padding:4px 11px; }
+.prac-arr{ align-self:center; color:var(--accent); font-size:17px; opacity:.65; animation:nudge 1.6s ease-in-out infinite; }
+.prac-arr:nth-of-type(2){ animation-delay:.35s; }
+
+/* pista con la chispa que recorre los tres */
+.prac-track{ position:relative; height:2px; max-width:760px; margin:18px auto 0;
+  background:linear-gradient(90deg,transparent,rgba(0,245,212,.22) 12%,rgba(0,245,212,.22) 88%,transparent); }
+.prac-track::after{ content:""; position:absolute; top:-4px; left:0; width:10px; height:10px; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 14px var(--accent); animation:travel 5.5s ease-in-out infinite; }
+@keyframes travel{ 0%{ left:0; opacity:0; } 8%{ opacity:1; } 92%{ opacity:1; } 100%{ left:calc(100% - 10px); opacity:0; } }
+.prac-foot{ margin-top:20px; display:inline-flex; align-items:center; gap:9px; font-size:13px; color:var(--muted);
+  padding:10px 18px; border-radius:99px; background:var(--surface); border:1px solid var(--line); }
+.prac-foot b{ color:var(--gold); }
+@media (max-width:820px){
+  .prac-flow{ flex-direction:column; align-items:stretch; }
+  .prac-card{ max-width:none; }
+  .prac-arr{ transform:rotate(90deg); }
+  .prac-track{ display:none; }
+  .pt-line{ font-size:11.5px; }
+}
+
+/* ==========================================================================
+   EJERCICIOS (prompt → resultado) · portado de ejercicio.html
+   ========================================================================== */
+.step-pill{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:.12em; padding:4px 11px; border-radius:99px; background:var(--accent); color:#041210; margin-right:8px;}
+.ex{ width:100%; max-width:1180px;}
+.ex-tools{ display:inline-flex; align-items:center; gap:8px; margin:8px auto 0; font-size:12px; color:var(--muted); padding:6px 14px; border-radius:99px; background:var(--surface); border:1px solid var(--line);}
+.ex-tools b{ color:var(--accent);}
+.ex-file-wrap{ text-align:center;}
+.ex-file{ display:inline-flex; align-items:center; gap:14px; margin:12px auto 0; padding:6px 6px 6px 16px; border-radius:99px; background:var(--surface); border:1px solid var(--line);}
+.ex-file .fn{ font-size:12.5px; font-weight:600; color:var(--text);}
+.ex-dl{ display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#041210; background:var(--accent); padding:7px 13px; border-radius:99px; text-decoration:none; transition:transform .2s;}
+.ex-dl:hover{ transform:translateY(-2px);}
+
+.practical{ display:grid; grid-template-columns:1.02fr 60px 1.18fr; gap:12px; align-items:center; margin-top:22px;}
+.prompt-card{ padding:22px; border-radius:18px; background:var(--surface); border:1px solid rgba(0,245,212,.3);}
+.card-label{ font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:12px;}
+.card-label .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent);}
+.card-label .dot.soft{ background:var(--muted);}
+.prompt-text{ font-size:14px; line-height:1.7; color:var(--text);}
+.prompt-text code{ font-family:var(--font-mono); font-size:.88em; color:var(--accent); background:rgba(0,245,212,.08); padding:2px 6px; border-radius:6px;}
+.fill-edit{ display:inline-block; padding:1px 8px; border-radius:6px; background:rgba(255,209,102,.14); border:1px dashed rgba(255,209,102,.5); color:var(--gold); font-weight:600; cursor:text;}
+.prompt-actions{ margin-top:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+.copy-prompt{ font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#041210; background:var(--accent); border:none; border-radius:10px; padding:9px 16px; cursor:pointer; transition:transform .2s;}
+.copy-prompt:hover{ transform:translateY(-2px);}
+.copy-prompt.done{ background:var(--gold);}
+.copy-hint{ font-size:11.5px; color:var(--muted);}
+.conjure{ display:grid; place-items:center; gap:4px; color:var(--accent);}
+.conjure .spark{ font-size:16px; animation:pulseS 1.8s ease-in-out infinite;}
+.conjure .arrow{ font-size:26px; animation:nudge 1.6s ease-in-out infinite;}
+@keyframes pulseS{ 0%,100%{ opacity:.4; transform:scale(.9);} 50%{ opacity:1; transform:scale(1.15);}}
+.visual-card{ padding:18px 20px; border-radius:18px; background:var(--surface); border:1px solid var(--line);}
+.why-note{ margin-top:20px; text-align:center; font-size:13px; color:var(--muted); display:flex; gap:8px; justify-content:center; align-items:center;}
+.why-note b{ color:var(--gold);}
+
+/* viz limpieza: antes/después */
+.viz-clean{ display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:center;}
+.vc-tbl{ border-radius:10px; overflow:hidden; border:1px solid var(--line);}
+.vc-tbl .h{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; padding:6px 10px; text-align:center;}
+.vc-tbl.bad .h{ background:rgba(255,107,107,.12); color:#ff9d9d;}
+.vc-tbl.good .h{ background:rgba(0,245,212,.12); color:var(--accent);}
+.vc-row{ display:flex; gap:6px; padding:6px 9px; font-family:var(--font-mono); font-size:11px; border-top:1px solid var(--line); align-items:center;}
+.vc-row .c{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.vc-bad{ color:#ff9d9d;} .vc-ok{ color:var(--accent);}
+.vc-mid{ display:grid; place-items:center; color:var(--accent); font-size:22px;}
+.vc-stats{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;}
+.vc-stats span{ font-size:11px; font-weight:700; padding:5px 11px; border-radius:99px; background:rgba(0,245,212,.08); border:1px solid rgba(0,245,212,.25); color:var(--accent);}
+
+/* viz split (automatización) */
+.viz-split{ display:flex; align-items:center; gap:14px; justify-content:center; flex-wrap:wrap;}
+.vs-source{ text-align:center; padding:14px 16px; border-radius:13px; background:rgba(0,245,212,.06); border:1px solid rgba(0,245,212,.28);}
+.vs-source .ic{ font-size:26px;} .vs-source .nm{ font-family:var(--font-mono); font-size:11px; color:var(--accent); margin-top:5px; font-weight:700;} .vs-source .mt{ font-size:10px; color:var(--muted); margin-top:2px;}
+.vs-arrow{ color:var(--accent); font-weight:800; font-size:13px; display:grid; place-items:center; text-align:center;}
+.vs-arrow small{ display:block; font-size:9px; color:var(--muted); font-weight:600;}
+.vs-outs{ display:flex; flex-direction:column; gap:5px; min-width:210px;}
+.vs-folder{ font-size:11px; color:var(--gold); font-weight:700; margin-bottom:2px;}
+.vs-out{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:9px; background:rgba(255,255,255,.03); border:1px solid var(--line); font-family:var(--font-mono); font-size:11px;}
+.vs-out .rows{ margin-left:auto; color:var(--muted);}
+.vs-book{ margin-top:9px;}
+.vs-tabs{ display:flex; gap:4px; flex-wrap:wrap;}
+.vs-tabs span{ font-size:9.5px; padding:4px 8px; border-radius:6px 6px 0 0; background:rgba(255,255,255,.04); border:1px solid var(--line); border-bottom:none; font-family:var(--font-mono);}
+.vs-tabs span.active{ background:rgba(0,245,212,.14); color:var(--accent);}
+
+/* viz dos hojas de Excel */
+.viz-xls{ display:grid; grid-template-columns:1fr 1.32fr; gap:12px; align-items:start;}
+.xls{ border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#0b1020;}
+.xls-bar{ display:flex; align-items:center; gap:7px; padding:7px 10px; background:rgba(33,115,70,.18); border-bottom:1px solid var(--line);}
+.xls-bar .xi{ width:16px; height:16px; border-radius:3px; background:#217346; color:#fff; display:grid; place-items:center; font-size:9px; font-weight:800;}
+.xls-bar .nm{ font-family:var(--font-mono); font-size:11px; color:#8fd7b3; font-weight:700;}
+.xls-bar .ct{ margin-left:auto; font-size:9.5px; color:var(--muted);}
+.xls-row{ display:grid; grid-template-columns:22px 1fr 1.25fr;}
+.xls.wide .xls-row{ grid-template-columns:22px .92fr 1.15fr 1fr;}
+.xls-cell{ padding:6px 8px; border-right:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:11px;}
+.xls-cell.gut{ background:rgba(255,255,255,.04); color:var(--muted); text-align:center; font-family:var(--font-mono); font-size:10px;}
+.xls-row.head .xls-cell{ background:rgba(255,255,255,.05); font-weight:700; color:var(--muted); font-size:9.5px; letter-spacing:.03em; text-transform:uppercase;}
+.xls-row.head .xls-cell.new{ color:var(--accent); background:rgba(0,245,212,.08);}
+.xls-cell.mono{ font-family:var(--font-mono); font-size:10px; color:var(--muted);}
+.xls-cell.match{ color:var(--accent); font-weight:700;}
+.xls-row.dup .xls-cell{ background:rgba(255,209,102,.08);}
+.xls-cell.estado{ padding:4px 6px;}
+.xls-tab{ display:inline-block; font-size:10px; font-weight:700; padding:5px 14px; background:rgba(255,255,255,.03); border-top:2px solid #2fa869; color:#8fd7b3; font-family:var(--font-mono);}
+.ib-badge{ font-size:9.5px; font-weight:700; padding:3px 8px; border-radius:99px; text-align:center; white-space:nowrap; display:inline-block;}
+.ib-badge.both{ background:rgba(0,245,212,.14); border:1px solid rgba(0,245,212,.42); color:var(--accent);}
+.ib-badge.only{ background:rgba(139,148,179,.14); border:1px solid var(--line); color:var(--muted);}
+.xls-legend{ grid-column:1/-1; display:flex; gap:16px; justify-content:center; margin-top:5px; font-size:10.5px; color:var(--muted); flex-wrap:wrap;}
+.xls-legend span{ display:inline-flex; align-items:center; gap:6px;}
+.xls-legend b{ color:var(--accent); font-weight:700;}
+.xls-legend .sw{ width:11px; height:11px; border-radius:3px; display:inline-block;}
+
 @media (max-width:1100px){
   .tool-grid{ grid-template-columns:repeat(2,1fr); }
   .def-grid{ grid-template-columns:repeat(2,1fr); }
@@ -688,9 +916,13 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .tline::before{ display:none; }
   .tl{ padding-top:0; padding-left:30px; }
   .tl .dot{ top:4px; }
+  .practical{ grid-template-columns:1fr; gap:12px; }
+  .conjure{ transform:rotate(90deg); }
 }
 @media (max-width:820px){
   .slide{ padding:5.5rem 6vw 6rem; align-items:flex-start; }
+  .viz-clean{ grid-template-columns:1fr; } .vc-mid{ transform:rotate(90deg); }
+  .viz-xls{ grid-template-columns:1fr; }
   .slide-scroll{ max-height:none; }
   .progress-num{ top:auto; bottom:22px; left:50%; transform:translateX(-50%); }
   .block-tag{ font-size:9px; padding:5px 12px; }
@@ -898,10 +1130,10 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <span class="kicker mb-2">Cómo vamos a avanzar</span>
       <h2 class="serif-h2 text-3xl md:text-5xl mt-3 text-white">De un <span class="em">archivo</span> a una <span class="em">tabla</span>, y de vuelta</h2>
       <p class="text-base text-slate-400 mt-3 max-w-4xl">
-        En Fundamentos aprendiste a manejar datos que escribías tú. Aquí los datos vienen de fuera: de un Excel, de una exportación, de un sistema de información geográfica. El trabajo es siempre el mismo — <strong class="text-slate-200">abrirlos, entenderlos y volver a guardarlos</strong>.
+        En Fundamentos aprendiste a manejar datos que escribías tú. Aquí los datos vienen de fuera: de un Excel, de una exportación, de un sistema de información geográfica. El trabajo es siempre el mismo — <strong class="text-slate-200">abrirlos, entenderlos, trabajarlos y volver a guardarlos</strong>.
       </p>
     </div>
-    <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+    <div class="reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2.5">
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">01</span><p class="font-bold mt-1">Dónde está el archivo</p><p class="text-xs text-slate-400">rutas y carpetas</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">02</span><p class="font-bold mt-1">El DataFrame</p><p class="text-xs text-slate-400">la tabla en memoria</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">03</span><p class="font-bold mt-1">CSV</p><p class="text-xs text-slate-400">read_csv</p></div>
@@ -911,7 +1143,14 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40"><span class="code-font text-xs" style="color:var(--lime)">07</span><p class="font-bold mt-1">Reconocer</p><p class="text-xs text-slate-400">head · shape · info</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(242,177,52,.4)"><span class="code-font text-xs" style="color:var(--amber)">08</span><p class="font-bold mt-1">Exportar</p><p class="text-xs text-slate-400">los cuatro formatos</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(242,177,52,.4)"><span class="code-font text-xs" style="color:var(--amber)">09</span><p class="font-bold mt-1">Exportar bien</p><p class="text-xs text-slate-400">rutas y carpetas</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(242,177,52,.4)"><span class="code-font text-xs" style="color:var(--amber)">★</span><p class="font-bold mt-1">Plantilla</p><p class="text-xs text-slate-400">para reutilizar</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">10</span><p class="font-bold mt-1">Elegir</p><p class="text-xs text-slate-400">columnas y filas</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">11</span><p class="font-bold mt-1">Filtrar</p><p class="text-xs text-slate-400">por condición</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">12</span><p class="font-bold mt-1">Renombrar</p><p class="text-xs text-slate-400">columnas y etiquetas</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">13</span><p class="font-bold mt-1">Crear columnas</p><p class="text-xs text-slate-400">calculadas · condición</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">14</span><p class="font-bold mt-1">Ordenar y limpiar</p><p class="text-xs text-slate-400">duplicados · vacíos</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">15</span><p class="font-bold mt-1">Agrupar</p><p class="text-xs text-slate-400">groupby · resúmenes</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">★</span><p class="font-bold mt-1">Chuleta</p><p class="text-xs text-slate-400">para reutilizar</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(0,245,212,.4)"><span class="code-font text-xs" style="color:var(--accent)">▶</span><p class="font-bold mt-1">Práctica</p><p class="text-xs text-slate-400">3 ejercicios con agentes</p></div>
     </div>
     <div class="reveal mt-6 p-4 rounded-lg text-sm text-slate-300" style="background:rgba(31,93,76,.25);border-left:4px solid var(--lime)">
       <i class="fa-solid fa-lightbulb mr-2" style="color:var(--amber)"></i>
@@ -931,14 +1170,17 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
       <div class="space-y-3">
-        <div class="kw-group"><h4>Ruta relativa · desde donde estás</h4>
-          <span class="kw">"ventas.csv"</span><span class="kw">"datos/ventas.csv"</span>
-          <p class="text-xs text-slate-400 mt-2">Corta y portátil. Si mueves la carpeta entera a otro computador, <b class="text-slate-200">sigue funcionando</b>. Es la que debes usar.</p>
+        <div class="tree">
+          <span class="rw dim">C:/</span>
+          <span class="rw"><i>└─ </i><span class="dim">Users/</span></span>
+          <span class="rw"><i>   └─ </i><span class="dim">Ana/</span></span>
+          <span class="rw here"><i>      └─ </i>curso-datos/     <u>← ESTÁS AQUÍ</u></span>
+          <span class="rw"><i>         ├─ </i><span class="dim">analisis.py</span></span>
+          <span class="rw"><i>         ├─ </i><span class="fileA">ventas.csv</span></span>
+          <span class="rw"><i>         └─ </i><span class="dim">datos/</span></span>
+          <span class="rw"><i>            └─ </i><span class="fileB">ventas_empresa.csv</span></span>
         </div>
-        <div class="kw-group"><h4>Ruta absoluta · desde la raíz del disco</h4>
-          <span class="kw">"C:/Users/Ana/datos/ventas.csv"</span>
-          <p class="text-xs text-slate-400 mt-2">Siempre encuentra el archivo… en <b class="text-slate-200">tu</b> computador. En el de otra persona falla seguro.</p>
-        </div>
+        <p class="text-xs text-slate-400 px-1">Una ruta es <b class="text-slate-200">el camino</b> desde un punto de partida hasta el archivo. Lo único que cambia entre una y otra es <b class="text-slate-200">dónde empieza ese camino</b>.</p>
         <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
           <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Las barras invertidas de Windows</p>
           <p class="text-slate-300 text-sm">
@@ -947,39 +1189,24 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
         </div>
       </div>
       <div class="space-y-3">
-        <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python · ¿dónde cree Python que está?</span>
-          </div>
-<pre class="static-code">import os
-
-<span class="cm"># La carpeta desde la que se está ejecutando</span>
-print(os.getcwd())
-
-<span class="cm"># Lo que hay ahí dentro</span>
-print(os.listdir())</pre>
-<pre class="static-out">C:\Users\Ana\curso-datos
-
-['analisis.py', 'datos', 'resultados']</pre>
+        <div class="path-card rel-a">
+          <h4><span>Ruta relativa · caso A</span>El archivo está <b>al lado</b> de tu script</h4>
+          <span class="path-chip">"<span class="tail">ventas.csv</span>"</span>
+          <p>Empieza donde estás. No hay que subir ni bajar de carpeta: basta el nombre del archivo.</p>
         </div>
-        <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python · la forma recomendada</span>
-          </div>
-<pre class="static-code">from pathlib import Path
-import pandas as pd
-
-<span class="cm"># Carpeta donde vive este script</span>
-BASE = Path(__file__).parent
-DATOS = BASE / "datos"
-
-df = pd.read_csv(DATOS / "ventas_empresa.csv")</pre>
+        <div class="path-card rel-b">
+          <h4><span>Ruta relativa · caso B</span>El archivo está en una <b>subcarpeta</b></h4>
+          <span class="path-chip">"<span class="tail" style="color:var(--sky)">datos/ventas_empresa.csv</span>"</span>
+          <p>Empieza donde estás y <b>baja</b> una carpeta. Cada <code>/</code> significa «entra aquí».</p>
+        </div>
+        <div class="path-card abs">
+          <h4><span>Ruta absoluta · desde la raíz del disco</span>El camino <b>completo</b>, desde <code>C:/</code></h4>
+          <span class="path-chip">"<span class="root">C:/Users/Ana/curso-datos/</span><span class="tail" style="color:var(--sky)">datos/ventas_empresa.csv</span>"</span>
+          <p>Fíjate: <b>la ruta relativa es la cola de la absoluta</b>. Lo de más, en ámbar, es lo que solo existe en <b>tu</b> computador — en el de otra persona esa ruta falla seguro.</p>
         </div>
         <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
-          <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
-          Con <code>Path</code> las rutas se arman con <code>/</code> y funcionan igual en Windows, Mac y Linux. Es lo que usaremos el resto del curso.
+          <i class="fa-solid fa-circle-check mr-2" style="color:var(--lime)"></i>
+          <b>Usa siempre la relativa.</b> Si mueves la carpeta entera a otro computador, o se la pasas a un compañero, sigue funcionando.
         </div>
       </div>
     </div>
@@ -993,17 +1220,22 @@ df = pd.read_csv(DATOS / "ventas_empresa.csv")</pre>
       <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
         <i class="fa-solid fa-table mr-2" style="color:var(--lime)"></i>El <span class="em">DataFrame</span>
       </h2>
-      <p class="text-base text-slate-400 mt-2 max-w-5xl">pandas no abre Excel: <strong class="text-slate-200">lee el archivo y lo convierte en un objeto</strong> que vive en la memoria del programa. Ese objeto se llama DataFrame, y es con lo que trabajarás el resto del curso.</p>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">pandas no abre Excel: <strong class="text-slate-200">lee el archivo y hace una copia de la tabla</strong> dentro de la memoria del programa. Esa tabla se llama DataFrame, y es con lo que trabajarás el resto del curso.</p>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 flex-1 items-center">
-      <div class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div class="kw-group"><h4>Lo que ya conoces</h4>
-            <span class="kw">lista de diccionarios</span>
-            <p class="text-xs text-slate-400 mt-2">Cada diccionario, una fila. Lo viste al final del capítulo de diccionarios.</p></div>
-          <div class="kw-group"><h4>Lo mismo, pero potente</h4>
-            <span class="kw">DataFrame</span>
-            <p class="text-xs text-slate-400 mt-2">Filas y columnas con nombre, y cientos de operaciones ya escritas.</p></div>
+      <div class="space-y-3">
+        <p class="text-sm text-slate-300 font-bold">Piénsalo como una hoja de cálculo que se abre sin abrir Excel. Al hacer la copia cambian tres cosas:</p>
+        <div class="kw-group">
+          <p class="pw-label" style="margin-bottom:4px"><i>1</i> La primera fila se vuelve <em>· el nombre de las columnas</em></p>
+          <p class="text-xs text-slate-400">Deja de ser la fila 1: pasa a ser la cabecera. Por eso puedes pedir <code>df["ciudad"]</code> en vez de acordarte de que era la columna B.</p>
+        </div>
+        <div class="kw-group">
+          <p class="pw-label" style="margin-bottom:4px"><i>2</i> Las filas se numeran <em>· desde 0</em></p>
+          <p class="text-xs text-slate-400">Ese número de la izquierda es el <b class="text-slate-200">índice</b>. No es un dato ni una columna del archivo: es la etiqueta de cada fila.</p>
+        </div>
+        <div class="kw-group">
+          <p class="pw-label" style="margin-bottom:4px"><i>3</i> Viajan los datos <em>· no el formato</em></p>
+          <p class="text-xs text-slate-400">Colores, fórmulas, celdas combinadas y anchos de columna se quedan atrás. Llega el contenido, que es lo que se analiza.</p>
         </div>
         <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
           <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
@@ -1011,30 +1243,82 @@ df = pd.read_csv(DATOS / "ventas_empresa.csv")</pre>
         </div>
         <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
           <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Leer no es modificar</p>
-          <p class="text-slate-300 text-sm">Cargar un archivo <strong>no lo cambia</strong>. Todo lo que hagas ocurre en memoria; el archivo original sigue intacto hasta que tú decidas exportar.</p>
+          <p class="text-slate-300 text-sm">Cargar un archivo <strong>no lo cambia</strong>. Todo lo que hagas ocurre en esa copia en memoria; el archivo original sigue intacto hasta que tú decidas exportar.</p>
         </div>
       </div>
-      <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python · el mismo dato, dos formas</span>
-          </div>
-<pre class="static-code"><span class="cm"># Como lo harías con lo de Fundamentos</span>
-ventas = [
-    {"ciudad": "Bogotá",   "ventas_cop": 6369760},
-    {"ciudad": "Envigado", "ventas_cop": 2101320},
-]
-print(ventas[0]["ciudad"])
-
-<span class="cm"># Como lo hace pandas</span>
-import pandas as pd
-
-df = pd.DataFrame(ventas)
-print(df)</pre>
+      <div style="max-width:520px">
+        <p class="pw-label"><i class="fa-solid fa-file-excel" style="font-size:.8rem"></i> ventas.xlsx <em>· como lo ves en Excel</em></p>
+        <div class="xl">
+          <table>
+            <thead><tr><th style="width:26px"></th><th>A</th><th>B</th></tr></thead>
+            <tbody>
+              <tr class="hdr"><th>1</th><td>ciudad</td><td>ventas_cop</td></tr>
+              <tr><th>2</th><td>Bogotá</td><td>6369760</td></tr>
+              <tr><th>3</th><td>Envigado</td><td>2101320</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="step-arrow"><i class="fa-solid fa-arrow-down" style="color:var(--lime)"></i> pd.read_excel("ventas.xlsx")</div>
+        <p class="pw-label"><i class="fa-solid fa-table" style="font-size:.8rem"></i> df <em>· como lo ve Python</em></p>
+        <div class="ide-window">
 <pre class="static-out">     ciudad  ventas_cop
 0    Bogotá     6369760
 1  Envigado     2101320</pre>
         </div>
+        <div class="flex gap-5 mt-2 px-1 flex-wrap">
+          <span class="note-tag"><b>↑</b> la fila 1 del Excel = nombres de columna</span>
+          <span class="note-tag"><b>0 · 1</b> = el índice, empieza en cero</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Cargar datos" data-title="Los mismos datos, tres formatos" data-sub="Una sola tabla de destino">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Antes de entrar en cada formato</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-code-compare mr-2" style="color:var(--lime)"></i>Tres puertas, <span class="em">la misma habitación</span>
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Da igual en cuál de los tres formatos te entreguen los datos: cada uno entra por su función y los tres salen convertidos en <strong class="text-slate-200">el mismo DataFrame</strong>. Los siguientes tres capítulos son estas tres puertas, una por una.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 lg:gap-6 items-center flex-1">
+      <div class="space-y-3">
+        <div class="fmt-file">
+          <span class="fi"><i class="fa-solid fa-file-excel"></i></span>
+          <span class="nm"><em>Excel · .xlsx</em>ventas_empresa.xlsx</span>
+          <span class="kw ml-auto">read_excel()</span>
+        </div>
+        <div class="fmt-file">
+          <span class="fi"><i class="fa-solid fa-file-csv"></i></span>
+          <span class="nm"><em>CSV · .csv</em>ventas_empresa.csv</span>
+          <span class="kw ml-auto">read_csv()</span>
+        </div>
+        <div class="fmt-file">
+          <span class="fi"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nm"><em>Texto · .txt</em>ventas_empresa.txt</span>
+          <span class="kw ml-auto">read_csv(sep="\t")</span>
+        </div>
+      </div>
+      <div class="fmt-arrow">
+        <i class="fa-solid fa-arrow-right hidden lg:block"></i>
+        <i class="fa-solid fa-arrow-down lg:hidden"></i>
+      </div>
+      <div class="fmt-target">
+        <div class="flex items-baseline gap-3">
+          <span class="tt">df</span>
+          <span class="dim">500 filas × 17 columnas</span>
+        </div>
+<pre class="static-out" style="border-top:none;border-radius:6px">        fecha    ciudad       categoria_producto  unidades  ventas_cop
+0  2025-01-06   Armenia  Papelería y consumibles         9      157460
+1  2025-01-07  Envigado        Muebles y oficina         5     2101320</pre>
+        <p class="text-xs text-slate-400">El mismo objeto en los tres casos: mismas columnas, mismos tipos, mismo número de filas.</p>
+      </div>
+    </div>
+    <div class="p-3 mt-4 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+      <i class="fa-solid fa-lightbulb mr-2" style="color:var(--lime)"></i>
+      <strong>Esta es la idea central del módulo:</strong> el formato solo importa en la primera línea. Después trabajas siempre con un DataFrame.
     </div>
   </div>
 </section>
@@ -1200,73 +1484,6 @@ print(df.head(3))</pre>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Cargar datos" data-title="Los mismos datos, tres formatos" data-sub="Una sola tabla de destino">
-  <div class="py-stage flex flex-col">
-    <div class="reveal mb-4 border-b border-slate-700 pb-3">
-      <span class="kicker mb-2">Comparación</span>
-      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
-        <i class="fa-solid fa-code-compare mr-2" style="color:var(--lime)"></i>Tres puertas, <span class="em">la misma habitación</span>
-      </h2>
-      <p class="text-base text-slate-400 mt-2 max-w-5xl">Estas tres líneas leen archivos distintos y producen <strong class="text-slate-200">exactamente el mismo DataFrame</strong>. A partir de ahí, todo lo que hagas es idéntico sin importar de dónde vinieron los datos.</p>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <div>
-        <p class="pw-label"><i>1</i> Excel <em>· .xlsx</em></p>
-        <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python</span>
-          </div>
-<pre class="static-code">df = pd.read_excel(
-    "ventas_empresa.xlsx")</pre>
-        </div>
-      </div>
-      <div>
-        <p class="pw-label"><i>2</i> CSV <em>· .csv</em></p>
-        <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python</span>
-          </div>
-<pre class="static-code">df = pd.read_csv(
-    "ventas_empresa.csv")</pre>
-        </div>
-      </div>
-      <div>
-        <p class="pw-label"><i>3</i> Texto <em>· .txt</em></p>
-        <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">python</span>
-          </div>
-<pre class="static-code">df = pd.read_csv(
-    "ventas_empresa.txt",
-    sep="\t")</pre>
-        </div>
-      </div>
-    </div>
-    <div class="mt-4">
-      <div class="ide-window">
-          <div class="ide-header">
-            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">resultado · idéntico en los tres casos</span>
-          </div>
-<pre class="static-code">print(df.shape)
-print(df.head(2))</pre>
-<pre class="static-out">(500, 17)
-
-        fecha    ciudad       categoria_producto  unidades  ventas_cop
-0  2025-01-06   Armenia  Papelería y consumibles         9      157460
-1  2025-01-07  Envigado        Muebles y oficina         5     2101320</pre>
-        </div>
-    </div>
-    <div class="p-3 mt-4 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
-      <i class="fa-solid fa-lightbulb mr-2" style="color:var(--lime)"></i>
-      <strong>Esta es la idea central del módulo:</strong> el formato solo importa en la primera línea. Después trabajas siempre con un DataFrame.
-    </div>
-  </div>
-</section>
-
 <section class="slide s-py" data-block="Cargar datos" data-title="06 · Shapefile" data-sub="Datos que además tienen ubicación">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-4 border-b border-slate-700 pb-3">
@@ -1292,10 +1509,29 @@ print(df.head(2))</pre>
         </div>
         <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
           <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
-          <code>EPSG:4326</code> es el de latitud y longitud de toda la vida — el que usa el GPS y Google Maps.
+          <code>EPSG:4326</code> es el de latitud y longitud de toda la vida — el que usa el GPS y Google Maps. Geopandas se instala aparte: <code>pip install geopandas</code>.
         </div>
       </div>
       <div class="space-y-3">
+        <div class="gmap">
+          <svg viewBox="0 0 200 225" role="img" aria-label="Mapa esquemático de Colombia con cuatro ciudades">
+            <path class="land" d="M118.7 7.5 L127.3 18.9 L101.6 40.2 L108.7 62.8 L141.6 75.4 L184.4 85.5 L181.5 140.6 L148.6 165.9 L151.5 178.5 L144.4 216.2 L68.6 163.4 L42.9 158.4 L15.7 145.8 L18.6 134.5 L37.2 113.1 L30.0 81.7 L37.2 64.1 L44.4 55.3 L64.4 32.7 L83.1 21.4 Z"/>
+            <circle class="pt" cx="84.8" cy="104.2" r="7"/>
+            <circle class="pt" cx="63.6" cy="85.0" r="4.4"/>
+            <circle class="pt" cx="49.8" cy="120.2" r="3.8"/>
+            <circle class="pt" cx="74.3" cy="25.6" r="4.0"/>
+            <text class="lbl" x="95" y="107"><tspan class="n">0</tspan> Bogotá <tspan class="v">59,4 M</tspan></text>
+            <text class="lbl" x="71" y="79"><tspan class="n">1</tspan> Medellín <tspan class="v">21,0 M</tspan></text>
+            <text class="lbl" x="56" y="133"><tspan class="n">2</tspan> Cali <tspan class="v">15,6 M</tspan></text>
+            <text class="lbl" x="82" y="24"><tspan class="n">3</tspan> Barranquilla <tspan class="v">17,7 M</tspan></text>
+          </svg>
+          <div class="gmap-legend">
+            <span><b>●</b> punto — una ciudad</span>
+            <span><b>╱</b> línea — una vía</span>
+            <span><b>▰</b> polígono — un municipio</span>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 px-1">El número de cada punto es <b class="text-slate-200">el índice de su fila</b>: la fila 0 de la tabla es ese círculo sobre Bogotá. Cada fila es una forma en el mapa — eso es todo lo que añade un shapefile.</p>
         <div class="ide-window">
           <div class="ide-header">
             <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
@@ -1304,18 +1540,13 @@ print(df.head(2))</pre>
 <pre class="static-code">import geopandas as gpd
 
 mapa = gpd.read_file("ciudades.shp")
-
-print(mapa.head())
-print(mapa.crs)</pre>
+print(mapa.head())</pre>
 <pre class="static-out">         ciudad  ventas_cop             geometry
 0        Bogotá    59411340  POINT (-74.07 4.71)
 1      Medellín    21013200  POINT (-75.56 6.24)
 2          Cali    15570500  POINT (-76.52 3.44)
-3  Barranquilla    17707200  POINT (-74.8 10.96)
-
-EPSG:4326</pre>
+3  Barranquilla    17707200  POINT (-74.8 10.96)</pre>
         </div>
-        <p class="text-xs text-slate-400">Se instala aparte: <code>pip install geopandas</code></p>
       </div>
     </div>
   </div>
@@ -1394,39 +1625,65 @@ dtypes: int64(2), object(3)</pre>
       </h2>
       <p class="text-base text-slate-400 mt-2 max-w-5xl">Cada <code>read_</code> tiene su <code>to_</code>. Lo que cambia es que ahora el archivo <strong class="text-slate-200">sí se escribe en tu disco</strong>: si el nombre ya existe, lo sobrescribe sin preguntar.</p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div>
-        <p class="pw-label"><i>1</i> Excel y CSV</p>
+        <p class="pw-label"><i>1</i> Excel <em>· .xlsx</em></p>
         <div class="ide-window">
           <div class="ide-header">
             <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
             <span class="ide-label">python</span>
           </div>
-<pre class="static-code"><span class="cm"># Excel</span>
-df.to_excel("resultado.xlsx", index=False)
+<pre class="static-code">df.to_excel("resultado.xlsx",
+            index=False)</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>2</i> CSV <em>· .csv</em></p>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python</span>
+          </div>
+<pre class="static-code">df.to_csv("resultado.csv",
+          index=False)
 
-<span class="cm"># CSV</span>
-df.to_csv("resultado.csv", index=False)
-
-<span class="cm"># CSV para Excel en español</span>
+<span class="cm"># para Excel en español</span>
 df.to_csv("resultado.csv", index=False,
           sep=";", encoding="utf-8-sig")</pre>
         </div>
       </div>
       <div>
-        <p class="pw-label"><i>2</i> Texto y shapefile</p>
+        <p class="pw-label"><i>3</i> Texto <em>· .txt</em></p>
         <div class="ide-window">
           <div class="ide-header">
             <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
             <span class="ide-label">python</span>
           </div>
-<pre class="static-code"><span class="cm"># Texto separado por tabulaciones</span>
-df.to_csv("resultado.txt", index=False,
-          sep="\t")
-
-<span class="cm"># Shapefile (necesita geopandas)</span>
-mapa.to_file("ciudades_nuevas.shp")</pre>
+<pre class="static-code">df.to_csv("resultado.txt",
+          index=False, sep="\t")</pre>
         </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+      <div class="lg:col-span-2">
+        <p class="pw-label"><i class="fa-solid fa-shuffle" style="font-size:.72rem"></i> Entras por un formato y sales por otro</p>
+        <div class="conv-strip">
+          <span class="st in">ventas.txt</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st mid">read_csv(sep="\t")</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st">df</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st mid">to_excel()</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st out">resultado.xlsx</span>
+        </div>
+        <p class="text-xs text-slate-400 mt-2 px-1">El formato de entrada <b class="text-slate-200">no manda</b> sobre el de salida. Te entregan un <code>.txt</code> incómodo y devuelves un Excel presentable: eso es lo que harás en el ejercicio.</p>
+      </div>
+      <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.08);border:1px dashed rgba(242,177,52,.35)">
+        <p class="font-bold mb-2 text-sm" style="color:var(--amber)"><i class="fa-solid fa-map-location-dot mr-2"></i>Solo si trabajas con mapas</p>
+        <p class="code-font text-xs" style="color:var(--lime)">mapa.to_file("ciudades.shp")</p>
+        <p class="text-slate-400 text-xs mt-2">Escribe los <b class="text-slate-200">cinco archivos</b> del shapefile de una vez. Necesita geopandas y un GeoDataFrame, no un DataFrame normal.</p>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
@@ -1498,100 +1755,681 @@ with pd.ExcelWriter("resultados/por_ciudad.xlsx") as w:
   </div>
 </section>
 
-<section class="slide s-py" data-block="Exportar datos" data-title="★ Plantilla" data-sub="Copia esto y cambia lo tuyo">
+<section class="slide s-py" data-block="Manipular datos" data-title="10 · Elegir columnas y filas" data-sub="Quedarte con un trozo de la tabla">
   <div class="py-stage flex flex-col">
     <div class="reveal mb-4 border-b border-slate-700 pb-3">
-      <span class="kicker mb-2">Para reutilizar</span>
+      <span class="kicker mb-2">Capítulo 10 · empieza el trabajo con los datos</span>
       <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
-        <i class="fa-solid fa-clipboard-check mr-2" style="color:var(--lime)"></i>La <span class="em">plantilla</span> completa
+        <i class="fa-solid fa-hand-pointer mr-2" style="color:var(--lime)"></i>Elegir <span class="em">columnas y filas</span>
       </h2>
-      <p class="text-base text-slate-400 mt-2 max-w-5xl">Este es el esqueleto de cualquier trabajo con datos: rutas, carga, reconocimiento y exportación. <strong class="text-slate-200">Copia el bloque entero</strong> y cambia solo las dos primeras líneas de configuración.</p>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Ya sabes abrir el archivo y devolverlo. Lo que viene ahora es <strong class="text-slate-200">lo que pasa en medio</strong>. Y lo primero es quedarte solo con el trozo de tabla que te interesa.</p>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div>
-        <p class="pw-label"><i>1</i> Cargar <em>· cualquiera de los cuatro formatos</em></p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
         <div class="ide-window">
           <div class="ide-header">
             <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">analisis.py</span>
+            <span class="ide-label">python · una columna</span>
           </div>
-<pre class="static-code">from pathlib import Path
-import pandas as pd
-
-<span class="cm"># ── configuración: lo único que cambias ──</span>
-BASE    = Path(__file__).parent
-ENTRADA = BASE / "datos"
-SALIDA  = BASE / "resultados"
-ARCHIVO = "ventas_empresa.csv"
-
-<span class="cm"># ── carga según la extensión ──</span>
-ruta = ENTRADA / ARCHIVO
-
-if ruta.suffix == ".csv":
-    df = pd.read_csv(ruta)
-elif ruta.suffix == ".xlsx":
-    df = pd.read_excel(ruta)
-elif ruta.suffix == ".txt":
-    df = pd.read_csv(ruta, sep="\t")
-else:
-    raise ValueError(f"No sé abrir {ruta.suffix}")</pre>
+<pre class="static-code">df["ciudad"]</pre>
+<pre class="static-out">0          Armenia
+1         Envigado
+2    Villavicencio
+Name: ciudad, dtype: object</pre>
         </div>
-      </div>
-      <div>
-        <p class="pw-label"><i>2</i> Reconocer y exportar</p>
         <div class="ide-window">
           <div class="ide-header">
             <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
-            <span class="ide-label">analisis.py · continuación</span>
+            <span class="ide-label">python · varias columnas · doble corchete</span>
           </div>
-<pre class="static-code"><span class="cm"># ── reconocer lo que llegó ──</span>
-print("Filas y columnas:", df.shape)
-print(df.head())
-df.info()
-
-<span class="cm"># ── aquí va tu trabajo con los datos ──</span>
-
-
-<span class="cm"># ── exportar ──</span>
-SALIDA.mkdir(exist_ok=True)
-
-df.to_excel(SALIDA / "resultado.xlsx", index=False)
-df.to_csv(SALIDA / "resultado.csv", index=False,
-          encoding="utf-8-sig")
-
-print("Listo. Revisa la carpeta:", SALIDA)</pre>
+<pre class="static-code">df[["ciudad", "unidades", "ventas_cop"]]</pre>
+<pre class="static-out">          ciudad  unidades  ventas_cop
+0        Armenia         9      157460
+1       Envigado         5     2101320
+2  Villavicencio        11      155705</pre>
         </div>
       </div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mt-4">
-      <div class="kw-group"><h4>Por qué <code>Path(__file__).parent</code></h4>
-        <p class="text-xs text-slate-400 mt-1">Ancla las rutas al script, no a la carpeta desde la que lo ejecutes. Funciona igual desde VS Code, desde la terminal o con doble clic.</p></div>
-      <div class="kw-group"><h4>Por qué <code>.suffix</code></h4>
-        <p class="text-xs text-slate-400 mt-1">Es la extensión del archivo. Con eso el mismo script sirve para los tres formatos sin tocar nada más que <code>ARCHIVO</code>.</p></div>
-      <div class="kw-group"><h4>Por qué <code>mkdir(exist_ok=True)</code></h4>
-        <p class="text-xs text-slate-400 mt-1">Crea la carpeta de salida si no está, y no protesta si ya existía. Evita el <code>FileNotFoundError</code> al exportar.</p></div>
-    </div>
-    <div class="p-3 mt-4 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
-      <i class="fa-solid fa-robot mr-2" style="color:var(--lime)"></i>
-      <strong>Con tu agente:</strong> pégale esta plantilla y dile qué quieres hacer entre los dos comentarios. Al darle la estructura, deja de inventarse rutas.
+      <div class="space-y-3">
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Un corchete o dos: no es lo mismo</p>
+          <p class="text-slate-300 text-sm">Con <b>un</b> corchete pides <b>una</b> columna suelta y recibes una <b>Serie</b>. Con <b>dos</b> le pasas una <b>lista</b> de nombres y recibes otra <b>tabla</b>. Casi todo en pandas espera una tabla, así que ante la duda: dos corchetes.</p>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · elegir filas y columnas a la vez</span>
+          </div>
+<pre class="static-code"><span class="cm"># Por nombre: .loc[filas, columnas]</span>
+df.loc[0, "ciudad"]
+df.loc[0:2, ["ciudad", "ventas_cop"]]
+
+<span class="cm"># Por posición: .iloc[filas, columnas]</span>
+df.iloc[0]        <span class="cm"># la primera fila entera</span>
+df.iloc[:5]       <span class="cm"># las cinco primeras filas</span>
+df.iloc[0, 1]     <span class="cm"># fila 0, segunda columna</span></pre>
+        </div>
+        <div class="kw-group"><h4>Para recordarlo</h4>
+          <span class="kw">.loc = por etiqueta</span><span class="kw">.iloc = por índice</span>
+          <p class="text-xs text-slate-400 mt-2">La <b class="text-slate-200">l</b> de <code>loc</code> es de «label». La <b class="text-slate-200">i</b> de <code>iloc</code> es de «index», la posición: 0, 1, 2…</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Exportar datos" data-title="Cierre" data-sub="Lo que sigue">
+<section class="slide s-py" data-block="Manipular datos" data-title="11 · Filtrar filas" data-sub="Quedarte solo con lo que cumple una condición">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 11</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-filter mr-2" style="color:var(--lime)"></i><span class="em">Filtrar</span>: la operación que más vas a usar
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Es el «filtro» de Excel, pero escrito. Y la clave está en entender qué hay dentro de los corchetes: <strong class="text-slate-200">una columna de verdadero y falso</strong>.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">paso 1 · la condición sola</span>
+          </div>
+<pre class="static-code">df["ventas_cop"] &gt; 1000000</pre>
+<pre class="static-out">0    False
+1     True
+2    False
+Name: ventas_cop, dtype: bool</pre>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">paso 2 · la condición dentro del corchete</span>
+          </div>
+<pre class="static-code">grandes = df[df["ventas_cop"] &gt; 1000000]
+
+print(df.shape)
+print(grandes.shape)</pre>
+<pre class="static-out">(500, 17)
+(118, 17)</pre>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+          <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
+          Pandas se queda con las filas donde pone <code>True</code>. Nada más. Mismas columnas, menos filas.
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · las cuatro formas que necesitas</span>
+          </div>
+<pre class="static-code"><span class="cm"># Dos condiciones a la vez: & es "y", | es "o"</span>
+df[(df["ciudad"] == "Bogotá") &amp;
+   (df["unidades"] &gt;= 10)]
+
+<span class="cm"># Cualquiera de una lista de valores</span>
+df[df["ciudad"].isin(["Bogotá", "Cali", "Medellín"])]
+
+<span class="cm"># Texto que contiene algo</span>
+df[df["categoria_producto"].str.contains("Papelería")]
+
+<span class="cm"># Lo contrario: ~ significa "no"</span>
+df[~df["ciudad"].isin(["Bogotá"])]</pre>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Aquí <code>and</code> y <code>or</code> no funcionan</p>
+          <p class="text-slate-300 text-sm">Con dos condiciones hay que usar <code>&amp;</code> y <code>|</code>, y <b>envolver cada condición en paréntesis</b>. Si lo olvidas sale un <code>ValueError</code> larguísimo que asusta y solo significa eso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Manipular datos" data-title="12 · Renombrar" data-sub="Arreglar los nombres y las etiquetas">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 12</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-tag mr-2" style="color:var(--lime)"></i><span class="em">Renombrar</span>: columnas y etiquetas
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Los archivos reales llegan con nombres como <code>VENTAS COP </code> o <code>Categoría_Producto</code>, y con la misma ciudad escrita de tres maneras. Se arregla en dos líneas.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · cambiar el nombre de las columnas</span>
+          </div>
+<pre class="static-code"><span class="cm"># Solo algunas, por nombre</span>
+df = df.rename(columns={
+    "ventas_cop": "ventas",
+    "categoria_producto": "categoria"
+})
+
+<span class="cm"># Todas de una vez: sin espacios y en minúscula</span>
+df.columns = df.columns.str.strip().str.lower()</pre>
+<pre class="static-out">antes:  ['fecha', 'ciudad', 'categoria_producto', 'unidades', 'ventas_cop']
+después: ['fecha', 'ciudad', 'categoria', 'unidades', 'ventas']</pre>
+        </div>
+        <div class="kw-group"><h4>Lo que hace cada pieza</h4>
+          <span class="kw">.rename(columns=)</span><span class="kw">.str.strip()</span><span class="kw">.str.lower()</span><span class="kw">.replace()</span>
+          <p class="text-xs text-slate-400 mt-2"><code>strip</code> quita los espacios de los bordes — el error invisible que hace que <code>df["ventas "]</code> falle aunque la columna «exista».</p>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · cambiar etiquetas dentro de una columna</span>
+          </div>
+<pre class="static-code">df["ciudad"] = df["ciudad"].replace({
+    "BOGOTA": "Bogotá",
+    "Bogota D.C.": "Bogotá",
+    "STA MARTA": "Santa Marta"
+})
+
+print(df["ciudad"].unique())</pre>
+<pre class="static-out">['Bogotá' 'Envigado' 'Santa Marta' 'Armenia' ...]</pre>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Si no lo guardas, no pasó</p>
+          <p class="text-slate-300 text-sm">
+            <code>rename</code>, <code>replace</code>, <code>drop</code>… <b>no modifican el DataFrame</b>: devuelven una copia cambiada. Hay que reasignarla con <code>df = df.rename(...)</code>. Es el error silencioso número uno: el código corre, no da error, y nada cambia.
+          </p>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+          <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
+          <code>df["ciudad"].unique()</code> te dice todas las formas distintas en que está escrita una columna. Úsalo <b>antes</b> de decidir qué reemplazar.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Manipular datos" data-title="13 · Crear columnas" data-sub="Columnas nuevas y columnas que sobran">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 13</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-plus mr-2" style="color:var(--lime)"></i><span class="em">Crear</span> columnas (y quitar las que sobran)
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Se crea una columna igual que se crea una variable: escribiendo su nombre a la izquierda del <code>=</code>. El cálculo se aplica a las 500 filas a la vez, <strong class="text-slate-200">sin escribir ningún bucle</strong>.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · columna calculada</span>
+          </div>
+<pre class="static-code"><span class="cm"># A partir de otras dos columnas</span>
+df["precio_unitario"] = df["ventas_cop"] / df["unidades"]
+
+<span class="cm"># Redondear y volverla número entero</span>
+df["precio_unitario"] = df["precio_unitario"].round(0).astype(int)
+
+<span class="cm"># Quitar las columnas que no vas a usar</span>
+df = df.drop(columns=["id_venta"])</pre>
+<pre class="static-out">          ciudad  unidades  ventas_cop  precio_unitario
+0        Armenia         9      157460            17496
+1       Envigado         5     2101320           420264
+2  Villavicencio        11      155705            14155</pre>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+          <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
+          Si el nombre <b>no existe</b>, la columna se crea al final. Si <b>ya existe</b>, se sobrescribe. Es la misma línea para las dos cosas.
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · columna con una condición</span>
+          </div>
+<pre class="static-code">import numpy as np
+
+df["tamano"] = np.where(df["ventas_cop"] &gt; 1000000,
+                        "Grande", "Pequeña")</pre>
+<pre class="static-out">   ventas_cop   tamano
+0      157460  Pequeña
+1     2101320   Grande</pre>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · sacar partes de una fecha</span>
+          </div>
+<pre class="static-code"><span class="cm"># Primero: convertir el texto en fecha de verdad</span>
+df["fecha"] = pd.to_datetime(df["fecha"])
+
+df["anio"] = df["fecha"].dt.year
+df["mes"]  = df["fecha"].dt.month</pre>
+        </div>
+        <div class="kw-group"><h4>Léelo así</h4>
+          <span class="kw">np.where(condición, si_sí, si_no)</span>
+          <p class="text-xs text-slate-400 mt-2">Es el <code>SI()</code> de Excel, aplicado a toda la columna de golpe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Manipular datos" data-title="14 · Ordenar y limpiar" data-sub="Orden, repetidos y casillas vacías">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 14</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-broom mr-2" style="color:var(--lime)"></i><span class="em">Ordenar</span> y quitar lo que estorba
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Ningún archivo real llega limpio: viene desordenado, con filas repetidas y con casillas vacías. Estas cuatro líneas resuelven la mayoría de los casos.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · ordenar</span>
+          </div>
+<pre class="static-code"><span class="cm"># De mayor a menor</span>
+df = df.sort_values("ventas_cop", ascending=False)
+
+<span class="cm"># Las cinco ventas más grandes</span>
+df.sort_values("ventas_cop", ascending=False).head(5)
+
+<span class="cm"># Por dos criterios: primero ciudad, luego ventas</span>
+df.sort_values(["ciudad", "ventas_cop"],
+               ascending=[True, False])</pre>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · filas repetidas</span>
+          </div>
+<pre class="static-code">print(df.duplicated().sum())
+df = df.drop_duplicates()</pre>
+<pre class="static-out">4</pre>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · casillas vacías</span>
+          </div>
+<pre class="static-code"><span class="cm"># ¿Cuántas faltan en cada columna?</span>
+df.isna().sum()</pre>
+<pre class="static-out">fecha         0
+ciudad        3
+unidades      0
+ventas_cop    7
+dtype: int64</pre>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · las dos salidas</span>
+          </div>
+<pre class="static-code"><span class="cm"># Borrar las filas a las que les falta ese dato</span>
+df = df.dropna(subset=["ventas_cop"])
+
+<span class="cm"># O rellenar con un valor</span>
+df["unidades"] = df["unidades"].fillna(0)</pre>
+        </div>
+        <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+          <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pon siempre <code>subset=</code></p>
+          <p class="text-slate-300 text-sm"><code>df.dropna()</code> a secas borra la fila si le falta <b>cualquiera</b> de las 17 columnas. Con datos reales eso se lleva media tabla sin avisar. Decide siempre <b>qué columna</b> es la imprescindible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Manipular datos" data-title="15 · Agrupar y resumir" data-sub="De 500 filas a una tabla de conclusiones">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Capítulo 15</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-layer-group mr-2" style="color:var(--lime)"></i><span class="em">Agrupar</span>: la tabla dinámica, en una línea
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Agrupar es siempre lo mismo, tres pasos: <strong class="text-slate-200">partir</strong> la tabla en grupos, <strong class="text-slate-200">calcular</strong> algo en cada grupo y <strong class="text-slate-200">juntar</strong> los resultados. Es la tabla dinámica de Excel.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-center">
+      <div class="space-y-3">
+        <div class="conv-strip">
+          <span class="st in">500 filas</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st mid">partir por ciudad</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st mid">sumar cada grupo</span>
+          <i class="fa-solid fa-arrow-right ar"></i>
+          <span class="st out">1 fila por ciudad</span>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · contar y sumar</span>
+          </div>
+<pre class="static-code"><span class="cm"># ¿Cuántas ventas hay por ciudad?</span>
+df["ciudad"].value_counts()
+
+<span class="cm"># ¿Cuánto se vendió en cada ciudad?</span>
+df.groupby("ciudad")["ventas_cop"].sum()</pre>
+<pre class="static-out">ciudad
+Bogotá          59411340
+Medellín        21013200
+Barranquilla    17707200
+Cali            15570500
+Name: ventas_cop, dtype: int64</pre>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · varios resúmenes a la vez</span>
+          </div>
+<pre class="static-code">df.groupby("ciudad")["ventas_cop"].agg(["sum", "mean", "count"])</pre>
+<pre class="static-out">                   sum       mean  count
+ciudad
+Bogotá        59411340   594113.4    100
+Medellín      21013200   420264.0     50
+Cali          15570500   311410.0     50</pre>
+        </div>
+        <div class="ide-window">
+          <div class="ide-header">
+            <div class="ide-dots"><div class="ide-dot red"></div><div class="ide-dot yellow"></div><div class="ide-dot green"></div></div>
+            <span class="ide-label">python · y de vuelta al disco</span>
+          </div>
+<pre class="static-code">resumen = (df.groupby("ciudad")["ventas_cop"].sum()
+             .sort_values(ascending=False)
+             .reset_index())
+
+resumen.to_excel("resumen_por_ciudad.xlsx", index=False)</pre>
+        </div>
+        <div class="p-3 rounded text-sm text-slate-300" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+          <i class="fa-solid fa-circle-info mr-2" style="color:var(--lime)"></i>
+          <code>.reset_index()</code> convierte el resultado agrupado en una <b>tabla normal</b>, con «ciudad» otra vez como columna. Sin él, el Excel te sale raro.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Manipular datos" data-title="★ Chuleta" data-sub="Las líneas que más vas a repetir">
+  <div class="py-stage flex flex-col">
+    <div class="reveal mb-4 border-b border-slate-700 pb-3">
+      <span class="kicker mb-2">Para reutilizar</span>
+      <h2 class="serif-h2 text-2xl md:text-4xl mt-2 text-white">
+        <i class="fa-solid fa-clipboard-check mr-2" style="color:var(--lime)"></i>La <span class="em">chuleta</span> de manipulación
+      </h2>
+      <p class="text-base text-slate-400 mt-2 max-w-5xl">Todo lo de los capítulos 10 a 15 en una sola pantalla. <strong class="text-slate-200">Estas son las líneas que vas a repetir el resto del curso</strong>; el resto se busca cuando hace falta.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div>
+        <p class="pw-label"><i>1</i> Elegir</p>
+        <div class="ide-window">
+<pre class="static-code">df["ciudad"]
+df[["ciudad", "ventas_cop"]]
+df.loc[0, "ciudad"]
+df.iloc[:5]</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>2</i> Filtrar</p>
+        <div class="ide-window">
+<pre class="static-code">df[df["ventas_cop"] &gt; 1000000]
+df[(df["ciudad"] == "Cali") &amp;
+   (df["unidades"] &gt;= 10)]
+df[df["ciudad"].isin(["Cali"])]</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>3</i> Renombrar</p>
+        <div class="ide-window">
+<pre class="static-code">df = df.rename(columns={"a": "b"})
+df.columns = df.columns.str.lower()
+df["ciudad"] = df["ciudad"].replace(
+    {"BOGOTA": "Bogotá"})</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>4</i> Crear y quitar</p>
+        <div class="ide-window">
+<pre class="static-code">df["precio"] = df["ventas_cop"] / df["unidades"]
+df["precio"] = df["precio"].round(0)
+df = df.drop(columns=["id_venta"])</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>5</i> Ordenar y limpiar</p>
+        <div class="ide-window">
+<pre class="static-code">df = df.sort_values("ventas_cop",
+                    ascending=False)
+df = df.drop_duplicates()
+df.isna().sum()
+df = df.dropna(subset=["ventas_cop"])</pre>
+        </div>
+      </div>
+      <div>
+        <p class="pw-label"><i>6</i> Agrupar</p>
+        <div class="ide-window">
+<pre class="static-code">df["ciudad"].value_counts()
+df.groupby("ciudad")["ventas_cop"].sum()
+resumen = (df.groupby("ciudad")["ventas_cop"]
+             .sum().reset_index())</pre>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div class="p-4 rounded-lg" style="background:rgba(242,177,52,.12);border:1px solid rgba(242,177,52,.35)">
+        <p class="font-bold mb-1" style="color:var(--amber)"><i class="fa-solid fa-triangle-exclamation mr-2"></i>La regla que resume todo</p>
+        <p class="text-slate-300 text-sm">Casi ningún método cambia el DataFrame: <strong>devuelven una copia</strong>. Si el resultado te importa, guárdalo — <code>df = df.algo(...)</code>. Si el código corre y nada cambia, es casi siempre esto.</p>
+      </div>
+      <div class="p-4 rounded-lg" style="background:rgba(31,93,76,.3);border-left:4px solid var(--lime)">
+        <p class="font-bold mb-1" style="color:var(--lime)"><i class="fa-solid fa-robot mr-2"></i>Con tu agente</p>
+        <p class="text-slate-300 text-sm">Pégale <code>df.head()</code> y <code>df.info()</code> antes de pedirle nada. Con los nombres y los tipos reales delante deja de inventarse columnas que no existen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PORTADA DEL BLOQUE DE PRÁCTICA ============== -->
+<section class="slide" data-block="Práctica" data-title="A la práctica" data-sub="Tres ejercicios con datos reales">
+  <div class="prac">
+    <div class="reveal">
+      <span class="eyebrow">Se acabó la teoría</span>
+      <h2>Vamos a la <span class="hl">práctica</span></h2>
+      <p class="lead">Tres ejercicios seguidos sobre un archivo de ventas real. <b>Tú escribes el prompt, el agente escribe el código</b> — y los archivos salen a tu carpeta.</p>
+    </div>
+
+    <div class="prac-type reveal">
+      <div class="pt-bar"><i></i><i></i><i></i><span>tu agente · escribiendo</span></div>
+      <div class="pt-body">
+        <div class="pt-who">Tú</div>
+        <div class="pt-line">Limpia datos_ventas.xlsx</div>
+        <div class="pt-reply"><span class="cog">⚙</span> <span>El agente escribe el código, lo ejecuta y te devuelve <b>datos_ventas_limpio.xlsx</b></span></div>
+      </div>
+    </div>
+
+    <div class="prac-flow reveal">
+      <div class="prac-card">
+        <span class="pc-n">1</span>
+        <span class="pc-ic">🧹</span>
+        <h4>Limpiar</h4>
+        <p>Duplicados, tildes, precios con «$» y celdas vacías.</p>
+        <span class="pc-out">datos_ventas_limpio.xlsx</span>
+      </div>
+      <div class="prac-arr">→</div>
+      <div class="prac-card">
+        <span class="pc-n">2</span>
+        <span class="pc-ic">⚙️</span>
+        <h4>Automatizar</h4>
+        <p>Un Excel por ciudad y un libro con una hoja por categoría.</p>
+        <span class="pc-out">+6 archivos</span>
+      </div>
+      <div class="prac-arr">→</div>
+      <div class="prac-card">
+        <span class="pc-n">3</span>
+        <span class="pc-ic">🔀</span>
+        <h4>Cruzar</h4>
+        <p>Dos hojas, repetidos detectados y una columna nueva.</p>
+        <span class="pc-out">preinscritos.xlsx</span>
+      </div>
+    </div>
+    <div class="prac-track"></div>
+
+    <div class="reveal">
+      <div class="prac-foot"><b>💡</b> Lo que acabas de ver en Python es lo que el agente escribe por ti. Saber leerlo es lo que te deja <b>corregirlo</b>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== EJERCICIO 1 · LIMPIEZA ============== -->
+<section class="slide" data-block="Práctica" data-title="Ejercicio 1 · Limpieza" data-sub="De datos sucios a datos listos">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 1</span> Limpieza de datos</span>
+      <h2>De datos <span class="hl">sucios</span> a datos listos</h2>
+      <div class="ex-tools">Úsalo en <b>cualquiera</b> de los 4 agentes · sobre <b>datos_ventas.xlsx</b></div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt</div>
+        <div class="prompt-text" id="p1">Carga <code>datos_ventas.xlsx</code> en un DataFrame llamado <code>datos</code>. Límpialo: (1) elimina filas duplicadas; (2) en <span class="fill-edit" contenteditable="true">ciudad</span> y <span class="fill-edit" contenteditable="true">categoria</span> quita espacios y unifica mayúsculas/acentos; (3) convierte <code>cantidad</code>, <code>precio_unitario</code> y <code>total_venta</code> a número (quita "$" y puntos de miles); (4) recalcula <code>total_venta = cantidad × precio_unitario</code> donde falte; (5) elimina filas con <code>cantidad ≤ 0</code>; (6) rellena <code>satisfaccion</code> vacía con la mediana. Guárdalo como <code>datos_ventas_limpio.xlsx</code>.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p1')">⧉ Copiar prompt</button><span class="copy-hint">Edita los recuadros con tus columnas.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-clean">
+          <div class="vc-tbl bad">
+            <div class="h">Antes</div>
+            <div class="vc-row"><span class="c vc-bad">BOGOTA </span><span class="c vc-bad">$ 295.200</span></div>
+            <div class="vc-row"><span class="c vc-bad">bogota</span><span class="c vc-bad">—</span></div>
+            <div class="vc-row"><span class="c vc-bad">Bogotá</span><span class="c vc-bad">4200</span></div>
+            <div class="vc-row"><span class="c vc-bad">Medellin </span><span class="c vc-bad">-2</span></div>
+          </div>
+          <div class="vc-mid">→</div>
+          <div class="vc-tbl good">
+            <div class="h">Después</div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">295200</span></div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">180000</span></div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">4200</span></div>
+            <div class="vc-row"><span class="c vc-ok">Medellín</span><span class="c vc-ok">✓ válida</span></div>
+          </div>
+        </div>
+        <div class="vc-stats"><span>162 → 153 filas</span><span>0 duplicados</span><span>0 nulos</span><span>tipos correctos</span></div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>La base de todo:</b> sin datos limpios, los gráficos y reportes mienten.</span></div>
+  </div>
+</section>
+
+<!-- ============== EJERCICIO 3 · AUTOMATIZACIÓN ============== -->
+<section class="slide" data-block="Práctica" data-title="Ejercicio 2 · Automatización" data-sub="Un proceso que genera archivos solo">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 2</span> Automatización de Excel</span>
+      <h2>Un proceso que <span class="hl">genera archivos solo</span></h2>
+      <div class="ex-tools">Sobre <b>datos_ventas_limpio.xlsx</b> · genera <b>varios .xlsx</b> automáticamente</div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt</div>
+        <div class="prompt-text" id="p2">Con <code>datos_ventas_limpio.xlsx</code>: (1) crea la carpeta <code>reportes_por_ciudad</code> y guarda un Excel por cada <span class="fill-edit" contenteditable="true">ciudad</span> (<code>ventas_&lt;ciudad&gt;.xlsx</code>); (2) crea un único <code>resumen_ventas.xlsx</code> con una hoja por cada <span class="fill-edit" contenteditable="true">categoria</span> y una hoja <code>Resumen</code> con <code>total_venta</code> y <code>utilidad</code> por ciudad.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p2')">⧉ Copiar prompt</button><span class="copy-hint">Cambia la columna para separar.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-split">
+          <div class="vs-source"><div class="ic">📊</div><div class="nm">datos_ventas_limpio.xlsx</div><div class="mt">153 filas</div></div>
+          <div class="vs-arrow">→<small>automatiza</small></div>
+          <div class="vs-outs">
+            <div class="vs-folder">📁 reportes_por_ciudad/</div>
+            <div class="vs-out"><span>📄</span> ventas_Bucaramanga.xlsx <span class="rows">37</span></div>
+            <div class="vs-out"><span>📄</span> ventas_Medellín.xlsx <span class="rows">34</span></div>
+            <div class="vs-out"><span>📄</span> ventas_Bogotá.xlsx <span class="rows">29</span></div>
+            <div class="vs-out"><span>📄</span> … +2 ciudades</div>
+            <div class="vs-book">
+              <div class="vs-folder">📗 resumen_ventas.xlsx</div>
+              <div class="vs-tabs"><span class="active">Tecnología</span><span>Hogar</span><span>Ropa</span><span>Deportes</span><span>Alimentos</span><span>Resumen</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Automatización real:</b> el agente recorre cada categoría y escribe su archivo. Sin copiar-pegar.</span></div>
+  </div>
+</section>
+
+<!-- ============== EJERCICIO 4 · AGENTE DENTRO DE EXCEL ============== -->
+<section class="slide" data-block="Práctica" data-title="Ejercicio 3 · Agente en Excel" data-sub="Cruzar dos hojas sin fórmulas">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 3</span> Agente dentro de una app</span>
+      <h2>Un agente <span class="hl">dentro de Excel</span></h2>
+      <div class="ex-tools">Con <b>Claude Code integrado en Excel</b> · reorganizar datos en <b>otro archivo</b></div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 preinscritos.xlsx · hojas «curso» y «taller»</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1o_pOmRQHjrV0DH0kJgdj_Y8_wL1cXxvS" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt · a Claude Code, dentro de Excel</div>
+        <div class="prompt-text" id="p3">Necesito que revises las <b>dos hojas</b>: primero, en cada hoja dime si hay alguna <b>persona repetida o duplicada</b> revisando <code>nombres</code> y <code>correos electrónicos</code>. Luego, en la hoja <code>taller</code>, agrégame una <b>columna nueva</b> que indique, por cada persona, si está <b>solo en el taller</b> o si está <b>tanto en el taller como en el curso</b>.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p3')">⧉ Copiar prompt</button><span class="copy-hint">Edítalo con tus columnas.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-xls">
+          <div class="xls">
+            <div class="xls-bar"><span class="xi">X</span><span class="nm">curso</span><span class="ct">3 personas</span></div>
+            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span></div>
+            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span></div>
+            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Carlos Ríos</span><span class="xls-cell mono">carlos@mail.com</span></div>
+            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span></div>
+            <span class="xls-tab">◧ curso</span>
+          </div>
+          <div class="xls wide">
+            <div class="xls-bar"><span class="xi">X</span><span class="nm">taller</span><span class="ct">+ columna nueva ✦</span></div>
+            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span><span class="xls-cell new">estado ✦</span></div>
+            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Luis Páez</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+            <div class="xls-row dup"><span class="xls-cell gut">4</span><span class="xls-cell">Luis Páez 🔁</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+            <span class="xls-tab">◧ taller</span>
+          </div>
+          <div class="xls-legend">
+            <span><span class="sw" style="background:rgba(0,245,212,.5)"></span> <b>verde</b> = está en ambas hojas</span>
+            <span>🔁 fila duplicada</span>
+            <span>✦ lo que agrega el agente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>La idea:</b> en segundos el agente cruza dos listas, detecta repetidos y marca quién está en ambas — sin fórmulas manuales.</span></div>
+  </div>
+</section>
+
+<section class="slide s-py" data-block="Cierre" data-title="Cierre" data-sub="Lo que sigue">
   <div class="py-stage flex flex-col">
     <div class="py-stage flex flex-col justify-center items-center text-center" style="background:transparent">
-      <span class="reveal kicker mb-4">Fin del bloque de carga</span>
+      <span class="reveal kicker mb-4">Fin del módulo 2</span>
       <h2 class="reveal serif-title text-4xl md:text-6xl mb-6 text-white max-w-4xl">
-        Los datos ya están <span style="color:var(--lime)">dentro</span>
+        El ciclo <span style="color:var(--lime)">completo</span>
       </h2>
       <p class="reveal text-lg text-slate-300 mb-8 max-w-3xl leading-relaxed">
-        Sabes abrir los cuatro formatos, reconocer lo que llegó y devolverlo al disco. Todo lo que viene ahora ocurre <span class="em">dentro del DataFrame</span>.
+        Abrir cualquier formato, entender lo que llegó, <span class="em">trabajarlo dentro del DataFrame</span> y devolverlo al disco. Eso es, entero, un flujo de datos profesional.
       </p>
       <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl w-full text-left mb-8">
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--lime)">Hoy dominas</p><p class="text-sm text-slate-400 mt-1">read_csv · read_excel · read_file · y sus cuatro to_</p></div>
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--amber)">Lo que sigue</p><p class="text-sm text-slate-400 mt-1">elegir columnas, filtrar filas y resolver datos faltantes</p></div>
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--sky)">Después</p><p class="text-sm text-slate-400 mt-1">unir varios archivos en una sola tabla</p></div>
+        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--lime)">Cargar y exportar</p><p class="text-sm text-slate-400 mt-1">read_csv · read_excel · read_file · y sus cuatro to_</p></div>
+        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--sky)">Manipular</p><p class="text-sm text-slate-400 mt-1">elegir, filtrar, renombrar, crear columnas, limpiar y agrupar</p></div>
+        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--amber)">Lo que sigue</p><p class="text-sm text-slate-400 mt-1">unir varios archivos en una sola tabla y graficar</p></div>
       </div>
       <div class="reveal flex gap-4 flex-wrap justify-center">
         <button onclick="go(0)" class="px-6 py-3 rounded-full font-bold transition-all hover:scale-105"
@@ -1645,6 +2483,20 @@ const mobileMQ = window.matchMedia('(max-width:820px)');
 
 /* ================================================================
 
+
+/* ================================================================
+   MOTOR DE DIAPOSITIVAS
+   ================================================================ */
+/* ================================================================
+   COPIAR PROMPT (diapositivas de ejercicio)
+   ================================================================ */
+function copyPrompt(btn, id){
+  const text = document.getElementById(id).innerText;
+  const done = () => { const t = btn.textContent; btn.textContent = '✓ Copiado'; btn.classList.add('done'); setTimeout(() => { btn.textContent = t; btn.classList.remove('done'); }, 1500); };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(() => fb(text, done)); }
+  else fb(text, done);
+}
+function fb(text, done){ const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(ta); }
 
 /* ================================================================
    MOTOR DE DIAPOSITIVAS
