@@ -1187,6 +1187,10 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .slide[data-block="Taller · el agente toca tus archivos"] .eyebrow{ margin-bottom:8px; }
 .slide[data-block="Taller · el agente toca tus archivos"] h2{ font-size:clamp(22px,2.7vw,34px); }
 .slide[data-block="Taller · el agente toca tus archivos"] .slide-head .lead{ font-size:13.5px; margin-top:6px; }
+/* el enlace a la carpeta viaja dentro de la barra «Meta»: ahí sobra ancho y
+   así no le roba ni un píxel de altura al esquema y al prompt, que ya van
+   justos para caber de una pantalla en proyección */
+.ex-goal .ex-dl{ margin-left:auto; flex-shrink:0; font-size:9.5px; padding:5px 12px; }
 .slide[data-block="Taller · el agente toca tus archivos"] .act-grid{ margin-top:10px; }
 .slide[data-block="Taller · el agente toca tus archivos"] .act-main{ gap:9px; }
 .slide[data-block="Taller · el agente toca tus archivos"] .act-side{ gap:9px; }
@@ -2438,6 +2442,12 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
       <span class="eyebrow"><span class="step-pill">EJERCICIO 1</span> Limpieza de datos</span>
       <h2>De datos <span class="hl">sucios</span> a datos listos</h2>
       <div class="ex-tools">Úsalo en <b>cualquiera</b> de los 4 agentes · sobre <b>datos_ventas.xlsx</b></div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 datos_ventas.xlsx · los datos sin limpiar</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
     </div>
     <div class="practical">
       <div class="prompt-card">
@@ -2479,6 +2489,12 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
       <span class="eyebrow"><span class="step-pill">EJERCICIO 2</span> Automatización de Excel</span>
       <h2>Un proceso que <span class="hl">genera archivos solo</span></h2>
       <div class="ex-tools">Sobre <b>datos_ventas_limpio.xlsx</b> · genera <b>varios .xlsx</b> automáticamente</div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 datos_ventas.xlsx · el de partida, si no hiciste el ejercicio 1</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
     </div>
     <div class="practical">
       <div class="prompt-card">
@@ -2591,11 +2607,17 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
     <div class="duo" style="margin-top:18px">
       <div class="tok-note warn">
         <h4>La carpeta de práctica</h4>
-        Descarga <code>actividades/modulo2_taller</code> del repositorio del curso y déjala donde te quede cómodo. Dentro hay dos carpetas: <b>carpeta_desordenada</b> (30 archivos revueltos, actividades 2 a 5) y <b>reportes_mensuales</b> (10 Excel, actividad 6). La actividad 1 no necesita ninguna: el documento lo crea el agente desde cero. Si prefieres, usa una carpeta tuya —pero <b>una copia</b>.
+        Descárgala del enlace de abajo y déjala donde te quede cómodo. Dentro hay dos carpetas: <b>carpeta_desordenada</b> (30 archivos revueltos, actividades 2 a 5) y <b>reportes_mensuales</b> (10 Excel, actividad 6). La actividad 1 no necesita ninguna: el documento lo crea el agente desde cero. Si prefieres, usa una carpeta tuya —pero <b>una copia</b>.
       </div>
       <div class="tok-note gold">
         <h4>Qué es «la carpeta de trabajo»</h4>
         Los prompts no traen ninguna ruta escrita, porque la tuya no será la mía. <b>La carpeta de trabajo es aquella desde la que abriste el agente</b>: entras en ella y lanzas la herramienta ahí. Si el agente que uses pide una ruta explícita, esa primera línea del prompt viene resaltada: escribe la tuya encima.
+      </div>
+    </div>
+    <div class="ex-file-wrap">
+      <div class="ex-file">
+        <span class="fn">📁 modulo2_taller · carpeta_desordenada + reportes_mensuales</span>
+        <a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Abrir carpeta</a>
       </div>
     </div>
     <p class="note-foot">Los prompts de las seis actividades <b>no nombran ninguna herramienta ni ninguna ruta</b>: funcionan en cualquier agente con acceso a archivos.</p>
@@ -2677,7 +2699,7 @@ la lista de todo lo que debo reemplazar con datos verdaderos.</div>
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> salir con el esqueleto completo y bien formateado, para dedicar tu tiempo a las cifras reales y no a la plantilla.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> salir con el esqueleto completo y bien formateado, para dedicar tu tiempo a las cifras reales y no a la plantilla.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Carpeta del taller</a></div>
   </div>
 </section>
 
@@ -2753,7 +2775,7 @@ Al terminar, dame una tabla: subcarpeta | cantidad de archivos.</div>
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que la carpeta quede navegable en un vistazo y que tú solo hayas escrito seis líneas.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que la carpeta quede navegable en un vistazo y que tú solo hayas escrito seis líneas.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
@@ -2826,7 +2848,7 @@ Muéstrame primero una tabla: nombre actual | nombre nuevo. Espera mi visto buen
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que cualquiera encuentre un archivo por su nombre, sin abrirlo y sin adivinar quién lo guardó.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que cualquiera encuentre un archivo por su nombre, sin abrirlo y sin adivinar quién lo guardó.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
@@ -2904,7 +2926,7 @@ Al terminar dime: cuántos convertiste y cuáles no pudiste, con el motivo de ca
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> tener el lote listo para enviar en PDF, con los originales intactos para seguir editando.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> tener el lote listo para enviar en PDF, con los originales intactos para seguir editando.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
@@ -2975,7 +2997,7 @@ pide la clave, y dame la lista de los que quedaron protegidos.</div>
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que el lote salga protegido en un minuto y que la protección sea real, no un trámite.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que el lote salga protegido en un minuto y que la protección sea real, no un trámite.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Carpeta del taller</a></div>
   </div>
 </section>
 
@@ -3049,7 +3071,7 @@ Al final dime: total de filas y cuántas aportó cada archivo.</div>
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> una tabla única, trazable hasta su archivo de origen, lista para analizar sin copiar y pegar.</div></div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> una tabla única, trazable hasta su archivo de origen, lista para analizar sin copiar y pegar.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ reportes_mensuales</a></div>
   </div>
 </section>
 
