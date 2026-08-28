@@ -40,6 +40,7 @@ button,input,textarea,select{ font:inherit; color:inherit; }
   --node:#3c873a;
   --git:#f05133;
   --github:#8b5cf6;
+  --blue:#4285f4;
   --font-display:'Fraunces',Georgia,serif;
   --font-body:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
   --font-mono:'JetBrains Mono',ui-monospace,'Cascadia Code',Consolas,monospace;
@@ -1064,6 +1065,152 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .anim .err{fill:none;stroke:var(--amber);stroke-width:1.6}
 .anim .qm{font-size:22px;font-weight:600;fill:var(--slate)}
 @media (prefers-reduced-motion:reduce){ .anim *{transition-duration:.001ms !important;animation:none !important} }
+
+/* ==========================================================================
+   TALLER · EL AGENTE TOCA TUS ARCHIVOS
+   Las seis actividades en las que el agente escribe en el disco. El sistema
+   visual es el mismo del resto del mazo; aquí solo van las piezas propias:
+   la etiqueta coloreable, la caja de prompt editable y el esquema
+   antes → después de la carpeta.
+   ========================================================================== */
+
+/* variante coloreable de la etiqueta: cada actividad tiñe la suya */
+.eyebrow.lvl{ --pc:var(--accent); color:var(--pc);
+  border-color:color-mix(in srgb, var(--pc) 42%, transparent);
+  background:color-mix(in srgb, var(--pc) 8%, transparent); }
+
+.trio{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px; align-items:stretch; }
+
+/* --- notas laterales: complementan las .tok-note que ya existen arriba --- */
+.tok-note.gold{ border-color:rgba(255,209,102,.35); } .tok-note.gold h4{ color:var(--gold); }
+.tok-note code{ font-family:var(--font-mono); font-size:11.5px; background:rgba(255,255,255,.08);
+  padding:1px 6px; border-radius:5px; color:var(--accent); }
+
+/* --------------------------------------------------------------------------
+   LABORATORIO DE PROMPTS
+   -------------------------------------------------------------------------- */
+.plab{ width:100%; max-width:1160px; }
+
+/* --- caja de prompt: la pieza que más se repite en el taller --- */
+.pbox{ display:flex; flex-direction:column; border-radius:16px; border:1px solid var(--line); background:#050810; overflow:hidden; }
+.pbox-head{ display:flex; align-items:center; gap:9px; padding:10px 14px; background:rgba(255,255,255,.03); border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.pbox-head .pdot{ width:9px; height:9px; min-width:9px; border-radius:50%; background:var(--accent); }
+.pbox-head .pk{ font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--muted); }
+.pbox-body{ padding:15px 17px; font-family:var(--font-mono); font-size:12.5px; line-height:1.8; white-space:pre-wrap; word-break:break-word; }
+.pbox-body.tight{ font-size:11.4px; line-height:1.62; padding:13px 15px; }
+.pbox.gold{ border-color:rgba(255,209,102,.32); }
+.pbox.gold .pdot{ background:var(--gold); }
+.copy-btn{ margin-left:auto; padding:5px 12px; border-radius:99px; border:1px solid var(--line); background:transparent;
+  color:var(--muted); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  cursor:pointer; transition:all .2s; white-space:nowrap; }
+.copy-btn:hover{ border-color:var(--accent); color:var(--accent); }
+.copy-btn.done{ background:var(--accent); color:#041210; border-color:var(--accent); }
+/* el de restaurar viaja pegado al de copiar, no al otro extremo de la cabecera */
+.reset-btn{ margin-left:7px; }
+.reset-btn:hover{ border-color:var(--gold); color:var(--gold); }
+
+/* --- el prompt es editable en vivo: se ajusta en clase antes de copiarlo --- */
+.pbox-body.edit{ outline:none; cursor:text; caret-color:var(--accent); transition:background .2s; }
+.pbox-body.edit:hover{ background:rgba(255,255,255,.02); }
+.pbox-body.edit:focus{ background:rgba(0,245,212,.05); }
+.pbox-head .ped{ font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  color:var(--gold); border:1px solid rgba(255,209,102,.35); border-radius:99px; padding:2px 8px; white-space:nowrap; }
+/* El prompt no viene con huecos: viene con un ejemplo real ya escrito.
+   Lo resaltado es lo único que hay que cambiar por lo propio. El margen
+   negativo compensa el relleno: sin él, el resaltado abre un hueco visible
+   antes del punto o de la palabra que le sigue. */
+.pbox-body .fill{ color:var(--gold); background:rgba(255,209,102,.13);
+  border-bottom:1px dashed rgba(255,209,102,.5); border-radius:4px;
+  padding:0 3px; margin:0 -3px; transition:background .2s; }
+.pbox-body.edit:focus .fill{ background:rgba(255,209,102,.2); }
+
+.ex-goal{ display:flex; align-items:center; gap:13px; margin-top:18px; padding:13px 18px; border-radius:14px;
+  background:rgba(0,245,212,.06); border:1px solid rgba(0,245,212,.3); font-size:13.2px; line-height:1.5; }
+.ex-goal .gi{ font-size:20px; line-height:1; }
+.ex-goal b{ color:var(--accent); font-weight:700; }
+.plab-foot{ margin-top:20px; text-align:center; font-size:13px; color:var(--muted); line-height:1.55; }
+.plab-foot b{ color:var(--text); font-weight:600; }
+
+/* --------------------------------------------------------------------------
+   ESQUEMA DE CARPETA (antes → después)
+   El problema de cada actividad se entiende mirando, no leyendo: dos cajas
+   con la lista de archivos y una flecha en medio. Las extensiones se pintan
+   con una variable local --pc, como .eyebrow.lvl, para no escribir una clase
+   por cada tipo de archivo.
+   El contenedor se llama .act-flow y no .flow porque .flow ya existe arriba
+   con otro significado (el diagrama de nodos de IA vs agente).
+   -------------------------------------------------------------------------- */
+.act-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:16px; margin-top:16px; align-items:start; }
+.act-main{ display:flex; flex-direction:column; gap:11px; }
+.act-side{ display:flex; flex-direction:column; gap:10px; }
+
+.act-flow{ display:grid; grid-template-columns:1fr auto 1fr; gap:11px; align-items:center; }
+.farr{ text-align:center; color:var(--accent); font-size:19px; line-height:1; }
+.farr small{ display:block; font-family:var(--font-body); font-size:8px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); font-weight:700; margin-top:4px; }
+
+.fbox{ border:1px solid var(--line); border-radius:14px; background:#050810; overflow:hidden; }
+.fbox.bad{ border-color:rgba(255,107,107,.28); }
+.fbox.ok{ border-color:rgba(0,245,212,.32); }
+.fhead{ display:flex; align-items:center; gap:8px; padding:7px 12px; background:rgba(255,255,255,.03);
+  border-bottom:1px solid var(--line); font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  font-weight:700; color:var(--muted); }
+.fbox.bad .fhead{ color:var(--danger); }
+.fbox.ok .fhead{ color:var(--accent); }
+.fhead .fpath{ margin-left:auto; font-family:var(--font-mono); font-size:8.5px; letter-spacing:.04em;
+  text-transform:none; color:var(--muted); opacity:.8; }
+.flist{ list-style:none; padding:9px 11px; display:flex; flex-direction:column; gap:4px; }
+.fitem{ display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10.6px;
+  line-height:1.35; color:var(--text); }
+.fic{ --pc:var(--muted); min-width:32px; text-align:center; padding:2px 4px; border-radius:5px;
+  font-family:var(--font-body); font-size:8px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--pc); background:color-mix(in srgb, var(--pc) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--pc) 30%, transparent); }
+.fname{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fitem.off .fname{ color:var(--muted); }
+.fitem.win .fname{ color:var(--accent); }
+.fitem .flag{ margin-left:auto; padding-left:7px; font-family:var(--font-body); font-size:7.5px; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--danger); white-space:nowrap; }
+/* en pantallas de proyección la ruta no cabe junto al rótulo y parte la cabecera en dos */
+@media (max-width:1500px){ .fhead .fpath{ display:none; } }
+.fitem.win .flag{ color:var(--accent); }
+.fdir{ display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:11.5px;
+  font-weight:800; color:var(--gold); letter-spacing:.02em; }
+.fdir .fcount{ margin-left:auto; font-family:var(--font-mono); font-size:9.5px; font-weight:400; color:var(--muted); }
+.ftree{ list-style:none; margin:2px 0 4px 8px; padding-left:12px; border-left:1px dashed var(--line);
+  display:flex; flex-direction:column; gap:3px; }
+.fmore{ font-family:var(--font-mono); font-size:9.5px; color:var(--muted); padding-left:44px; }
+
+/* las seis actividades van cargadas (esquema + prompt + tres notas): se
+   compactan en bloque para que quepan de una sola pantalla en proyección. */
+.slide[data-block="Taller · el agente toca tus archivos"]{ padding:max(9vh,96px) 4vw 3.5vh; }
+.slide[data-block="Taller · el agente toca tus archivos"] .eyebrow{ margin-bottom:8px; }
+.slide[data-block="Taller · el agente toca tus archivos"] h2{ font-size:clamp(22px,2.7vw,34px); }
+.slide[data-block="Taller · el agente toca tus archivos"] .slide-head .lead{ font-size:13.5px; margin-top:6px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .act-grid{ margin-top:10px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .act-main{ gap:9px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .act-side{ gap:9px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .flist{ padding:7px 11px; gap:3px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .fhead{ padding:6px 12px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .fitem{ font-size:10.2px; line-height:1.25; }
+.slide[data-block="Taller · el agente toca tus archivos"] .fmore{ font-size:9.2px; line-height:1.25; }
+.slide[data-block="Taller · el agente toca tus archivos"] .pbox-head{ padding:7px 14px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .tok-note{ padding:11px 14px; font-size:12.2px; line-height:1.5; }
+.slide[data-block="Taller · el agente toca tus archivos"] .pbox-body.tight{ font-size:11px; line-height:1.5; padding:11px 14px; }
+.slide[data-block="Taller · el agente toca tus archivos"] .ex-goal{ margin-top:9px; padding:9px 16px; font-size:12.6px; }
+
+/* --- responsive del taller --- */
+@media (max-width:1180px){
+  .act-grid{ grid-template-columns:1fr; }
+  .trio{ grid-template-columns:1fr; }
+}
+@media (max-width:960px){
+  .act-flow{ grid-template-columns:1fr; }
+  .farr{ transform:rotate(90deg); }
+}
+@media (max-width:820px){
+  .slide[data-block="Taller · el agente toca tus archivos"]{ padding:5.5rem 6vw 6rem; }
+}
 
 @media (prefers-reduced-motion:reduce){
   *{ animation:none !important; transition:none !important; }
@@ -2416,6 +2563,496 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
   </div>
 </section>
 
+<!-- ============== TALLER · ANTES DE EMPEZAR ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Antes de empezar el taller" data-sub="Tres reglas cuando el agente escribe en tu disco">
+  <div class="slide-scroll wrapA">
+    <div class="slide-head">
+      <span class="eyebrow">Cambio de escenario</span>
+      <h2>Ahora la IA <span class="hl">ejecuta</span>, no solo responde</h2>
+      <p class="lead">Un agente con acceso a tu carpeta puede mover, renombrar, convertir y sobrescribir. Es potentísimo y por eso <b>se trabaja con tres reglas</b>.</p>
+    </div>
+    <div class="trio">
+      <div class="pane gold">
+        <span class="tag">Regla 1</span>
+        <h3>Copia primero</h3>
+        <p>Nunca estrenes un prompt sobre la carpeta original. Duplícala y trabaja sobre la copia. Si algo sale mal, borras la copia y ya.</p>
+      </div>
+      <div class="pane gold">
+        <span class="tag">Regla 2</span>
+        <h3>Plan antes de ejecutar</h3>
+        <p>Casi todos los prompts terminan pidiendo <b>«muéstrame el plan y espera mi confirmación»</b>. Leer una tabla de 20 filas cuesta 30 segundos; deshacer, mucho más.</p>
+      </div>
+      <div class="pane gold">
+        <span class="tag">Regla 3</span>
+        <h3>Verifica el resultado</h3>
+        <p>Abre dos o tres archivos al azar. Un agente puede reportar «listo» y haber saltado los que tenían tildes en el nombre.</p>
+      </div>
+    </div>
+    <div class="duo" style="margin-top:18px">
+      <div class="tok-note warn">
+        <h4>La carpeta de práctica</h4>
+        Descarga <code>actividades/modulo2_taller</code> del repositorio del curso y déjala donde te quede cómodo. Dentro hay dos carpetas: <b>carpeta_desordenada</b> (30 archivos revueltos, actividades 2 a 5) y <b>reportes_mensuales</b> (10 Excel, actividad 6). La actividad 1 no necesita ninguna: el documento lo crea el agente desde cero. Si prefieres, usa una carpeta tuya —pero <b>una copia</b>.
+      </div>
+      <div class="tok-note gold">
+        <h4>Qué es «la carpeta de trabajo»</h4>
+        Los prompts no traen ninguna ruta escrita, porque la tuya no será la mía. <b>La carpeta de trabajo es aquella desde la que abriste el agente</b>: entras en ella y lanzas la herramienta ahí. Si el agente que uses pide una ruta explícita, esa primera línea del prompt viene resaltada: escribe la tuya encima.
+      </div>
+    </div>
+    <p class="note-foot">Los prompts de las seis actividades <b>no nombran ninguna herramienta ni ninguna ruta</b>: funcionan en cualquier agente con acceso a archivos.</p>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 1 · PROYECTO DE INVERSIÓN ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 1 · Proyecto de inversión" data-sub="De un objetivo en una línea a un documento formal en Word">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--claude)">Actividad 1 de 6</span>
+      <h2>De un objetivo <span class="hl">a un proyecto en Word</span></h2>
+      <p class="lead">Tienes la idea en una frase; falta la estructura formal. Y esa estructura siempre es la misma.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · una frase suelta</div>
+            <ul class="flist">
+              <li class="fitem" style="align-items:flex-start"><span class="fic" style="--pc:var(--gold)">obj</span><span class="fname" style="white-space:normal">«Montar una sala de digitalización para el archivo de la entidad»</span></li>
+              <li class="fmore">y nada más: ni estructura ni formato</li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">✕</span><span class="fname">sin portada ni índice</span><span class="flag">a mano</span></li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">✕</span><span class="fname">sin estudio financiero</span><span class="flag">a mano</span></li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">✕</span><span class="fname">sin cronograma ni riesgos</span><span class="flag">a mano</span></li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · documento formal<span class="fpath">.docx</span></div>
+            <ul class="flist">
+              <li class="fdir">📄 PROYECTO_INVERSION.docx <span class="fcount">10 secciones</span></li>
+              <li>
+                <ul class="ftree">
+                  <li class="fitem win"><span class="fic" style="--pc:var(--accent)">1-3</span><span class="fname">Portada · resumen · justificación</span></li>
+                  <li class="fitem win"><span class="fic" style="--pc:var(--accent)">4-6</span><span class="fname">Objetivos · mercado · técnico</span></li>
+                  <li class="fitem win"><span class="fic" style="--pc:var(--accent)">7-8</span><span class="fname">Financiero (VPN, TIR) · riesgos</span></li>
+                  <li class="fitem win"><span class="fic" style="--pc:var(--accent)">9-10</span><span class="fname">Cronograma · conclusiones</span></li>
+                </ul>
+              </li>
+              <li class="fmore">estilos de Word, índice automático y numeración</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja en <span class="fill">la carpeta de trabajo actual</span>.
+
+Objetivo del proyecto: «<span class="fill">montar una sala de digitalización para el archivo central de la entidad</span>».
+Contexto: <span class="fill">entidad pública, inversión estimada de $400 millones, horizonte de 3 años</span>.
+
+Genera un Word (.docx) llamado PROYECTO_INVERSION.docx con esta estructura: portada ·
+resumen ejecutivo · antecedentes y justificación · objetivo general y específicos · estudio
+de mercado · estudio técnico · estudio financiero (inversión, costos, ingresos, flujo de caja,
+VPN y TIR) · análisis de riesgos · cronograma · conclusiones.
+
+Formato profesional: títulos con los estilos Título 1 y Título 2 de Word, texto justificado,
+tablas con fila de encabezado, numeración de páginas e índice automático al inicio.
+
+No inventes cifras como si fueran reales: marca cada una con [SUPUESTO] y déjame al final
+la lista de todo lo que debo reemplazar con datos verdaderos.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          El agente necesita poder escribir <code>.docx</code>. Si te dice que no tiene la librería, respóndele <b>«instálala y continúa»</b>. Un <code>.txt</code> renombrado a <code>.docx</code> no es un Word.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          Abre el documento: los títulos deben salir en el <b>panel de navegación</b> y el índice debe actualizarse solo. Después busca <code>[SUPUESTO]</code>: si no aparece ninguno, el agente inventó cifras y no te avisó.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Cambia el tipo de documento: <b>plan de negocio</b>, <b>proyecto de investigación</b>, <b>estudio de factibilidad</b> o <b>plan de mejoramiento</b>. Cambia la lista de secciones; el resto del prompt no se toca.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> salir con el esqueleto completo y bien formateado, para dedicar tu tiempo a las cifras reales y no a la plantilla.</div></div>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 2 · ORDENAR POR TIPO ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 2 · Ordenar por tipo" data-sub="Una carpeta revuelta se convierte en subcarpetas por tipo de archivo">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--accent)">Actividad 2 de 6</span>
+      <h2>Ordenar la carpeta <span class="hl">por tipo de archivo</span></h2>
+      <p class="lead">Todo mezclado en un solo nivel. Que el agente cree las subcarpetas y mueva cada archivo a la suya.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · todo revuelto<span class="fpath">\carpeta_desordenada</span></div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">informe final_2 (copia).pdf</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">acta reuNIon 12 de MARSO.docx</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">presupuesto 2026.xlsx</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--github)">jpeg</span><span class="fname">WhatsApp Image 2026-02-18.jpeg</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">POLIZA cumplimiento 2026.pdf</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--muted)">txt</span><span class="fname">pendientes semana.txt</span></li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--gold)">zip</span><span class="fname">respaldo documentos.zip</span></li>
+              <li class="fmore">…y 23 archivos más, en el mismo montón</li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · por tipo<span class="fpath">\carpeta_desordenada</span></div>
+            <ul class="flist">
+              <li class="fdir">📁 PDF <span class="fcount">8 archivos</span></li>
+              <li class="fdir">📁 WORD <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 EXCEL <span class="fcount">4 archivos</span></li>
+              <li class="fdir">📁 IMAGENES <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 TEXTO <span class="fcount">3 archivos</span></li>
+              <li class="fdir">📁 OTROS <span class="fcount">3 archivos</span></li>
+              <li class="fmore">30 de 30 · nada se borró: todo se movió</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre los archivos de <span class="fill">la carpeta de trabajo actual</span>.
+
+Organiza los archivos en subcarpetas según su tipo: PDF, WORD, EXCEL,
+IMAGENES, TEXTO y OTROS (lo que no encaje en las anteriores).
+
+Reglas:
+- Mueve los archivos, no los copies ni los borres.
+- Crea la subcarpeta solo si hay al menos un archivo de ese tipo.
+- Si un nombre ya existe en el destino, añade el sufijo _1, _2 en vez de sobrescribir.
+
+Muéstrame primero el plan (archivo → carpeta destino) y espera mi confirmación.
+Al terminar, dame una tabla: subcarpeta | cantidad de archivos.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          Duplica la carpeta. El agente <b>mueve archivos de verdad</b>: si el plan está mal y confirmas, el desorden queda peor que antes.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          Cuenta: la suma de la tabla final debe dar <b>exactamente</b> el número de archivos que había al inicio. Si falta uno, apareció un tipo que no previste.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Cambia el criterio: en vez de por tipo, <b>por año</b> (usando la fecha de modificación) o <b>por cliente</b> (usando una palabra del nombre). El resto del prompt no se toca.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que la carpeta quede navegable en un vistazo y que tú solo hayas escrito seis líneas.</div></div>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 3 · RENOMBRAR ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 3 · Renombrar en mayúsculas" data-sub="Nombres irregulares, tildes y faltas de ortografía a un solo formato">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--gold)">Actividad 3 de 6</span>
+      <h2>Renombrar todo a <span class="hl">un mismo criterio</span></h2>
+      <p class="lead">Mayúsculas y minúsculas mezcladas, tildes, «copia (2)» y faltas de ortografía. Una sola pasada y quedan homogéneos.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · cada uno a su manera</div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">acta reuNIon 12 de MARSO.docx</span><span class="flag">falta</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">informe final_2 (copia).pdf</span><span class="flag">copia</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">resumen-EJECUTIVO(1).pdf</span><span class="flag">copia</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">presupuesto 2026.xlsx</span><span class="flag">espacios</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--github)">png</span><span class="fname">IMG_20240912.png</span><span class="flag">opaco</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--muted)">txt</span><span class="fname">notas rapidas sesion.txt</span><span class="flag">tildes</span></li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · un solo formato</div>
+            <ul class="flist">
+              <li class="fitem win"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">ACTA_REUNION_12_DE_MARZO.docx</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">INFORME_FINAL_2.pdf</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">RESUMEN_EJECUTIVO.pdf</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">PRESUPUESTO_2026.xlsx</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--github)">png</span><span class="fname">IMG_20240912.png</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--muted)">txt</span><span class="fname">NOTAS_RAPIDAS_SESION.txt</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre los archivos de <span class="fill">la carpeta de trabajo actual</span>.
+
+Renombra TODOS los archivos que contiene con este criterio:
+- El nombre completo en MAYÚSCULAS; la extensión en minúsculas.
+- Sin tildes ni caracteres especiales; los espacios se vuelven guion bajo.
+- Corrige las faltas de ortografía evidentes (MARSO → MARZO, REUNION queda igual).
+- Elimina del nombre los sufijos de duplicado: "copia", "(1)", "- copia (2)".
+
+No borres, no muevas y no modifiques el contenido de ningún archivo.
+Si al limpiar el nombre dos archivos quedan iguales, añade _1, _2 al final.
+
+Muéstrame primero una tabla: nombre actual | nombre nuevo. Espera mi visto bueno.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          Si esos archivos están enlazados desde otro documento o desde una hoja de cálculo, <b>renombrarlos rompe los enlaces</b>. Revisa antes de confirmar.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          Busca en la tabla los casos raros: nombres con ñ, con &amp;, con paréntesis y con puntos intermedios (<code>informe.v2.final.pdf</code>). Ahí es donde suele fallar.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Añade un prefijo con la fecha: <b>AAAA-MM-DD_NOMBRE</b>, tomando la fecha de modificación del archivo. La carpeta queda ordenada cronológicamente sola.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que cualquiera encuentre un archivo por su nombre, sin abrirlo y sin adivinar quién lo guardó.</div></div>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 4 · CONVERTIR A PDF ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 4 · Convertir a PDF" data-sub="Word e imágenes convertidos en lote, sin perder los originales">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--blue)">Actividad 4 de 6</span>
+      <h2>Convertir Word e imágenes <span class="hl">a PDF</span></h2>
+      <p class="lead">Lo que se envía fuera de la organización va en PDF. Convertir doce archivos a mano son doce «Guardar como»; con el agente es un párrafo.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · formatos mezclados</div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">ACTA_REUNION_12_DE_MARZO.docx</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">CARTA_PROVEEDOR.docx</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--blue)">docx</span><span class="fname">MEMORANDO_INTERNO.docx</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--github)">png</span><span class="fname">IMG_20240912.png</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--github)">png</span><span class="fname">FIRMA_ESCANEADA.png</span></li>
+              <li class="fmore">…y 7 más entre Word e imágenes · los .pdf se saltan</li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · originales + carpeta PDF</div>
+            <ul class="flist">
+              <li class="fdir">📁 PDF_CONVERTIDOS <span class="fcount">12 nuevos</span></li>
+              <li>
+                <ul class="ftree">
+                  <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">ACTA_REUNION_12_DE_MARZO.pdf</span></li>
+                  <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">CARTA_PROVEEDOR.pdf</span></li>
+                  <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">MEMORANDO_INTERNO.pdf</span></li>
+                  <li class="fmore" style="padding-left:0">…y 9 más · 6 Word + 6 imágenes = 12</li>
+                </ul>
+              </li>
+              <li class="fmore">los .docx y las imágenes siguen donde estaban</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre los archivos de <span class="fill">la carpeta de trabajo actual</span>.
+
+Convierte a PDF todos los archivos de Word (.docx, .doc) y todas las
+imágenes (.png, .jpg, .jpeg) que encuentres.
+
+Reglas:
+- Guarda los PDF en una subcarpeta nueva llamada PDF_CONVERTIDOS.
+- Conserva el nombre original, cambiando solo la extensión.
+- No elimines ni modifiques los archivos de origen.
+- Una imagen = una página tamaño carta, centrada y sin deformar la proporción.
+
+Si te falta alguna librería para hacerlo, instálala y continúa.
+Al terminar dime: cuántos convertiste y cuáles no pudiste, con el motivo de cada uno.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          Los <code>.docx</code> con tablas complejas o encabezados de membrete pueden verse distintos al convertir. <b>Abre uno</b> antes de dar por bueno el lote.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          Cuenta los PDF nuevos y compáralos con la suma de Word + imágenes del origen. Si sobran o faltan, pide la lista de los que no pudo convertir.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Pide que <b>una sola imagen por página</b> se convierta en un <b>único PDF</b> con todas ellas: es la forma rápida de armar un anexo escaneado.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> tener el lote listo para enviar en PDF, con los originales intactos para seguir editando.</div></div>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 5 · PROTEGER PDF ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 5 · Proteger los PDF" data-sub="Contraseña en lote sobre todos los PDF de una carpeta">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--danger)">Actividad 5 de 6</span>
+      <h2>Poner clave a <span class="hl">todos los PDF</span></h2>
+      <p class="lead">Documentos con datos de terceros que salen por correo. Proteger uno es fácil; proteger veinte, uno por uno, es donde se abandona.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · abiertos para cualquiera<span class="fpath">\PDF_CONVERTIDOS</span></div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">ACTA_REUNION_12_DE_MARZO.pdf</span><span class="flag">sin clave</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">CARTA_PROVEEDOR.pdf</span><span class="flag">sin clave</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">MEMORANDO_INTERNO.pdf</span><span class="flag">sin clave</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">IMG_20240912.pdf</span><span class="flag">sin clave</span></li>
+              <li class="fmore">…y 8 más · los 12 salieron de la actividad 4</li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · copia protegida<span class="fpath">\PDF_PROTEGIDOS</span></div>
+            <ul class="flist">
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">pdf</span><span class="fname">ACTA_REUNION_12_DE_MARZO_CLAVE.pdf</span><span class="flag">🔒</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">pdf</span><span class="fname">CARTA_PROVEEDOR_CLAVE.pdf</span><span class="flag">🔒</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">pdf</span><span class="fname">MEMORANDO_INTERNO_CLAVE.pdf</span><span class="flag">🔒</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">pdf</span><span class="fname">IMG_20240912_CLAVE.pdf</span><span class="flag">🔒</span></li>
+              <li class="fmore">12 de 12 · los originales siguen sin tocar</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre <span class="fill">la subcarpeta PDF_CONVERTIDOS</span> de la carpeta de trabajo actual.
+
+Protege con contraseña todos los archivos PDF que haya allí.
+
+Reglas:
+- Contraseña de apertura: <span class="fill">Taller2026*</span>
+- Guarda los archivos protegidos en una subcarpeta PDF_PROTEGIDOS,
+  con el mismo nombre más el sufijo _CLAVE.
+- No modifiques, no muevas y no borres los PDF originales.
+
+Al terminar, comprueba abriendo uno de los protegidos que efectivamente
+pide la clave, y dame la lista de los que quedaron protegidos.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          <b>La clave no viaja por el mismo canal que el archivo.</b> Si mandas el PDF por correo, la contraseña va por otro medio. Si no, la protección es decorativa.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          Ábrelo tú mismo. Y guarda la clave donde vayas a encontrarla: <b>un PDF protegido cuya contraseña se perdió es un archivo perdido</b>.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Una clave distinta por destinatario, tomada de una columna de un Excel: <b>«usa la columna CLAVE del archivo destinatarios.xlsx»</b>. Ahí empieza el envío masivo personalizado.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que el lote salga protegido en un minuto y que la protección sea real, no un trámite.</div></div>
+  </div>
+</section>
+
+<!-- ============== ACTIVIDAD 6 · CONSOLIDAR EXCEL ============== -->
+<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 6 · Consolidar los Excel" data-sub="Diez archivos con la misma estructura en una sola tabla">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--github)">Actividad 6 de 6</span>
+      <h2>Diez Excel iguales, <span class="hl">un solo archivo</span></h2>
+      <p class="lead">El reporte mensual llega partido en diez libros con las mismas columnas. Copiar y pegar diez veces es donde aparecen los errores.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · diez libros<span class="fpath">\reportes_mensuales</span></div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_01.xlsx</span><span class="flag" style="color:var(--muted)">312 filas</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_02.xlsx</span><span class="flag" style="color:var(--muted)">288 filas</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_03.xlsx</span><span class="flag" style="color:var(--muted)">341 filas</span></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_04.xlsx</span><span class="flag" style="color:var(--muted)">305 filas</span></li>
+              <li class="fmore">…hasta REPORTE_2026_10.xlsx</li>
+              <li class="fmore">los diez con las mismas 5 columnas</li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · una sola tabla</div>
+            <ul class="flist">
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">CONSOLIDADO.xlsx</span><span class="flag">3.104 filas</span></li>
+              <li class="fmore">columnas del original + <b>ORIGEN</b></li>
+              <li class="fitem"><span class="fic" style="--pc:var(--gold)">col</span><span class="fname">las 5 columnas del original</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">col</span><span class="fname">ORIGEN → REPORTE_2026_03.xlsx</span></li>
+              <li class="fmore">una fila de encabezados, no diez</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre los archivos de Excel de <span class="fill">la carpeta de trabajo actual</span>.
+
+Los archivos de Excel que hay allí tienen la misma estructura de columnas.
+Consolídalos en un solo archivo llamado CONSOLIDADO.xlsx.
+
+Reglas:
+- Una sola fila de encabezados al inicio, no una por archivo.
+- Añade una columna ORIGEN con el nombre del archivo del que salió cada fila.
+- No cambies los datos: no redondees, no reordenes columnas, no borres filas.
+- Respeta el formato de fecha y de número tal como viene.
+
+Antes de escribir nada, verifica que las columnas coincidan en todos los archivos
+y avísame si alguno difiere en nombre, orden o cantidad de columnas.
+Al final dime: total de filas y cuántas aportó cada archivo.</div>
+        </div>
+      </div>
+      <div class="act-side">
+        <div class="tok-note warn">
+          <h4>Antes de empezar</h4>
+          El error clásico es el <b>encabezado repetido</b> a mitad de tabla y las <b>filas de totales</b> al final de cada libro. Pide explícitamente que las detecte y te pregunte qué hacer.
+        </div>
+        <div class="tok-note">
+          <h4>Cómo verificar</h4>
+          La suma de filas por archivo debe dar el total del consolidado. Y filtra la columna <code>ORIGEN</code>: deben aparecer los diez nombres, ninguno vacío.
+        </div>
+        <div class="tok-note gold">
+          <h4>Variante para tu trabajo</h4>
+          Encadena el siguiente paso: <b>«ahora hazme una tabla dinámica de Valor por Sede y por mes»</b>. Consolidar es el paso aburrido; el análisis viene después.
+        </div>
+      </div>
+    </div>
+    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> una tabla única, trazable hasta su archivo de origen, lista para analizar sin copiar y pegar.</div></div>
+  </div>
+</section>
+
 <section class="slide s-py" data-block="Cierre" data-title="Cierre" data-sub="Lo que sigue">
   <div class="py-stage flex flex-col">
     <div class="py-stage flex flex-col justify-center items-center text-center" style="background:transparent">
@@ -2499,6 +3136,53 @@ function copyPrompt(btn, id){
 function fb(text, done){ const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){} document.body.removeChild(ta); }
 
 /* ================================================================
+   PROMPTS EDITABLES (taller de archivos)
+   Mecanismo aparte del copyPrompt() de arriba: aquí el prompt se
+   edita en vivo antes de copiarlo. El texto original se guarda al
+   cargar para poder devolverlo. Se guarda el innerHTML y no el texto
+   plano: si no, al restaurar se perderían los resaltados que marcan
+   lo que hay que cambiar.
+   ================================================================ */
+const ORIGINALES = new Map();
+document.querySelectorAll('.pbox-body.edit').forEach(el => ORIGINALES.set(el, el.innerHTML));
+document.querySelectorAll('.reset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.closest('.pbox').querySelector('.pbox-body.edit');
+    if(!body || !ORIGINALES.has(body)) return;
+    body.innerHTML = ORIGINALES.get(body);
+    btn.textContent = '✓ Original';
+    setTimeout(() => { btn.textContent = 'Restaurar'; }, 1500);
+  });
+});
+
+/* Lee .innerText, así que copia el prompt TAL COMO quedó tras editarlo.
+   El fallback con execCommand hace falta porque fuera de https el
+   portapapeles moderno no siempre está disponible. */
+document.querySelectorAll('.copy-btn:not(.reset-btn)').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const box = btn.closest('.pbox');
+    if(!box) return;
+    const body = box.querySelector('.pbox-body');
+    if(!body) return;
+    const txt = body.innerText.trim();
+    let ok = true;
+    try{
+      await navigator.clipboard.writeText(txt);
+    }catch(err){
+      const ta = document.createElement('textarea');
+      ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
+      ta.remove();
+    }
+    const previo = btn.textContent;
+    btn.textContent = ok ? '✓ Copiado' : 'Selecciónalo';
+    btn.classList.toggle('done', ok);
+    setTimeout(() => { btn.textContent = previo; btn.classList.remove('done'); }, 1800);
+  });
+});
+
+/* ================================================================
    MOTOR DE DIAPOSITIVAS
    ================================================================ */
 const slides = [...document.querySelectorAll('.slide')];
@@ -2530,7 +3214,7 @@ function go(i){
 function next(){ go(current+1); }
 function prev(){ go(current-1); }
 document.addEventListener('keydown', e => {
-  if(e.target.closest('.CodeMirror, textarea')) return;   /* no navegar mientras se escribe código */
+  if(e.target.closest('.CodeMirror, textarea, input, [contenteditable]')) return;   /* no navegar mientras se escribe código o se edita un prompt */
   if(e.key === 'Escape'){ openMenu(false); return; }
   if(e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); next(); }
   if(e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); prev(); }
@@ -2540,7 +3224,7 @@ document.addEventListener('keydown', e => {
 let touchX = 0;
 document.addEventListener('touchstart', e => touchX = e.touches[0].clientX, {passive:true});
 document.addEventListener('touchend', e => {
-  if(e.target.closest('.CodeMirror, textarea, button, a')) return;
+  if(e.target.closest('.CodeMirror, textarea, button, a, [contenteditable]')) return;
   const dx = e.changedTouches[0].clientX - touchX;
   if(Math.abs(dx) > 70){ dx < 0 ? next() : prev(); }
 }, {passive:true});
