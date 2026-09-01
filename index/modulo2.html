@@ -766,10 +766,13 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .pt-bar span{ margin-left:6px; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
 .pt-body{ padding:14px 16px; }
 .pt-who{ font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
-.pt-line{ font-family:var(--font-mono); font-size:13.5px; color:var(--accent); white-space:nowrap; overflow:hidden;
+/* el tecleo se dibuja abriendo el ancho carácter a carácter: --ch es el número
+   de caracteres de .pt-line y hay que actualizarlo si se cambia esa frase, o el
+   texto queda cortado a mitad */
+.pt-line{ --ch:39; font-family:var(--font-mono); font-size:13.5px; color:var(--accent); white-space:nowrap; overflow:hidden;
   border-right:2px solid var(--accent); width:0;
-  animation:typeIn 5.5s steps(24) infinite, caret .75s step-end infinite; }
-@keyframes typeIn{ 0%{ width:0; } 45%,90%{ width:24ch; } 100%{ width:0; } }
+  animation:typeIn 5.5s steps(var(--ch)) infinite, caret .75s step-end infinite; }
+@keyframes typeIn{ 0%{ width:0; } 45%,90%{ width:calc(var(--ch) * 1ch); } 100%{ width:0; } }
 @keyframes caret{ 50%{ border-color:transparent; } }
 .pt-reply{ display:flex; align-items:center; gap:9px; margin-top:12px; padding-top:11px; border-top:1px dashed var(--line);
   font-size:12.5px; color:var(--muted); opacity:0; animation:ptReply 5.5s ease-in-out infinite; }
@@ -825,6 +828,16 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .ex-file .fn{ font-size:12.5px; font-weight:600; color:var(--text);}
 .ex-dl{ display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#041210; background:var(--accent); padding:7px 13px; border-radius:99px; text-decoration:none; transition:transform .2s;}
 .ex-dl:hover{ transform:translateY(-2px);}
+
+/* descarga destacada · arranque de la práctica */
+.dl-big{ display:flex; align-items:center; gap:20px; max-width:840px; margin:30px auto 0; padding:22px 26px;
+  border-radius:20px; background:rgba(0,245,212,.06); border:1px solid rgba(0,245,212,.35); text-align:left; }
+.dl-big .dl-ic{ font-size:36px; line-height:1; }
+.dl-big .dl-txt{ display:flex; flex-direction:column; gap:5px; }
+.dl-big .dl-txt b{ font-family:var(--font-body); font-size:20px; font-weight:800; color:var(--text); letter-spacing:-.01em; }
+.dl-big .dl-txt span{ font-size:13.5px; color:var(--muted); line-height:1.45; }
+.dl-big .dl-txt span b{ font-family:var(--font-mono); font-size:12.5px; font-weight:600; color:var(--text); }
+.dl-big .ex-dl{ margin-left:auto; flex-shrink:0; font-size:13px; padding:14px 24px; }
 
 .practical{ display:grid; grid-template-columns:1.02fr 60px 1.18fr; gap:12px; align-items:center; margin-top:22px;}
 .prompt-card{ padding:22px; border-radius:18px; background:var(--surface); border:1px solid rgba(0,245,212,.3);}
@@ -900,6 +913,44 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .xls-legend span{ display:inline-flex; align-items:center; gap:6px;}
 .xls-legend b{ color:var(--accent); font-weight:700;}
 .xls-legend .sw{ width:11px; height:11px; border-radius:3px; display:inline-block;}
+
+/* --------------------------------------------------------------------------
+   BLOQUE 3 · EL AGENTE DENTRO DEL PROGRAMA
+   Aquí el agente no está en otra ventana: vive dentro de la aplicación. La
+   diapositiva lo dice sin texto, dibujándose como la ventana de Excel con el
+   panel del agente acoplado a la derecha. Marco en verde Excel y panel en
+   --accent: es el contraste que separa este bloque del cian del bloque 2.
+   -------------------------------------------------------------------------- */
+.appwrap{ width:100%; max-width:1180px; }
+.appwin{ margin-top:18px; border-radius:14px; overflow:hidden; background:#0b1020;
+  border:1px solid rgba(47,168,105,.65); box-shadow:0 26px 70px -30px rgba(47,168,105,.9); }
+.appwin-bar{ display:flex; align-items:center; gap:10px; padding:10px 14px;
+  background:linear-gradient(180deg, rgba(33,115,70,.38), rgba(33,115,70,.16));
+  border-bottom:1px solid rgba(47,168,105,.4); }
+.appwin-bar .xi{ width:18px; height:18px; border-radius:4px; background:#217346; color:#fff;
+  display:grid; place-items:center; font-size:10px; font-weight:800; }
+.appwin-bar .nm{ font-family:var(--font-mono); font-size:12px; color:#8fd7b3; font-weight:700; }
+.appwin-bar .dots{ margin-left:auto; display:flex; gap:6px; }
+.appwin-bar .dots i{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.22); }
+.appwin-body{ display:grid; grid-template-columns:1fr 340px; align-items:stretch; }
+.appwin-doc{ padding:13px; display:grid; grid-template-columns:1fr 1.32fr; gap:11px; align-items:start; }
+.appwin-side{ padding:14px 16px; display:flex; flex-direction:column; gap:11px;
+  border-left:1px solid rgba(0,245,212,.3); background:rgba(0,245,212,.05); }
+.aw-head{ display:flex; align-items:center; gap:8px; font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; font-weight:700; color:var(--accent); }
+.aw-head .pdot{ width:8px; height:8px; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 0 4px rgba(0,245,212,.15); }
+.aw-prompt{ font-size:12.4px; line-height:1.62; color:var(--text); }
+.aw-prompt code{ font-family:var(--font-mono); font-size:.86em; color:var(--accent);
+  background:rgba(0,245,212,.08); padding:2px 5px; border-radius:5px; }
+.aw-foot{ margin-top:auto; padding-top:4px; font-size:10.5px; color:var(--muted); line-height:1.45; }
+.appwin-tabs{ display:flex; gap:2px; padding:0 13px; border-top:1px solid var(--line);
+  background:rgba(255,255,255,.02); }
+@media (max-width:1100px){
+  .appwin-body{ grid-template-columns:1fr; }
+  .appwin-side{ border-left:none; border-top:1px solid rgba(0,245,212,.3); }
+}
+@media (max-width:820px){ .appwin-doc{ grid-template-columns:1fr; } }
 
 @media (max-width:1100px){
   .tool-grid{ grid-template-columns:repeat(2,1fr); }
@@ -1081,6 +1132,33 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 
 .trio{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px; align-items:stretch; }
 
+/* --------------------------------------------------------------------------
+   DIVISORIA DE BLOQUE (patrón «bridge», traído de PRACTICA.html)
+   Antes de cada bloque, la ruta de tres paradas con la actual encendida: es
+   lo único que hace visible el salto de bloque mientras se proyecta.
+   -------------------------------------------------------------------------- */
+.bridge{ width:100%; max-width:1000px; text-align:center; }
+.thread{ display:flex; align-items:stretch; justify-content:center; gap:10px; margin-top:34px; }
+.th{ flex:1; max-width:250px; padding:16px 15px; border-radius:16px; text-align:left;
+  background:var(--surface); border:1px solid var(--line); opacity:.5;
+  transition:opacity .3s, transform .3s, border-color .3s, background .3s; }
+.th .tk{ display:block; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase;
+  font-weight:700; color:var(--muted); margin-bottom:6px; }
+.th b{ display:block; font-size:14px; font-weight:700; line-height:1.25; }
+.th small{ display:block; margin-top:5px; font-size:11.5px; color:var(--muted); line-height:1.4; }
+.th.done{ opacity:.55; }
+.th.done .tk::after{ content:" ✓"; color:var(--accent); }
+.th.next{ opacity:.5; border-style:dashed; }
+.th.now{ opacity:1; border-color:var(--accent); background:rgba(0,245,212,.07);
+  transform:translateY(-5px); box-shadow:0 14px 40px -22px rgba(0,245,212,.85); }
+.th.now .tk{ color:var(--accent); }
+.tarr{ align-self:center; color:var(--muted); font-size:13px; }
+@media (max-width:900px){
+  .thread{ flex-direction:column; gap:8px; margin-top:26px; }
+  .th{ max-width:none; }
+  .tarr{ transform:rotate(90deg); }
+}
+
 /* --- notas laterales: complementan las .tok-note que ya existen arriba --- */
 .tok-note.gold{ border-color:rgba(255,209,102,.35); } .tok-note.gold h4{ color:var(--gold); }
 .tok-note code{ font-family:var(--font-mono); font-size:11.5px; background:rgba(255,255,255,.08);
@@ -1124,10 +1202,6 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   padding:0 3px; margin:0 -3px; transition:background .2s; }
 .pbox-body.edit:focus .fill{ background:rgba(255,209,102,.2); }
 
-.ex-goal{ display:flex; align-items:center; gap:13px; margin-top:18px; padding:13px 18px; border-radius:14px;
-  background:rgba(0,245,212,.06); border:1px solid rgba(0,245,212,.3); font-size:13.2px; line-height:1.5; }
-.ex-goal .gi{ font-size:20px; line-height:1; }
-.ex-goal b{ color:var(--accent); font-weight:700; }
 .plab-foot{ margin-top:20px; text-align:center; font-size:13px; color:var(--muted); line-height:1.55; }
 .plab-foot b{ color:var(--text); font-weight:600; }
 
@@ -1140,9 +1214,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
    El contenedor se llama .act-flow y no .flow porque .flow ya existe arriba
    con otro significado (el diagrama de nodos de IA vs agente).
    -------------------------------------------------------------------------- */
-.act-grid{ display:grid; grid-template-columns:1.2fr .8fr; gap:16px; margin-top:16px; align-items:start; }
+.act-grid{ display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px; align-items:start; }
 .act-main{ display:flex; flex-direction:column; gap:11px; }
-.act-side{ display:flex; flex-direction:column; gap:10px; }
 
 .act-flow{ display:grid; grid-template-columns:1fr auto 1fr; gap:11px; align-items:center; }
 .farr{ text-align:center; color:var(--accent); font-size:19px; line-height:1; }
@@ -1181,31 +1254,21 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   display:flex; flex-direction:column; gap:3px; }
 .fmore{ font-family:var(--font-mono); font-size:9.5px; color:var(--muted); padding-left:44px; }
 
-/* las seis actividades van cargadas (esquema + prompt + tres notas): se
-   compactan en bloque para que quepan de una sola pantalla en proyección. */
-.slide[data-block="Taller · el agente toca tus archivos"]{ padding:max(9vh,96px) 4vw 3.5vh; }
-.slide[data-block="Taller · el agente toca tus archivos"] .eyebrow{ margin-bottom:8px; }
-.slide[data-block="Taller · el agente toca tus archivos"] h2{ font-size:clamp(22px,2.7vw,34px); }
-.slide[data-block="Taller · el agente toca tus archivos"] .slide-head .lead{ font-size:13.5px; margin-top:6px; }
-/* el enlace a la carpeta viaja dentro de la barra «Meta»: ahí sobra ancho y
-   así no le roba ni un píxel de altura al esquema y al prompt, que ya van
-   justos para caber de una pantalla en proyección */
-.ex-goal .ex-dl{ margin-left:auto; flex-shrink:0; font-size:9.5px; padding:5px 12px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .act-grid{ margin-top:10px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .act-main{ gap:9px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .act-side{ gap:9px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .flist{ padding:7px 11px; gap:3px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .fhead{ padding:6px 12px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .fitem{ font-size:10.2px; line-height:1.25; }
-.slide[data-block="Taller · el agente toca tus archivos"] .fmore{ font-size:9.2px; line-height:1.25; }
-.slide[data-block="Taller · el agente toca tus archivos"] .pbox-head{ padding:7px 14px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .tok-note{ padding:11px 14px; font-size:12.2px; line-height:1.5; }
-.slide[data-block="Taller · el agente toca tus archivos"] .pbox-body.tight{ font-size:11px; line-height:1.5; padding:11px 14px; }
-.slide[data-block="Taller · el agente toca tus archivos"] .ex-goal{ margin-top:9px; padding:9px 16px; font-size:12.6px; }
+/* los seis ejercicios llevan solo esquema + prompt: una columna con medida
+   cómoda y el texto un punto más grande, que ahora sobra sitio en pantalla. */
+.slide.s-lab{ padding:max(9vh,96px) 4vw 3.5vh; }
+.slide.s-lab .plab{ max-width:1020px; }
+.slide.s-lab .eyebrow{ margin-bottom:8px; }
+.slide.s-lab h2{ font-size:clamp(22px,2.7vw,34px); }
+.slide.s-lab .slide-head .lead{ font-size:13.5px; margin-top:6px; }
+.slide.s-lab .act-grid{ margin-top:14px; }
+.slide.s-lab .flist{ padding:11px 13px; gap:5px; }
+.slide.s-lab .fitem{ font-size:12px; line-height:1.35; }
+.slide.s-lab .fmore{ font-size:10.5px; line-height:1.35; }
+.slide.s-lab .pbox-body.tight{ font-size:12.4px; line-height:1.65; padding:15px 18px; }
 
 /* --- responsive del taller --- */
 @media (max-width:1180px){
-  .act-grid{ grid-template-columns:1fr; }
   .trio{ grid-template-columns:1fr; }
 }
 @media (max-width:960px){
@@ -1213,7 +1276,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .farr{ transform:rotate(90deg); }
 }
 @media (max-width:820px){
-  .slide[data-block="Taller · el agente toca tus archivos"]{ padding:5.5rem 6vw 6rem; }
+  .slide.s-lab{ padding:5.5rem 6vw 6rem; }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1301,7 +1364,7 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">14</span><p class="font-bold mt-1">Ordenar y limpiar</p><p class="text-xs text-slate-400">duplicados · vacíos</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">15</span><p class="font-bold mt-1">Agrupar</p><p class="text-xs text-slate-400">groupby · resúmenes</p></div>
       <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(94,200,224,.4)"><span class="code-font text-xs" style="color:var(--sky)">★</span><p class="font-bold mt-1">Chuleta</p><p class="text-xs text-slate-400">para reutilizar</p></div>
-      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(0,245,212,.4)"><span class="code-font text-xs" style="color:var(--accent)">▶</span><p class="font-bold mt-1">Práctica</p><p class="text-xs text-slate-400">3 ejercicios con agentes</p></div>
+      <div class="toc-card p-4 rounded-xl border border-slate-700 bg-slate-800/40" style="border-color:rgba(0,245,212,.4)"><span class="code-font text-xs" style="color:var(--accent)">▶</span><p class="font-bold mt-1">Práctica</p><p class="text-xs text-slate-400">12 ejercicios en 3 bloques</p></div>
     </div>
     <div class="reveal mt-6 p-4 rounded-lg text-sm text-slate-300" style="background:rgba(31,93,76,.25);border-left:4px solid var(--lime)">
       <i class="fa-solid fa-lightbulb mr-2" style="color:var(--amber)"></i>
@@ -2384,203 +2447,8 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
   </div>
 </section>
 
-<!-- ============== PORTADA DEL BLOQUE DE PRÁCTICA ============== -->
-<section class="slide" data-block="Práctica" data-title="A la práctica" data-sub="Tres ejercicios con datos reales">
-  <div class="prac">
-    <div class="reveal">
-      <span class="eyebrow">Se acabó la teoría</span>
-      <h2>Vamos a la <span class="hl">práctica</span></h2>
-      <p class="lead">Tres ejercicios seguidos sobre un archivo de ventas real. <b>Tú escribes el prompt, el agente escribe el código</b> — y los archivos salen a tu carpeta.</p>
-    </div>
-
-    <div class="prac-type reveal">
-      <div class="pt-bar"><i></i><i></i><i></i><span>tu agente · escribiendo</span></div>
-      <div class="pt-body">
-        <div class="pt-who">Tú</div>
-        <div class="pt-line">Limpia datos_ventas.xlsx</div>
-        <div class="pt-reply"><span class="cog">⚙</span> <span>El agente escribe el código, lo ejecuta y te devuelve <b>datos_ventas_limpio.xlsx</b></span></div>
-      </div>
-    </div>
-
-    <div class="prac-flow reveal">
-      <div class="prac-card">
-        <span class="pc-n">1</span>
-        <span class="pc-ic">🧹</span>
-        <h4>Limpiar</h4>
-        <p>Duplicados, tildes, precios con «$» y celdas vacías.</p>
-        <span class="pc-out">datos_ventas_limpio.xlsx</span>
-      </div>
-      <div class="prac-arr">→</div>
-      <div class="prac-card">
-        <span class="pc-n">2</span>
-        <span class="pc-ic">⚙️</span>
-        <h4>Automatizar</h4>
-        <p>Un Excel por ciudad y un libro con una hoja por categoría.</p>
-        <span class="pc-out">+6 archivos</span>
-      </div>
-      <div class="prac-arr">→</div>
-      <div class="prac-card">
-        <span class="pc-n">3</span>
-        <span class="pc-ic">🔀</span>
-        <h4>Cruzar</h4>
-        <p>Dos hojas, repetidos detectados y una columna nueva.</p>
-        <span class="pc-out">preinscritos.xlsx</span>
-      </div>
-    </div>
-    <div class="prac-track"></div>
-
-    <div class="reveal">
-      <div class="prac-foot"><b>💡</b> Lo que acabas de ver en Python es lo que el agente escribe por ti. Saber leerlo es lo que te deja <b>corregirlo</b>.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============== EJERCICIO 1 · LIMPIEZA ============== -->
-<section class="slide" data-block="Práctica" data-title="Ejercicio 1 · Limpieza" data-sub="De datos sucios a datos listos">
-  <div class="ex">
-    <div class="slide-head">
-      <span class="eyebrow"><span class="step-pill">EJERCICIO 1</span> Limpieza de datos</span>
-      <h2>De datos <span class="hl">sucios</span> a datos listos</h2>
-      <div class="ex-tools">Úsalo en <b>cualquiera</b> de los 4 agentes · sobre <b>datos_ventas.xlsx</b></div>
-      <div class="ex-file-wrap">
-        <div class="ex-file">
-          <span class="fn">📊 datos_ventas.xlsx · los datos sin limpiar</span>
-          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
-        </div>
-      </div>
-    </div>
-    <div class="practical">
-      <div class="prompt-card">
-        <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text" id="p1">Carga <code>datos_ventas.xlsx</code> en un DataFrame llamado <code>datos</code>. Límpialo: (1) elimina filas duplicadas; (2) en <span class="fill-edit" contenteditable="true">ciudad</span> y <span class="fill-edit" contenteditable="true">categoria</span> quita espacios y unifica mayúsculas/acentos; (3) convierte <code>cantidad</code>, <code>precio_unitario</code> y <code>total_venta</code> a número (quita "$" y puntos de miles); (4) recalcula <code>total_venta = cantidad × precio_unitario</code> donde falte; (5) elimina filas con <code>cantidad ≤ 0</code>; (6) rellena <code>satisfaccion</code> vacía con la mediana. Guárdalo como <code>datos_ventas_limpio.xlsx</code>.</div>
-        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p1')">⧉ Copiar prompt</button><span class="copy-hint">Edita los recuadros con tus columnas.</span></div>
-      </div>
-      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
-      <div class="visual-card">
-        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
-        <div class="viz-clean">
-          <div class="vc-tbl bad">
-            <div class="h">Antes</div>
-            <div class="vc-row"><span class="c vc-bad">BOGOTA </span><span class="c vc-bad">$ 295.200</span></div>
-            <div class="vc-row"><span class="c vc-bad">bogota</span><span class="c vc-bad">—</span></div>
-            <div class="vc-row"><span class="c vc-bad">Bogotá</span><span class="c vc-bad">4200</span></div>
-            <div class="vc-row"><span class="c vc-bad">Medellin </span><span class="c vc-bad">-2</span></div>
-          </div>
-          <div class="vc-mid">→</div>
-          <div class="vc-tbl good">
-            <div class="h">Después</div>
-            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">295200</span></div>
-            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">180000</span></div>
-            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">4200</span></div>
-            <div class="vc-row"><span class="c vc-ok">Medellín</span><span class="c vc-ok">✓ válida</span></div>
-          </div>
-        </div>
-        <div class="vc-stats"><span>162 → 153 filas</span><span>0 duplicados</span><span>0 nulos</span><span>tipos correctos</span></div>
-      </div>
-    </div>
-    <div class="why-note">💡 <span><b>La base de todo:</b> sin datos limpios, los gráficos y reportes mienten.</span></div>
-  </div>
-</section>
-
-<!-- ============== EJERCICIO 3 · AUTOMATIZACIÓN ============== -->
-<section class="slide" data-block="Práctica" data-title="Ejercicio 2 · Automatización" data-sub="Un proceso que genera archivos solo">
-  <div class="ex">
-    <div class="slide-head">
-      <span class="eyebrow"><span class="step-pill">EJERCICIO 2</span> Automatización de Excel</span>
-      <h2>Un proceso que <span class="hl">genera archivos solo</span></h2>
-      <div class="ex-tools">Sobre <b>datos_ventas_limpio.xlsx</b> · genera <b>varios .xlsx</b> automáticamente</div>
-      <div class="ex-file-wrap">
-        <div class="ex-file">
-          <span class="fn">📊 datos_ventas.xlsx · el de partida, si no hiciste el ejercicio 1</span>
-          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
-        </div>
-      </div>
-    </div>
-    <div class="practical">
-      <div class="prompt-card">
-        <div class="card-label"><span class="dot"></span>El prompt</div>
-        <div class="prompt-text" id="p2">Con <code>datos_ventas_limpio.xlsx</code>: (1) crea la carpeta <code>reportes_por_ciudad</code> y guarda un Excel por cada <span class="fill-edit" contenteditable="true">ciudad</span> (<code>ventas_&lt;ciudad&gt;.xlsx</code>); (2) crea un único <code>resumen_ventas.xlsx</code> con una hoja por cada <span class="fill-edit" contenteditable="true">categoria</span> y una hoja <code>Resumen</code> con <code>total_venta</code> y <code>utilidad</code> por ciudad.</div>
-        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p2')">⧉ Copiar prompt</button><span class="copy-hint">Cambia la columna para separar.</span></div>
-      </div>
-      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
-      <div class="visual-card">
-        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
-        <div class="viz-split">
-          <div class="vs-source"><div class="ic">📊</div><div class="nm">datos_ventas_limpio.xlsx</div><div class="mt">153 filas</div></div>
-          <div class="vs-arrow">→<small>automatiza</small></div>
-          <div class="vs-outs">
-            <div class="vs-folder">📁 reportes_por_ciudad/</div>
-            <div class="vs-out"><span>📄</span> ventas_Bucaramanga.xlsx <span class="rows">37</span></div>
-            <div class="vs-out"><span>📄</span> ventas_Medellín.xlsx <span class="rows">34</span></div>
-            <div class="vs-out"><span>📄</span> ventas_Bogotá.xlsx <span class="rows">29</span></div>
-            <div class="vs-out"><span>📄</span> … +2 ciudades</div>
-            <div class="vs-book">
-              <div class="vs-folder">📗 resumen_ventas.xlsx</div>
-              <div class="vs-tabs"><span class="active">Tecnología</span><span>Hogar</span><span>Ropa</span><span>Deportes</span><span>Alimentos</span><span>Resumen</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="why-note">💡 <span><b>Automatización real:</b> el agente recorre cada categoría y escribe su archivo. Sin copiar-pegar.</span></div>
-  </div>
-</section>
-
-<!-- ============== EJERCICIO 4 · AGENTE DENTRO DE EXCEL ============== -->
-<section class="slide" data-block="Práctica" data-title="Ejercicio 3 · Agente en Excel" data-sub="Cruzar dos hojas sin fórmulas">
-  <div class="ex">
-    <div class="slide-head">
-      <span class="eyebrow"><span class="step-pill">EJERCICIO 3</span> Agente dentro de una app</span>
-      <h2>Un agente <span class="hl">dentro de Excel</span></h2>
-      <div class="ex-tools">Con <b>Claude Code integrado en Excel</b> · reorganizar datos en <b>otro archivo</b></div>
-      <div class="ex-file-wrap">
-        <div class="ex-file">
-          <span class="fn">📊 preinscritos.xlsx · hojas «curso» y «taller»</span>
-          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1o_pOmRQHjrV0DH0kJgdj_Y8_wL1cXxvS" target="_blank" rel="noopener">⬇ Descargar</a>
-        </div>
-      </div>
-    </div>
-    <div class="practical">
-      <div class="prompt-card">
-        <div class="card-label"><span class="dot"></span>El prompt · a Claude Code, dentro de Excel</div>
-        <div class="prompt-text" id="p3">Necesito que revises las <b>dos hojas</b>: primero, en cada hoja dime si hay alguna <b>persona repetida o duplicada</b> revisando <code>nombres</code> y <code>correos electrónicos</code>. Luego, en la hoja <code>taller</code>, agrégame una <b>columna nueva</b> que indique, por cada persona, si está <b>solo en el taller</b> o si está <b>tanto en el taller como en el curso</b>.</div>
-        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p3')">⧉ Copiar prompt</button><span class="copy-hint">Edítalo con tus columnas.</span></div>
-      </div>
-      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
-      <div class="visual-card">
-        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
-        <div class="viz-xls">
-          <div class="xls">
-            <div class="xls-bar"><span class="xi">X</span><span class="nm">curso</span><span class="ct">3 personas</span></div>
-            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span></div>
-            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span></div>
-            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Carlos Ríos</span><span class="xls-cell mono">carlos@mail.com</span></div>
-            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span></div>
-            <span class="xls-tab">◧ curso</span>
-          </div>
-          <div class="xls wide">
-            <div class="xls-bar"><span class="xi">X</span><span class="nm">taller</span><span class="ct">+ columna nueva ✦</span></div>
-            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span><span class="xls-cell new">estado ✦</span></div>
-            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
-            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Luis Páez</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
-            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
-            <div class="xls-row dup"><span class="xls-cell gut">4</span><span class="xls-cell">Luis Páez 🔁</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
-            <span class="xls-tab">◧ taller</span>
-          </div>
-          <div class="xls-legend">
-            <span><span class="sw" style="background:rgba(0,245,212,.5)"></span> <b>verde</b> = está en ambas hojas</span>
-            <span>🔁 fila duplicada</span>
-            <span>✦ lo que agrega el agente</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="why-note">💡 <span><b>La idea:</b> en segundos el agente cruza dos listas, detecta repetidos y marca quién está en ambas — sin fórmulas manuales.</span></div>
-  </div>
-</section>
-
-<!-- ============== TALLER · ANTES DE EMPEZAR ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Antes de empezar el taller" data-sub="Tres reglas cuando el agente escribe en tu disco">
+<!-- ============== PRÁCTICA · ANTES DE EMPEZAR ============== -->
+<section class="slide" data-block="Práctica" data-title="Antes de empezar" data-sub="Tres reglas cuando el agente escribe en tu disco">
   <div class="slide-scroll wrapA">
     <div class="slide-head">
       <span class="eyebrow">Cambio de escenario</span>
@@ -2604,31 +2472,53 @@ resumen = (df.groupby("ciudad")["ventas_cop"]
         <p>Abre dos o tres archivos al azar. Un agente puede reportar «listo» y haber saltado los que tenían tildes en el nombre.</p>
       </div>
     </div>
-    <div class="duo" style="margin-top:18px">
-      <div class="tok-note warn">
-        <h4>La carpeta de práctica</h4>
-        Descárgala del enlace de abajo y déjala donde te quede cómodo. Dentro hay dos carpetas: <b>carpeta_desordenada</b> (30 archivos revueltos, actividades 2 a 5) y <b>reportes_mensuales</b> (10 Excel, actividad 6). La actividad 1 no necesita ninguna: el documento lo crea el agente desde cero. Si prefieres, usa una carpeta tuya —pero <b>una copia</b>.
+    <div class="dl-big">
+      <div class="dl-ic">📁</div>
+      <div class="dl-txt">
+        <b>Datos de trabajo</b>
+        <span>Dentro van dos carpetas: <b>carpeta_desordenada</b> (30 archivos revueltos, ejercicios 2 a 8) y <b>reportes_mensuales</b> (10 Excel, ejercicio 9). El ejercicio 1 no necesita ninguna y los ejercicios 10 a 12 traen su propio archivo.</span>
       </div>
-      <div class="tok-note gold">
-        <h4>Qué es «la carpeta de trabajo»</h4>
-        Los prompts no traen ninguna ruta escrita, porque la tuya no será la mía. <b>La carpeta de trabajo es aquella desde la que abriste el agente</b>: entras en ella y lanzas la herramienta ahí. Si el agente que uses pide una ruta explícita, esa primera línea del prompt viene resaltada: escribe la tuya encima.
-      </div>
+      <a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Descargar carpeta de trabajo</a>
     </div>
-    <div class="ex-file-wrap">
-      <div class="ex-file">
-        <span class="fn">📁 modulo2_taller · carpeta_desordenada + reportes_mensuales</span>
-        <a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Abrir carpeta</a>
-      </div>
-    </div>
-    <p class="note-foot">Los prompts de las seis actividades <b>no nombran ninguna herramienta ni ninguna ruta</b>: funcionan en cualquier agente con acceso a archivos.</p>
+    <p class="note-foot">Los prompts de los doce ejercicios <b>no nombran ninguna herramienta ni ninguna ruta</b>: funcionan en cualquier agente con acceso a archivos.</p>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 1 · PROYECTO DE INVERSIÓN ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 1 · Proyecto de inversión" data-sub="De un objetivo en una línea a un documento formal en Word">
+<!-- ============== DIVISORIA · BLOQUE 1 ============== -->
+<section class="slide" data-block="Bloque 1 · Gestionar archivos" data-title="Bloque 1 · Gestionar archivos" data-sub="Empieza la práctica · ocho ejercicios sobre tu carpeta">
+  <div class="slide-scroll bridge">
+    <div class="slide-head">
+      <span class="eyebrow">Bloque 1 de 3</span>
+      <h2>Empezamos por <span class="hl">la carpeta</span></h2>
+      <p class="lead">Antes de tocar los datos hay que poder con los archivos: crearlos, ordenarlos, convertirlos y encontrarlos. <b>Tú escribes el prompt, el agente ejecuta</b> — y el resultado queda en tu disco.</p>
+    </div>
+
+    <div class="prac-type">
+      <div class="pt-bar"><i></i><i></i><i></i><span>tu agente · escribiendo</span></div>
+      <div class="pt-body">
+        <div class="pt-who">Tú</div>
+        <div class="pt-line">Ordena esta carpeta por tipo de archivo</div>
+        <div class="pt-reply"><span class="cog">⚙</span> <span>El agente te enseña el plan, lo confirmas y los <b>30 archivos</b> quedan en sus subcarpetas</span></div>
+      </div>
+    </div>
+
+    <div class="thread">
+      <div class="th now"><span class="tk">Bloque 1</span><b>Gestionar archivos</b><small>8 ejercicios · crear, ordenar, renombrar, convertir, proteger, comprimir y buscar.</small></div>
+      <span class="tarr">→</span>
+      <div class="th next"><span class="tk">Bloque 2</span><b>Manipular archivos</b><small>3 ejercicios · entrar en los datos y trabajarlos.</small></div>
+      <span class="tarr">→</span>
+      <div class="th next"><span class="tk">Bloque 3</span><b>Agente en el programa</b><small>1 ejercicio · el agente dentro de Excel.</small></div>
+    </div>
+
+    <p class="note-foot">En este bloque: <b>1 Word · 2 Ordenar · 3 Renombrar · 4 PDF · 5 Proteger · 6 Comprimir · 7 Descomprimir · 8 Buscar</b></p>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 1 · EJERCICIO 1 · PROYECTO DE INVERSIÓN ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 1 · Proyecto de inversión" data-sub="De un objetivo en una línea a un documento formal en Word">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--claude)">Actividad 1 de 6</span>
+      <span class="eyebrow lvl" style="--pc:var(--claude)">Bloque 1 · Ejercicio 1 de 12</span>
       <h2>De un objetivo <span class="hl">a un proyecto en Word</span></h2>
       <p class="lead">Tienes la idea en una frase; falta la estructura formal. Y esa estructura siempre es la misma.</p>
     </div>
@@ -2684,30 +2574,15 @@ No inventes cifras como si fueran reales: marca cada una con [SUPUESTO] y déjam
 la lista de todo lo que debo reemplazar con datos verdaderos.</div>
         </div>
       </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          El agente necesita poder escribir <code>.docx</code>. Si te dice que no tiene la librería, respóndele <b>«instálala y continúa»</b>. Un <code>.txt</code> renombrado a <code>.docx</code> no es un Word.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          Abre el documento: los títulos deben salir en el <b>panel de navegación</b> y el índice debe actualizarse solo. Después busca <code>[SUPUESTO]</code>: si no aparece ninguno, el agente inventó cifras y no te avisó.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Cambia el tipo de documento: <b>plan de negocio</b>, <b>proyecto de investigación</b>, <b>estudio de factibilidad</b> o <b>plan de mejoramiento</b>. Cambia la lista de secciones; el resto del prompt no se toca.
-        </div>
-      </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> salir con el esqueleto completo y bien formateado, para dedicar tu tiempo a las cifras reales y no a la plantilla.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Carpeta del taller</a></div>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 2 · ORDENAR POR TIPO ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 2 · Ordenar por tipo" data-sub="Una carpeta revuelta se convierte en subcarpetas por tipo de archivo">
+<!-- ====== BLOQUE 1 · EJERCICIO 2 · ORDENAR POR TIPO ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 2 · Ordenar por tipo" data-sub="Una carpeta revuelta se convierte en subcarpetas por tipo de archivo">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--accent)">Actividad 2 de 6</span>
+      <span class="eyebrow lvl" style="--pc:var(--accent)">Bloque 1 · Ejercicio 2 de 12</span>
       <h2>Ordenar la carpeta <span class="hl">por tipo de archivo</span></h2>
       <p class="lead">Todo mezclado en un solo nivel. Que el agente cree las subcarpetas y mueva cada archivo a la suya.</p>
     </div>
@@ -2760,30 +2635,15 @@ Muéstrame primero el plan (archivo → carpeta destino) y espera mi confirmaci�
 Al terminar, dame una tabla: subcarpeta | cantidad de archivos.</div>
         </div>
       </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          Duplica la carpeta. El agente <b>mueve archivos de verdad</b>: si el plan está mal y confirmas, el desorden queda peor que antes.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          Cuenta: la suma de la tabla final debe dar <b>exactamente</b> el número de archivos que había al inicio. Si falta uno, apareció un tipo que no previste.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Cambia el criterio: en vez de por tipo, <b>por año</b> (usando la fecha de modificación) o <b>por cliente</b> (usando una palabra del nombre). El resto del prompt no se toca.
-        </div>
-      </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que la carpeta quede navegable en un vistazo y que tú solo hayas escrito seis líneas.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 3 · RENOMBRAR ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 3 · Renombrar en mayúsculas" data-sub="Nombres irregulares, tildes y faltas de ortografía a un solo formato">
+<!-- ====== BLOQUE 1 · EJERCICIO 3 · RENOMBRAR ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 3 · Renombrar en mayúsculas" data-sub="Nombres irregulares, tildes y faltas de ortografía a un solo formato">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--gold)">Actividad 3 de 6</span>
+      <span class="eyebrow lvl" style="--pc:var(--gold)">Bloque 1 · Ejercicio 3 de 12</span>
       <h2>Renombrar todo a <span class="hl">un mismo criterio</span></h2>
       <p class="lead">Mayúsculas y minúsculas mezcladas, tildes, «copia (2)» y faltas de ortografía. Una sola pasada y quedan homogéneos.</p>
     </div>
@@ -2833,30 +2693,15 @@ Si al limpiar el nombre dos archivos quedan iguales, añade _1, _2 al final.
 Muéstrame primero una tabla: nombre actual | nombre nuevo. Espera mi visto bueno.</div>
         </div>
       </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          Si esos archivos están enlazados desde otro documento o desde una hoja de cálculo, <b>renombrarlos rompe los enlaces</b>. Revisa antes de confirmar.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          Busca en la tabla los casos raros: nombres con ñ, con &amp;, con paréntesis y con puntos intermedios (<code>informe.v2.final.pdf</code>). Ahí es donde suele fallar.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Añade un prefijo con la fecha: <b>AAAA-MM-DD_NOMBRE</b>, tomando la fecha de modificación del archivo. La carpeta queda ordenada cronológicamente sola.
-        </div>
-      </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que cualquiera encuentre un archivo por su nombre, sin abrirlo y sin adivinar quién lo guardó.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 4 · CONVERTIR A PDF ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 4 · Convertir a PDF" data-sub="Word e imágenes convertidos en lote, sin perder los originales">
+<!-- ====== BLOQUE 1 · EJERCICIO 4 · CONVERTIR A PDF ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 4 · Convertir a PDF" data-sub="Word e imágenes convertidos en lote, sin perder los originales">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--blue)">Actividad 4 de 6</span>
+      <span class="eyebrow lvl" style="--pc:var(--blue)">Bloque 1 · Ejercicio 4 de 12</span>
       <h2>Convertir Word e imágenes <span class="hl">a PDF</span></h2>
       <p class="lead">Lo que se envía fuera de la organización va en PDF. Convertir doce archivos a mano son doce «Guardar como»; con el agente es un párrafo.</p>
     </div>
@@ -2911,30 +2756,15 @@ Si te falta alguna librería para hacerlo, instálala y continúa.
 Al terminar dime: cuántos convertiste y cuáles no pudiste, con el motivo de cada uno.</div>
         </div>
       </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          Los <code>.docx</code> con tablas complejas o encabezados de membrete pueden verse distintos al convertir. <b>Abre uno</b> antes de dar por bueno el lote.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          Cuenta los PDF nuevos y compáralos con la suma de Word + imágenes del origen. Si sobran o faltan, pide la lista de los que no pudo convertir.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Pide que <b>una sola imagen por página</b> se convierta en un <b>único PDF</b> con todas ellas: es la forma rápida de armar un anexo escaneado.
-        </div>
-      </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> tener el lote listo para enviar en PDF, con los originales intactos para seguir editando.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ carpeta_desordenada</a></div>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 5 · PROTEGER PDF ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 5 · Proteger los PDF" data-sub="Contraseña en lote sobre todos los PDF de una carpeta">
+<!-- ====== BLOQUE 1 · EJERCICIO 5 · PROTEGER PDF ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 5 · Proteger los PDF" data-sub="Contraseña en lote sobre todos los PDF de una carpeta">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--danger)">Actividad 5 de 6</span>
+      <span class="eyebrow lvl" style="--pc:var(--danger)">Bloque 1 · Ejercicio 5 de 12</span>
       <h2>Poner clave a <span class="hl">todos los PDF</span></h2>
       <p class="lead">Documentos con datos de terceros que salen por correo. Proteger uno es fácil; proteger veinte, uno por uno, es donde se abandona.</p>
     </div>
@@ -2948,7 +2778,7 @@ Al terminar dime: cuántos convertiste y cuáles no pudiste, con el motivo de ca
               <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">CARTA_PROVEEDOR.pdf</span><span class="flag">sin clave</span></li>
               <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">MEMORANDO_INTERNO.pdf</span><span class="flag">sin clave</span></li>
               <li class="fitem"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">IMG_20240912.pdf</span><span class="flag">sin clave</span></li>
-              <li class="fmore">…y 8 más · los 12 salieron de la actividad 4</li>
+              <li class="fmore">…y 8 más · los 12 salieron del ejercicio 4</li>
             </ul>
           </div>
           <div class="farr">→<small>el agente</small></div>
@@ -2982,56 +2812,42 @@ Al terminar, comprueba abriendo uno de los protegidos que efectivamente
 pide la clave, y dame la lista de los que quedaron protegidos.</div>
         </div>
       </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          <b>La clave no viaja por el mismo canal que el archivo.</b> Si mandas el PDF por correo, la contraseña va por otro medio. Si no, la protección es decorativa.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          Ábrelo tú mismo. Y guarda la clave donde vayas a encontrarla: <b>un PDF protegido cuya contraseña se perdió es un archivo perdido</b>.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Una clave distinta por destinatario, tomada de una columna de un Excel: <b>«usa la columna CLAVE del archivo destinatarios.xlsx»</b>. Ahí empieza el envío masivo personalizado.
-        </div>
-      </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> que el lote salga protegido en un minuto y que la protección sea real, no un trámite.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Carpeta del taller</a></div>
   </div>
 </section>
 
-<!-- ============== ACTIVIDAD 6 · CONSOLIDAR EXCEL ============== -->
-<section class="slide" data-block="Taller · el agente toca tus archivos" data-title="Actividad 6 · Consolidar los Excel" data-sub="Diez archivos con la misma estructura en una sola tabla">
+<!-- ====== BLOQUE 1 · EJERCICIO 6 · COMPRIMIR ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 6 · Comprimir" data-sub="Las ocho carpetas en un solo archivo listo para enviar">
   <div class="slide-scroll plab">
     <div class="slide-head">
-      <span class="eyebrow lvl" style="--pc:var(--github)">Actividad 6 de 6</span>
-      <h2>Diez Excel iguales, <span class="hl">un solo archivo</span></h2>
-      <p class="lead">El reporte mensual llega partido en diez libros con las mismas columnas. Copiar y pegar diez veces es donde aparecen los errores.</p>
+      <span class="eyebrow lvl" style="--pc:var(--node)">Bloque 1 · Ejercicio 6 de 12</span>
+      <h2>Ocho carpetas en <span class="hl">un solo archivo</span></h2>
+      <p class="lead">La carpeta ya está ordenada, pero enviarla sigue siendo adjuntar carpeta por carpeta. Un comprimido y va todo de una vez, con la estructura intacta.</p>
     </div>
     <div class="act-grid">
       <div class="act-main">
         <div class="act-flow">
           <div class="fbox bad">
-            <div class="fhead">Antes · diez libros<span class="fpath">\reportes_mensuales</span></div>
+            <div class="fhead">Antes · ocho carpetas sueltas<span class="fpath">\carpeta de trabajo</span></div>
             <ul class="flist">
-              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_01.xlsx</span><span class="flag" style="color:var(--muted)">312 filas</span></li>
-              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_02.xlsx</span><span class="flag" style="color:var(--muted)">288 filas</span></li>
-              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_03.xlsx</span><span class="flag" style="color:var(--muted)">341 filas</span></li>
-              <li class="fitem"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">REPORTE_2026_04.xlsx</span><span class="flag" style="color:var(--muted)">305 filas</span></li>
-              <li class="fmore">…hasta REPORTE_2026_10.xlsx</li>
-              <li class="fmore">los diez con las mismas 5 columnas</li>
+              <li class="fdir">📁 PDF <span class="fcount">8 archivos</span></li>
+              <li class="fdir">📁 WORD <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 EXCEL <span class="fcount">4 archivos</span></li>
+              <li class="fdir">📁 IMAGENES <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 PDF_CONVERTIDOS <span class="fcount">12 archivos</span></li>
+              <li class="fmore">…y TEXTO, OTROS y PDF_PROTEGIDOS</li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">✕</span><span class="fname">nada que adjuntar de una sola vez</span><span class="flag">a mano</span></li>
             </ul>
           </div>
           <div class="farr">→<small>el agente</small></div>
           <div class="fbox ok">
-            <div class="fhead">Después · una sola tabla</div>
+            <div class="fhead">Después · un único paquete<span class="fpath">\carpeta de trabajo</span></div>
             <ul class="flist">
-              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">xlsx</span><span class="fname">CONSOLIDADO.xlsx</span><span class="flag">3.104 filas</span></li>
-              <li class="fmore">columnas del original + <b>ORIGEN</b></li>
-              <li class="fitem"><span class="fic" style="--pc:var(--gold)">col</span><span class="fname">las 5 columnas del original</span></li>
-              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">col</span><span class="fname">ORIGEN → REPORTE_2026_03.xlsx</span></li>
-              <li class="fmore">una fila de encabezados, no diez</li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--node)">zip</span><span class="fname">comprimido.zip</span><span class="flag">54 archivos</span></li>
+              <li class="fmore">dentro van las ocho carpetas, con su jerarquía</li>
+              <li class="fitem"><span class="fic" style="--pc:var(--gold)">est</span><span class="fname">PDF\ · WORD\ · EXCEL\ · IMAGENES\ …</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">ok</span><span class="fname">las carpetas originales, sin tocar</span></li>
+              <li class="fmore">un solo adjunto en vez de ocho</li>
             </ul>
           </div>
         </div>
@@ -3040,66 +2856,429 @@ pide la clave, y dame la lista de los que quedaron protegidos.</div>
             <span class="ped">✎ Cambia lo resaltado</span>
             <button class="copy-btn" type="button">Copiar</button>
             <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
-          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja sobre los archivos de Excel de <span class="fill">la carpeta de trabajo actual</span>.
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja en <span class="fill">la carpeta de trabajo actual</span>.
 
-Los archivos de Excel que hay allí tienen la misma estructura de columnas.
-Consolídalos en un solo archivo llamado CONSOLIDADO.xlsx.
+Comprime en un único archivo llamado <span class="fill">comprimido.zip</span> todas las
+subcarpetas que haya allí, con todo su contenido.
 
 Reglas:
-- Una sola fila de encabezados al inicio, no una por archivo.
-- Añade una columna ORIGEN con el nombre del archivo del que salió cada fila.
-- No cambies los datos: no redondees, no reordenes columnas, no borres filas.
-- Respeta el formato de fecha y de número tal como viene.
+- Conserva dentro del zip la misma estructura de carpetas.
+- Incluye solo las carpetas: los archivos sueltos de la raíz quedan fuera.
+- No muevas, no renombres y no borres nada de lo original.
+- No metas el propio comprimido.zip dentro de sí mismo.
 
-Antes de escribir nada, verifica que las columnas coincidan en todos los archivos
-y avísame si alguno difiere en nombre, orden o cantidad de columnas.
-Al final dime: total de filas y cuántas aportó cada archivo.</div>
-        </div>
-      </div>
-      <div class="act-side">
-        <div class="tok-note warn">
-          <h4>Antes de empezar</h4>
-          El error clásico es el <b>encabezado repetido</b> a mitad de tabla y las <b>filas de totales</b> al final de cada libro. Pide explícitamente que las detecte y te pregunte qué hacer.
-        </div>
-        <div class="tok-note">
-          <h4>Cómo verificar</h4>
-          La suma de filas por archivo debe dar el total del consolidado. Y filtra la columna <code>ORIGEN</code>: deben aparecer los diez nombres, ninguno vacío.
-        </div>
-        <div class="tok-note gold">
-          <h4>Variante para tu trabajo</h4>
-          Encadena el siguiente paso: <b>«ahora hazme una tabla dinámica de Valor por Sede y por mes»</b>. Consolidar es el paso aburrido; el análisis viene después.
+Muéstrame primero el plan (qué carpetas vas a incluir) y espera mi confirmación.
+Al terminar dime: cuántos archivos entraron y el tamaño final del zip.</div>
         </div>
       </div>
     </div>
-    <div class="ex-goal"><span class="gi">🎯</span><div><b>Meta:</b> una tabla única, trazable hasta su archivo de origen, lista para analizar sin copiar y pegar.</div><a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ reportes_mensuales</a></div>
   </div>
 </section>
 
-<section class="slide s-py" data-block="Cierre" data-title="Cierre" data-sub="Lo que sigue">
-  <div class="py-stage flex flex-col">
-    <div class="py-stage flex flex-col justify-center items-center text-center" style="background:transparent">
-      <span class="reveal kicker mb-4">Fin del módulo 2</span>
-      <h2 class="reveal serif-title text-4xl md:text-6xl mb-6 text-white max-w-4xl">
-        El ciclo <span style="color:var(--lime)">completo</span>
-      </h2>
-      <p class="reveal text-lg text-slate-300 mb-8 max-w-3xl leading-relaxed">
-        Abrir cualquier formato, entender lo que llegó, <span class="em">trabajarlo dentro del DataFrame</span> y devolverlo al disco. Eso es, entero, un flujo de datos profesional.
-      </p>
-      <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl w-full text-left mb-8">
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--lime)">Cargar y exportar</p><p class="text-sm text-slate-400 mt-1">read_csv · read_excel · read_file · y sus cuatro to_</p></div>
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--sky)">Manipular</p><p class="text-sm text-slate-400 mt-1">elegir, filtrar, renombrar, crear columnas, limpiar y agrupar</p></div>
-        <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/40"><p class="font-bold" style="color:var(--amber)">Lo que sigue</p><p class="text-sm text-slate-400 mt-1">unir varios archivos en una sola tabla y graficar</p></div>
-      </div>
-      <div class="reveal flex gap-4 flex-wrap justify-center">
-        <button onclick="go(0)" class="px-6 py-3 rounded-full font-bold transition-all hover:scale-105"
-                style="background:var(--lime);color:var(--ink);box-shadow:0 12px 30px -10px rgba(200,242,90,.5)">
-          <i class="fa-solid fa-rotate-left mr-2"></i> Volver al inicio
-        </button>
-      </div>
-      <p class="reveal mt-8" style="font-family:var(--mono);font-size:.72rem;color:rgba(245,239,228,.55);letter-spacing:.18em;text-transform:uppercase">
-        Trabajo Científico · @TCientifico · Democratizando la ciencia de datos
-      </p>
+<!-- ====== BLOQUE 1 · EJERCICIO 7 · DESCOMPRIMIR ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 7 · Descomprimir" data-sub="Abrir el paquete y comprobar que llegó completo">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--python)">Bloque 1 · Ejercicio 7 de 12</span>
+      <h2>Abrirlo y <span class="hl">comprobar que está todo</span></h2>
+      <p class="lead">Descomprimir es un doble clic. Lo que nadie hace es contar si salió lo mismo que entró — y ahí es donde se pierden archivos sin enterarse.</p>
     </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · una caja cerrada<span class="fpath">\carpeta de trabajo</span></div>
+            <ul class="flist">
+              <li class="fitem"><span class="fic" style="--pc:var(--node)">zip</span><span class="fname">comprimido.zip</span><span class="flag" style="color:var(--muted)">54 archivos</span></li>
+              <li class="fmore">un solo archivo, ocho carpetas dentro</li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">?</span><span class="fname">¿llegó completo o falta algo?</span><span class="flag">a ciegas</span></li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">✕</span><span class="fname">extraer encima y pisar lo que ya está</span><span class="flag">riesgo</span></li>
+              <li class="fmore">abrir y contar a mano son 54 comprobaciones</li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · restaurado y contado<span class="fpath">\comprimido_extraido</span></div>
+            <ul class="flist">
+              <li class="fdir">📁 PDF <span class="fcount">8 archivos</span></li>
+              <li class="fdir">📁 WORD <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 EXCEL <span class="fcount">4 archivos</span></li>
+              <li class="fmore">…y las otras cinco carpetas, igual que en el zip</li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--accent)">ok</span><span class="fname">54 de 54 · no falta ninguno</span><span class="flag">íntegro</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Trabaja en <span class="fill">la carpeta de trabajo actual</span>.
+
+Descomprime <span class="fill">comprimido.zip</span> dentro de una subcarpeta nueva
+llamada comprimido_extraido.
+
+Reglas:
+- Conserva la estructura de carpetas tal como viene dentro del zip.
+- No extraigas nada fuera de comprimido_extraido: no sobrescribas
+  las carpetas que ya existen en la raíz.
+- Si comprimido_extraido ya existe y tiene contenido, avísame antes de tocarla.
+
+Al terminar compara el zip con lo extraído y dime: cuántos archivos traía,
+cuántos salieron y si falta o sobra alguno.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 1 · EJERCICIO 8 · BUSCAR UN ARCHIVO ====== -->
+<section class="slide s-lab" data-block="Bloque 1 · Gestionar archivos" data-title="Ejercicio 8 · Buscar un archivo" data-sub="Dónde está —y en cuántas copias— el informe final">
+  <div class="slide-scroll plab">
+    <div class="slide-head">
+      <span class="eyebrow lvl" style="--pc:var(--git)">Bloque 1 · Ejercicio 8 de 12</span>
+      <h2>¿Dónde quedó <span class="hl">el informe final</span>?</h2>
+      <p class="lead">Sabes que está, pero no en cuál de las ocho carpetas. Y casi siempre no hay una copia: hay tres, y ninguna se llama igual.</p>
+    </div>
+    <div class="act-grid">
+      <div class="act-main">
+        <div class="act-flow">
+          <div class="fbox bad">
+            <div class="fhead">Antes · ¿en cuál de las ocho?<span class="fpath">\carpeta de trabajo</span></div>
+            <ul class="flist">
+              <li class="fdir">📁 PDF <span class="fcount">8 archivos</span></li>
+              <li class="fdir">📁 WORD <span class="fcount">6 archivos</span></li>
+              <li class="fdir">📁 PDF_CONVERTIDOS <span class="fcount">12 archivos</span></li>
+              <li class="fdir">📁 PDF_PROTEGIDOS <span class="fcount">12 archivos</span></li>
+              <li class="fmore">…y cuatro carpetas más, con subcarpetas dentro</li>
+              <li class="fitem off"><span class="fic" style="--pc:var(--danger)">?</span><span class="fname">«el informe final» — abrir carpeta por carpeta</span><span class="flag">a ojo</span></li>
+            </ul>
+          </div>
+          <div class="farr">→<small>el agente</small></div>
+          <div class="fbox ok">
+            <div class="fhead">Después · las tres copias, con su ruta</div>
+            <ul class="flist">
+              <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">\PDF\informe final_2 (copia).pdf</span><span class="flag">1,8 MB</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">\PDF_CONVERTIDOS\INFORME_FINAL.pdf</span><span class="flag">2,1 MB</span></li>
+              <li class="fitem win"><span class="fic" style="--pc:var(--danger)">pdf</span><span class="fname">\PDF_PROTEGIDOS\INFORME_FINAL_CLAVE.pdf</span><span class="flag">🔒</span></li>
+              <li class="fmore">la más reciente: la de PDF_CONVERTIDOS</li>
+              <li class="fmore">nada se movió ni se abrió: solo te dice dónde está</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pbox gold">
+          <div class="pbox-head"><span class="pdot"></span><span class="pk">Prompt · ajústalo antes de copiarlo</span>
+            <span class="ped">✎ Cambia lo resaltado</span>
+            <button class="copy-btn" type="button">Copiar</button>
+            <button class="copy-btn reset-btn" type="button">Restaurar</button></div>
+          <div class="pbox-body tight edit" contenteditable="true" spellcheck="false">Busca en <span class="fill">la carpeta de trabajo actual</span> y en todas sus
+subcarpetas, a cualquier profundidad.
+
+Encuéntrame todos los archivos cuyo nombre contenga «<span class="fill">informe final</span>».
+
+Reglas:
+- Ignora mayúsculas, tildes, guiones bajos y espacios: «INFORME_FINAL»,
+  «informe final» e «Informe-Final» son lo mismo.
+- No abras, no muevas, no renombres y no borres nada: solo localizar.
+
+Dame una tabla con: ruta completa | nombre | tamaño | fecha de modificación.
+Al final dime cuál es la más reciente y si alguna copia es idéntica a otra.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DIVISORIA · BLOQUE 2 ============== -->
+<section class="slide" data-block="Bloque 2 · Manipular archivos" data-title="Bloque 2 · Manipular archivos" data-sub="Se acabó la carpeta: ahora entramos en los datos">
+  <div class="slide-scroll bridge">
+    <div class="slide-head">
+      <span class="eyebrow">Bloque 2 de 3</span>
+      <h2>Ahora entramos <span class="hl">en los datos</span></h2>
+      <p class="lead">Hasta aquí el agente movía archivos sin mirar dentro. En este bloque los abre: junta tablas, corrige lo que viene sucio y genera los reportes por su cuenta. <b>Ya no ordenas la carpeta: trabajas los datos</b>.</p>
+    </div>
+
+    <div class="thread">
+      <div class="th done"><span class="tk">Bloque 1</span><b>Gestionar archivos</b><small>8 ejercicios · crear, ordenar, convertir, comprimir y buscar.</small></div>
+      <span class="tarr">→</span>
+      <div class="th now"><span class="tk">Bloque 2</span><b>Manipular archivos</b><small>3 ejercicios · consolidar, limpiar y automatizar lo que hay dentro.</small></div>
+      <span class="tarr">→</span>
+      <div class="th next"><span class="tk">Bloque 3</span><b>Agente en el programa</b><small>1 ejercicio · el agente dentro de Excel.</small></div>
+    </div>
+
+    <p class="note-foot">En este bloque: <b>9 Consolidar · 10 Limpieza · 11 Automatización</b> — los tres sobre archivos de Excel reales.</p>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 2 · EJERCICIO 9 · CONSOLIDAR EXCEL ====== -->
+<section class="slide" data-block="Bloque 2 · Manipular archivos" data-title="Ejercicio 9 · Consolidar los Excel" data-sub="Diez archivos con la misma estructura en una sola tabla">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 9</span> Bloque 2 · Consolidar Excel</span>
+      <h2>Diez Excel iguales, <span class="hl">un solo archivo</span></h2>
+      <div class="ex-tools">Sobre <b>reportes_mensuales</b> · diez libros con las mismas columnas</div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📁 reportes_mensuales · los diez libros del reporte</span>
+          <a class="ex-dl" href="https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing" target="_blank" rel="noopener">⬇ Abrir carpeta</a>
+        </div>
+      </div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt</div>
+        <div class="prompt-text" id="p4">Los archivos de Excel de <span class="fill-edit" contenteditable="true">reportes_mensuales</span> tienen la misma estructura de columnas. Consolídalos en un solo archivo llamado <code>CONSOLIDADO.xlsx</code>: (1) una sola fila de encabezados al inicio, no una por archivo; (2) añade una columna <code>ORIGEN</code> con el nombre del archivo del que salió cada fila; (3) no cambies los datos —no redondees, no reordenes columnas, no borres filas— y respeta el formato de fecha y de número. Antes de escribir nada, verifica que las columnas coincidan en todos los archivos y avísame si alguno difiere. Al final dime el total de filas y cuántas aportó cada archivo.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p4')">⧉ Copiar prompt</button><span class="copy-hint">Cambia la carpeta por la tuya.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-split">
+          <div class="vs-outs">
+            <div class="vs-folder">📁 reportes_mensuales/</div>
+            <div class="vs-out"><span>📄</span> REPORTE_2026_01.xlsx <span class="rows">312</span></div>
+            <div class="vs-out"><span>📄</span> REPORTE_2026_02.xlsx <span class="rows">288</span></div>
+            <div class="vs-out"><span>📄</span> REPORTE_2026_03.xlsx <span class="rows">341</span></div>
+            <div class="vs-out"><span>📄</span> … +7 archivos</div>
+          </div>
+          <div class="vs-arrow">→<small>consolida</small></div>
+          <div class="vs-source"><div class="ic">📗</div><div class="nm">CONSOLIDADO.xlsx</div><div class="mt">3.104 filas</div></div>
+        </div>
+        <div class="vc-stats"><span>1 encabezado, no 10</span><span>+ columna ORIGEN</span><span>datos sin tocar</span></div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Trazable:</b> con la columna <b>ORIGEN</b> siempre sabes de qué libro salió cada fila — y por eso puedes fiarte del consolidado.</span></div>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 2 · EJERCICIO 10 · LIMPIEZA ====== -->
+<section class="slide" data-block="Bloque 2 · Manipular archivos" data-title="Ejercicio 10 · Limpieza" data-sub="De datos sucios a datos listos">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 10</span> Bloque 2 · Limpieza de datos</span>
+      <h2>De datos <span class="hl">sucios</span> a datos listos</h2>
+      <div class="ex-tools">Úsalo en <b>cualquiera</b> de los 4 agentes · sobre <b>datos_ventas.xlsx</b></div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 datos_ventas.xlsx · los datos sin limpiar</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt</div>
+        <div class="prompt-text" id="p1">Carga <code>datos_ventas.xlsx</code> en un DataFrame llamado <code>datos</code>. Límpialo: (1) elimina filas duplicadas; (2) en <span class="fill-edit" contenteditable="true">ciudad</span> y <span class="fill-edit" contenteditable="true">categoria</span> quita espacios y unifica mayúsculas/acentos; (3) convierte <code>cantidad</code>, <code>precio_unitario</code> y <code>total_venta</code> a número (quita "$" y puntos de miles); (4) recalcula <code>total_venta = cantidad × precio_unitario</code> donde falte; (5) elimina filas con <code>cantidad ≤ 0</code>; (6) rellena <code>satisfaccion</code> vacía con la mediana. Guárdalo como <code>datos_ventas_limpio.xlsx</code>.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p1')">⧉ Copiar prompt</button><span class="copy-hint">Edita los recuadros con tus columnas.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-clean">
+          <div class="vc-tbl bad">
+            <div class="h">Antes</div>
+            <div class="vc-row"><span class="c vc-bad">BOGOTA </span><span class="c vc-bad">$ 295.200</span></div>
+            <div class="vc-row"><span class="c vc-bad">bogota</span><span class="c vc-bad">—</span></div>
+            <div class="vc-row"><span class="c vc-bad">Bogotá</span><span class="c vc-bad">4200</span></div>
+            <div class="vc-row"><span class="c vc-bad">Medellin </span><span class="c vc-bad">-2</span></div>
+          </div>
+          <div class="vc-mid">→</div>
+          <div class="vc-tbl good">
+            <div class="h">Después</div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">295200</span></div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">180000</span></div>
+            <div class="vc-row"><span class="c vc-ok">Bogotá</span><span class="c vc-ok">4200</span></div>
+            <div class="vc-row"><span class="c vc-ok">Medellín</span><span class="c vc-ok">✓ válida</span></div>
+          </div>
+        </div>
+        <div class="vc-stats"><span>162 → 153 filas</span><span>0 duplicados</span><span>0 nulos</span><span>tipos correctos</span></div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>La base de todo:</b> sin datos limpios, los gráficos y reportes mienten.</span></div>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 2 · EJERCICIO 11 · AUTOMATIZACIÓN ====== -->
+<section class="slide" data-block="Bloque 2 · Manipular archivos" data-title="Ejercicio 11 · Automatización" data-sub="Un proceso que genera archivos solo">
+  <div class="ex">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 11</span> Bloque 2 · Automatización de Excel</span>
+      <h2>Un proceso que <span class="hl">genera archivos solo</span></h2>
+      <div class="ex-tools">Sobre <b>datos_ventas_limpio.xlsx</b> · genera <b>varios .xlsx</b> automáticamente</div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 datos_ventas.xlsx · el de partida, si no hiciste el ejercicio 1</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1PaKpruNIdyofxiSav8G_nnYnp-m2uveC" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
+    </div>
+    <div class="practical">
+      <div class="prompt-card">
+        <div class="card-label"><span class="dot"></span>El prompt</div>
+        <div class="prompt-text" id="p2">Con <code>datos_ventas_limpio.xlsx</code>: (1) crea la carpeta <code>reportes_por_ciudad</code> y guarda un Excel por cada <span class="fill-edit" contenteditable="true">ciudad</span> (<code>ventas_&lt;ciudad&gt;.xlsx</code>); (2) crea un único <code>resumen_ventas.xlsx</code> con una hoja por cada <span class="fill-edit" contenteditable="true">categoria</span> y una hoja <code>Resumen</code> con <code>total_venta</code> y <code>utilidad</code> por ciudad.</div>
+        <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p2')">⧉ Copiar prompt</button><span class="copy-hint">Cambia la columna para separar.</span></div>
+      </div>
+      <div class="conjure"><span class="spark">✦</span><span class="arrow">→</span></div>
+      <div class="visual-card">
+        <div class="card-label"><span class="dot soft"></span>Qué obtienes</div>
+        <div class="viz-split">
+          <div class="vs-source"><div class="ic">📊</div><div class="nm">datos_ventas_limpio.xlsx</div><div class="mt">153 filas</div></div>
+          <div class="vs-arrow">→<small>automatiza</small></div>
+          <div class="vs-outs">
+            <div class="vs-folder">📁 reportes_por_ciudad/</div>
+            <div class="vs-out"><span>📄</span> ventas_Bucaramanga.xlsx <span class="rows">37</span></div>
+            <div class="vs-out"><span>📄</span> ventas_Medellín.xlsx <span class="rows">34</span></div>
+            <div class="vs-out"><span>📄</span> ventas_Bogotá.xlsx <span class="rows">29</span></div>
+            <div class="vs-out"><span>📄</span> … +2 ciudades</div>
+            <div class="vs-book">
+              <div class="vs-folder">📗 resumen_ventas.xlsx</div>
+              <div class="vs-tabs"><span class="active">Tecnología</span><span>Hogar</span><span>Ropa</span><span>Deportes</span><span>Alimentos</span><span>Resumen</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-note">💡 <span><b>Automatización real:</b> el agente recorre cada categoría y escribe su archivo. Sin copiar-pegar.</span></div>
+  </div>
+</section>
+
+<!-- ============== DIVISORIA · BLOQUE 3 ============== -->
+<section class="slide" data-block="Bloque 3 · Agente dentro del programa" data-title="Bloque 3 · Agente en el programa" data-sub="El agente deja de ser una ventana aparte">
+  <div class="slide-scroll bridge">
+    <div class="slide-head">
+      <span class="eyebrow">Bloque 3 de 3</span>
+      <h2>El agente <span class="hl">se muda dentro</span></h2>
+      <p class="lead">En los once ejercicios anteriores el agente estaba en otra ventana y tú le pasabas la carpeta. Aquí vive <b>dentro de Excel</b>: ve la hoja que tienes abierta y escribe sobre ella.</p>
+    </div>
+
+    <div class="thread">
+      <div class="th done"><span class="tk">Bloque 1</span><b>Gestionar archivos</b><small>8 ejercicios · crear, ordenar, convertir, comprimir y buscar.</small></div>
+      <span class="tarr">→</span>
+      <div class="th done"><span class="tk">Bloque 2</span><b>Manipular archivos</b><small>3 ejercicios · consolidar, limpiar y automatizar.</small></div>
+      <span class="tarr">→</span>
+      <div class="th now"><span class="tk">Bloque 3</span><b>Agente en el programa</b><small>1 ejercicio · cruzar dos hojas sin salir de la aplicación.</small></div>
+    </div>
+
+    <p class="note-foot">En este bloque: <b>12 Agente en Excel</b> — el mismo tipo de encargo, pero sin cambiar de ventana.</p>
+  </div>
+</section>
+
+<!-- ====== BLOQUE 3 · EJERCICIO 12 · AGENTE DENTRO DE EXCEL ====== -->
+<section class="slide" data-block="Bloque 3 · Agente dentro del programa" data-title="Ejercicio 12 · Agente en Excel" data-sub="Cruzar dos hojas sin fórmulas">
+  <div class="slide-scroll appwrap">
+    <div class="slide-head">
+      <span class="eyebrow"><span class="step-pill">EJERCICIO 12</span> Bloque 3 · Agente dentro de una app</span>
+      <h2>Un agente <span class="hl">dentro de Excel</span></h2>
+      <div class="ex-tools">Con <b>Claude Code integrado en Excel</b> · el agente lee y escribe sobre la hoja abierta</div>
+      <div class="ex-file-wrap">
+        <div class="ex-file">
+          <span class="fn">📊 preinscritos.xlsx · hojas «curso» y «taller»</span>
+          <a class="ex-dl" href="https://drive.google.com/uc?export=download&id=1o_pOmRQHjrV0DH0kJgdj_Y8_wL1cXxvS" target="_blank" rel="noopener">⬇ Descargar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="appwin">
+      <div class="appwin-bar">
+        <span class="xi">X</span>
+        <span class="nm">preinscritos.xlsx</span>
+        <span class="dots"><i></i><i></i><i></i></span>
+      </div>
+      <div class="appwin-body">
+        <div class="appwin-doc">
+          <div class="xls">
+            <div class="xls-bar"><span class="xi">X</span><span class="nm">curso</span><span class="ct">3 personas</span></div>
+            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span></div>
+            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span></div>
+            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Carlos Ríos</span><span class="xls-cell mono">carlos@mail.com</span></div>
+            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span></div>
+          </div>
+          <div class="xls wide">
+            <div class="xls-bar"><span class="xi">X</span><span class="nm">taller</span><span class="ct">+ columna nueva ✦</span></div>
+            <div class="xls-row head"><span class="xls-cell gut">#</span><span class="xls-cell">nombre</span><span class="xls-cell">correo</span><span class="xls-cell new">estado ✦</span></div>
+            <div class="xls-row"><span class="xls-cell gut">1</span><span class="xls-cell match">Ana Gómez</span><span class="xls-cell mono">ana@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+            <div class="xls-row"><span class="xls-cell gut">2</span><span class="xls-cell">Luis Páez</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+            <div class="xls-row"><span class="xls-cell gut">3</span><span class="xls-cell match">María Ruiz</span><span class="xls-cell mono">maria@mail.com</span><span class="xls-cell estado"><span class="ib-badge both">Taller + curso</span></span></div>
+            <div class="xls-row dup"><span class="xls-cell gut">4</span><span class="xls-cell">Luis Páez 🔁</span><span class="xls-cell mono">luis@mail.com</span><span class="xls-cell estado"><span class="ib-badge only">Solo taller</span></span></div>
+          </div>
+          <div class="xls-legend">
+            <span><span class="sw" style="background:rgba(0,245,212,.5)"></span> <b>verde</b> = está en ambas hojas</span>
+            <span>🔁 fila duplicada</span>
+            <span>✦ lo que agrega el agente</span>
+          </div>
+        </div>
+        <aside class="appwin-side">
+          <div class="aw-head"><span class="pdot"></span>Agente · panel lateral</div>
+          <div class="aw-prompt" id="p3">Necesito que revises las <b>dos hojas</b>: primero, en cada hoja dime si hay alguna <b>persona repetida o duplicada</b> revisando <code>nombres</code> y <code>correos electrónicos</code>. Luego, en la hoja <code>taller</code>, agrégame una <b>columna nueva</b> que indique, por cada persona, si está <b>solo en el taller</b> o si está <b>tanto en el taller como en el curso</b>.</div>
+          <div class="prompt-actions"><button class="copy-prompt" onclick="copyPrompt(this,'p3')">⧉ Copiar prompt</button></div>
+          <div class="aw-foot">No hay carpeta ni ruta que indicar: el agente ya está dentro del archivo abierto y trabaja sobre la hoja que ve.</div>
+        </aside>
+      </div>
+      <div class="appwin-tabs">
+        <span class="xls-tab">◧ curso</span>
+        <span class="xls-tab">◧ taller</span>
+      </div>
+    </div>
+
+    <div class="why-note">💡 <span><b>La diferencia del bloque 3:</b> no exportas, no abres otra ventana y no indicas rutas — le hablas al programa que ya tienes delante.</span></div>
+  </div>
+</section>
+
+<section class="slide" data-block="Cierre" data-title="Cierre" data-sub="Lo que sigue">
+  <div class="slide-scroll wrapA">
+    <div class="slide-head">
+      <span class="eyebrow">Fin del módulo 2</span>
+      <h2>El ciclo <span class="hl">completo</span></h2>
+      <p class="lead">Abrir cualquier formato, entender lo que llegó, <b>trabajarlo dentro del DataFrame</b> y devolverlo al disco. Eso es, entero, un flujo de datos profesional.</p>
+    </div>
+    <div class="trio">
+      <div class="pane">
+        <span class="tag">Lo que viste</span>
+        <h3>Cargar y exportar</h3>
+        <p>Los cuatro formatos con los que te van a entregar los datos, y los cuatro de vuelta.</p>
+        <ul>
+          <li>read_csv · read_excel · read_file</li>
+          <li>to_csv · to_excel · to_file</li>
+          <li>rutas, carpetas y varias hojas</li>
+        </ul>
+      </div>
+      <div class="pane">
+        <span class="tag">Lo que viste</span>
+        <h3>Manipular</h3>
+        <p>Todo lo que pasa dentro de la tabla antes de volver a guardarla.</p>
+        <ul>
+          <li>elegir, filtrar y renombrar</li>
+          <li>crear columnas y limpiar</li>
+          <li>agrupar y resumir</li>
+        </ul>
+      </div>
+      <div class="pane gold">
+        <span class="tag">Lo que sigue</span>
+        <h3>Módulo 3</h3>
+        <p>Con los archivos ya bajo control, el siguiente paso es cruzarlos y mostrarlos.</p>
+        <ul>
+          <li>unir varios archivos en una tabla</li>
+          <li>graficar lo que resumiste</li>
+        </ul>
+      </div>
+    </div>
+    <div class="duo" style="margin-top:18px">
+      <div class="tok-note">
+        <h4>Los doce ejercicios siguen ahí</h4>
+        Tres bloques: <b>gestionar archivos</b> (1 a 8), <b>manipular archivos</b> (9 a 11) y el <b>agente dentro del programa</b> (12). Los prompts quedan editables en cada diapositiva: vuelve, cámbialos por los tuyos y cópialos.
+      </div>
+      <div class="tok-note gold">
+        <h4>La regla que no cambia</h4>
+        Copia primero, pide el plan antes de ejecutar y verifica el resultado. Con eso el agente deja de ser un riesgo y pasa a ser una herramienta de trabajo.
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:26px">
+      <button class="btn-primary" onclick="go(0)">Volver al inicio</button>
+      <button class="btn-ghost" onclick="go(19)">Volver a la práctica</button>
+    </div>
+    <p class="note-foot" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase">
+      Trabajo Científico · @TCientifico · Democratizando la ciencia de datos
+    </p>
   </div>
 </section>
 
